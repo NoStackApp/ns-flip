@@ -10,11 +10,11 @@ import {storeAddedCode} from '../codeGeneration/storeAddedCode'
 import {names} from '../constants'
 import {getCodeInfo} from '../constants/getCodeInfo'
 import {getConfiguration} from '../constants/getConfiguration'
-// import {StackInfo} from '../constants/types'
-// import {getAppName} from '../inputs/getAppName'
 import {isRequired} from '../inputs/isRequired'
-// import {failsTests} from '../testing/failsTests'
-import execa = require('execa');
+import {ensureIgnoredExist} from '../testing/ensureIgnoredExist'
+import {mergePackageJsons} from '../testing/mergePackageJsons'
+import execa = require('execa')
+import writePackage = require('write-pkg')
 
 const fs = require('fs-extra')
 
@@ -100,6 +100,10 @@ export default class Generate extends Command {
       // regenerate the code
       await copyCodeBaseToNewDir(starter, codeDir)
       await restoreMetaDir(codeDir)
+      await ensureIgnoredExist(codeDir)
+      const mergedJson: object = await mergePackageJsons(starter, codeDir)
+      // @ts-ignore
+      await writePackage(`${codeDir}/package.json`, mergedJson)
 
       await generateCode(codeDir, nsInfo, config)
 

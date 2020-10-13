@@ -122,3 +122,10 @@ export const links = {
   NS_RULES: `${NS_DOMAIN}/ns-front/`,
   TEST_RESULTS: `${NS_FLIP_NPM}#working-with-test-results`,
 }
+
+export const standardIgnored = [
+  'package.json',
+  '.git',
+  'package-lock.json',
+  'meta',
+]

@@ -6,6 +6,9 @@ import {names} from '../constants'
 import {getCodeInfo} from '../constants/getCodeInfo'
 import {getConfiguration} from '../constants/getConfiguration'
 import {checkDirForDiscrepancies} from './checkDirForDiscrepancies'
+// import {mergePackageJsons} from './mergePackageJsons'
+import {moveOverIgnored} from './moveOverIgnored'
+// import writePackage = require('write-pkg');
 
 const fs = require('fs-extra')
 
@@ -33,6 +36,9 @@ export async function failsTests(codeDir: string) {
   try {
     await fs.remove(testDir)
     await copyCodeBaseToNewDir(starter, testDir)
+    await moveOverIgnored(codeDir)
+    // const mergedJson = await mergePackageJsons(starter, codeDir)
+    // await writePackage(`${testDir}/package.json`, mergedJson)
 
     await generateCode(testDir, nsInfo, config)
 
