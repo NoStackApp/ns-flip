@@ -1,6 +1,6 @@
 {
   "name": "ns-flip",
-  "description": "exchangeable templates: separating custom code from the rest of a stack",
+  "description": "updatable templates: separating custom code from the rest of a stack",
   "version": "1.0.0-0",
   "author": "YizYah @YizYah",
   "bin": {

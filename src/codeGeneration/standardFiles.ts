@@ -1,3 +1,4 @@
+import {standardIgnored} from '../constants'
 import {NsInfo} from '../constants/types/nsInfo'
 import {Schema} from '../constants/types/schema'
 import {contextForStandard} from './contextForStandard'
@@ -38,6 +39,7 @@ ${error}`)
 
   emitter.on('file', async function (fileName: any) {
     const localPath = fileName.replace(standardDir, '')
+    if (localPath in standardIgnored) return
     const newPath = `${appDir}${localPath}`
     const parsed = path.parse(newPath)
     const {ext} = parsed
