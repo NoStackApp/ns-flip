@@ -101,9 +101,15 @@ export default class Generate extends Command {
       await copyCodeBaseToNewDir(starter, codeDir)
       await restoreMetaDir(codeDir)
       await ensureIgnoredExist(codeDir)
+<<<<<<< HEAD
       const mergedJson: object = await mergePackageJsons(starter, codeDir)
       // @ts-ignore
       await writePackage(`${codeDir}/package.json`, mergedJson)
+=======
+      // const mergedJson: object = await mergePackageJsons(starter, codeDir)
+      // // @ts-ignore
+      // await writePackage(`${codeDir}/package.json`, mergedJson)
+>>>>>>> resolvedTSCError
 
       await generateCode(codeDir, nsInfo, config)
 

@@ -1,6 +1,10 @@
 ns-flip
 ========
+<<<<<<< HEAD
 A meta-tool for creating and using *updateable* code templates.  Separates custom code from the rest of a stack.  Framework agnostic.
+=======
+A tool for creating and using *updatable* code templates.  Supports regeneration of code without losing custom changes. Framework agnostic.
+>>>>>>> resolvedTSCError
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/ns-flip.svg)](https://npmjs.org/package/ns-flip)
@@ -10,22 +14,15 @@ A meta-tool for creating and using *updateable* code templates.  Separates custo
 <!-- toc -->
 * [Why](#why)
 * [What](#what)
-* [Limitations](#limitations)
-* [History of the Project](#history-of-the-project)
+* [How](#how)
+* [Plans](#plans)
+* [Contributing](#contributing)
 * [Usage](#usage)
 * [Commands](#commands)
-* [(1) Install npm globally](#1-install-npm-globally)
-* [(2) [optional] Create a base app](#2-optional-create-a-base-app)
-* [usually recommended.  It will speed up recreating your app](#usually-recommended--it-will-speed-up-recreating-your-app)
-* [from scratch or generating other apps with the same template.](#from-scratch-or-generating-other-apps-with-the-same-template)
-* [also, if you want to add changes to a base app that you'd like](#also-if-you-want-to-add-changes-to-a-base-app-that-youd-like)
-* [to reuse (e.g. modify your ns.yml) the changes will be copied](#to-reuse-eg-modify-your-nsyml-the-changes-will-be-copied)
-* [over in step (3).](#over-in-step-3)
-* [(4) make the code.  If you like, you can edit $CODE_DIR/meta/ns.yml as needed before running this step.](#4-make-the-code--if-you-like-you-can-edit-code_dirmetansyml-as-needed-before-running-this-step)
-* [Creating Templates](#creating-templates)
 <!-- tocstop -->
 
 # Why
+<<<<<<< HEAD
 The hard part of software development isn't usually building it, but rather maintaining it.
 
 Any template can generate code quickly.  But usually, the generated code cannot be updated without losing any custom changes. The problem is that custom changes are mixed in with the template-based code as "legacy code".  If the template maintainer updates to a new version, the generated code does not update with it.  Or what if the code developer wants to switch the legacy code a different template?
@@ -44,9 +41,16 @@ ns-flip (short for "No Stack Flip") is CLI for front end templates that can be e
 You can create templates for yourself or others that have regions built in for customized code.  Then users of the template can upgrade easily, or even exchange templates that use the same custom regions, without losing their custom changes.
 
 You can store a template in a repo and distribute it separately, or just use your own privately.  A template must conform to required standards explained below.  Creating a template requires working knowledge of the simple Handlebars language, and not much more.
+=======
+After you generate code with a template or tool, you make changes to the code.  But then usually you can't regenerate it without losing your changes.  So you can't apply an updated template or change to another similar template. Keeping your "legacy code" current becomes an expensive pain.  
 
-A template can generate any combination of three types of files:
+# What
+ns-flip is a CLI to support code templates that can be exchanged as easily as WordPress themes.
+>>>>>>> resolvedTSCError
 
+A template can support three types of files:
+
+<<<<<<< HEAD
 1. standard files (appear in every generated code base)
 2. custom static files (are static, but custom created for each code base)
 3. custom dynamic files (based on queries e.g. components for query results).
@@ -63,15 +67,27 @@ When you use a template to generate code, first you create "starter".  You can u
 * A flexible, hierarchical approach for specifying specific data types needed for a generated dynamic code base. Rather than limiting an app to standard pages (you know, a cookie cutter), a `ns-flip` template relies upon a flexible specification with the units and hierarchies of components that you need in your app.
 * Easy to use: Simple handlebars with a simple standard structure for templates.
 * [Coming Soon] A searchable list for registering templates, so that if you create a template others can find it.
+=======
+1. standard (appear in every generated code base, e.g. 'App.jsx')
+2. custom static (static, but must be custom specified for each code base, e.g. steps in an input stepper)
+3. custom dynamic (based on queries e.g. components showing query results).
 
-# Limitations
-Currently, the languages which work are constrained to those that can use at least one of the comment formats of javascript (that is, `// comment` or `/* comment */`).  That will probably change soon.
+You can create templates with locations designated for custom code.  You can also name regions that can be replaced or removed in the generated code.  Ns-flip stores the custom changes before regenerating and restores them.
 
-# History of the Project
-We created this because we needed it at [NoStack](https:www.nostack.net).  Originally, we created a tool that was specific to our needs.  But then we realized that it would support a lot more people if we made it more generic, at no loss to ourselves.
+# How
+>>>>>>> resolvedTSCError
 
-So, we turned it into a tool that supports any type of template. 
+A template is a directory with requirements explained in the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
+To create code from a template:
+1. Create a "starter" directory by calling [`ns newstarter -t <template> -s <starter>`](#ns-newstarter).  
+2. Create a code base using the starter: [`ns newcode -c <code path> -s <starter>`](#ns-newcode).
+3. The code base will have a `meta` directory with a sample ns file `meta/ns.yml`.  You can modify the ns file to change data types for dynamic files and any static information needed.  After any modifications, regenerate the code using [`ns generate -c <code>`](#ns-generate)
+4. Anyone can add custom code.  But periodically run  [`ns test -c <code>`](#ns-test) to be certain you did it right.  (Otherwise, some of your changes will not be preserved when `ns-generate` is run in the future.)
+
+Whenever you want to run an updated version of the template, create a new starter (as in step 1) and then run `ns generate -c <code>` again.
+
+<<<<<<< HEAD
 Templates that support the [NoStack](https:www.nostack.net) service will extend the power of the template to include autogenerated backends, so that you can throw together and then modify your whole stack with minimal code.  But the `ns-flip` package is generalized to allow for templating of any type of code, independent of no-stack.
  
  So far, we've got [one template](https://github.com/YizYah/basicNsFrontTemplate), and we are pulling together the documentation.
@@ -89,6 +105,25 @@ There are a number of planned improvements to `ns-flip`:
 If you want to help with this project, we'd love to talk to you!  Please [open an issue](https://github.com/https://github.com/NoStackApp/ns-flip/issues/new) and start talking to us!  Or just reach out to info at nostack dot net.
 
 Please see instructions for usage below.
+=======
+See the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
+
+# Plans
+* Add a default test before generating unless `--force` is used
+* Allow sample.custom.json for a starter.  A starter could optionally be a fully customized app.
+* Remove the extra tags in custom delimiters (They are no longer necessary in the current implmentation)
+* Allow the template to specify comment delimiters.  (Currently, the languages must support at least one of the comment formats of javascript (that is, `// comment` or `/* comment */`) or embed them within additional comment delimiters).
+* Templates should contain precise specification of frameworks supported and code sections, so that different templates can be compared for compatibility.  That way, if a project's code base was generated with one template, it could be moved over to other compatible templates.
+* A searchable repository of templates.
+* A new command `ns checkVersion -t <template>` which checks for updates.
+* Commands to simplify creation of templates from sample code.
+* Instructions for using a template added to the `meta` directory.
+* Input fields in `ns.yml` files to accept fields defined in another file. 
+* `ns.yml` interactive generator.
+
+# Contributing
+Please do! [Open an issue](https://github.com/https://github.com/NoStackApp/ns-flip/issues/new) and start talking to us!  Or just reach out to info at nostack dot net.
+>>>>>>> resolvedTSCError
 
 # Usage
 <!-- usage -->
@@ -209,6 +244,7 @@ EXAMPLE
 _See code: [src/commands/test.ts](https://github.com/NoStackApp/ns-flip/blob/v1.0.0-0/src/commands/test.ts)_
 <!-- commandsstop -->
 
+<<<<<<< HEAD
 #Using Templates
 Here is a sample session where a code base is generated from a template for an app.  A lot of these steps should only be done once.
 
@@ -454,4 +490,6 @@ A template is a directory containing the following:
 * An optional `partials` directory containing handebars partials files.  As with `fileTemplates, you can add any number of subdirectories.  NsFront will read in your partials before generating files and you can make reference to them in your template files.
 
 
+=======
+>>>>>>> resolvedTSCError
 [//]: # (add)
