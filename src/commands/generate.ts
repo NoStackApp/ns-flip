@@ -12,9 +12,9 @@ import {getCodeInfo} from '../constants/getCodeInfo'
 import {getConfiguration} from '../constants/getConfiguration'
 import {isRequired} from '../inputs/isRequired'
 import {ensureIgnoredExist} from '../testing/ensureIgnoredExist'
-import {mergePackageJsons} from '../testing/mergePackageJsons'
+// import {mergePackageJsons} from '../testing/mergePackageJsons'
 import execa = require('execa')
-import writePackage = require('write-pkg')
+// import writePackage = require('write-pkg')
 
 const fs = require('fs-extra')
 

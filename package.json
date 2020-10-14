@@ -37,6 +37,7 @@
     "merge-anything": "^3.0.6",
     "pluralize": "^8.0.0",
     "prompts": "^2.3.2",
+    "read-pkg": "^5.2.0",
     "traverse": "^0.6.6",
     "walkdir": "^0.4.1",
     "write-pkg": "^4.0.0"
