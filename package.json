@@ -1,7 +1,7 @@
 {
   "name": "ns-flip",
   "description": "updatable templates: separating custom code from the rest of a stack",
-  "version": "1.0.0-0",
+  "version": "1.0.0",
   "author": "YizYah @YizYah",
   "bin": {
     "ns": "./bin/run"
