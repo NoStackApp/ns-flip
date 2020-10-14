@@ -99,7 +99,7 @@ OPTIONS
   -h, --help             show CLI help
 
 EXAMPLE
-  $ nostack makecode -a ~/temp/myapp
+  $ nd generate -c ~/temp/myapp
 ```
 
 _See code: [src/commands/generate.ts](https://github.com/NoStackApp/ns-flip/blob/v1.0.0-0/src/commands/generate.ts)_
@@ -135,7 +135,7 @@ OPTIONS
   -s, --starterDir=starterDir  starter directory.
 
 EXAMPLE
-  $ nostack newcode -c ~/temp/myapp -s ~/temp/starter
+  $ ns newcode -c ~/temp/myapp -s ~/temp/starter
 ```
 
 _See code: [src/commands/newcode.ts](https://github.com/NoStackApp/ns-flip/blob/v1.0.0-0/src/commands/newcode.ts)_
@@ -154,14 +154,14 @@ OPTIONS
   -t, --templateDir=templateDir  template directory
 
 EXAMPLE
-  $ nostack newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter
+  $ ns newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter
 ```
 
 _See code: [src/commands/newstarter.ts](https://github.com/NoStackApp/ns-flip/blob/v1.0.0-0/src/commands/newstarter.ts)_
 
 ## `ns test`
 
-Confirms that your custom changes have been entered safely, allowing you to generate with an updated or replaced template, or with a changed 'ns.yml' file. For documentation about the rules for custom code placement, please see https://www.nostack.net/ns-front/.
+Confirms that your custom changes have been entered safely, allowing you to generate with an updated or replaced template, or with a changed 'ns.yml' file. For documentation about the rules for custom code placement, please see https://github.com/NoStackApp/ns-flip/wiki/Safe-Custom-Code.
 
 ```
 USAGE
@@ -176,7 +176,7 @@ DESCRIPTION
   If there are differences, then there is a problem with your code.
 
 EXAMPLE
-  $ nsfront test -c ~/temp/myApp
+  $ ns test -c ~/temp/myApp
 ```
 
 _See code: [src/commands/test.ts](https://github.com/NoStackApp/ns-flip/blob/v1.0.0-0/src/commands/test.ts)_
