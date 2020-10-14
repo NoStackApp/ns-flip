@@ -17,7 +17,7 @@ export default class Newcode extends Command {
   }
 
   static examples = [
-    '$ nostack newcode -c ~/temp/myapp -s ~/temp/starter',
+    '$ ns newcode -c ~/temp/myapp -s ~/temp/starter',
   ]
   // static args = [{name: 'file'}]
 

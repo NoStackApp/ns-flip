@@ -7,7 +7,7 @@ import {logEntry} from '../testing/logEntry'
 const descriptionString = 'Confirms that your custom changes have been entered safely, ' +
   `allowing you to generate with an updated or replaced template, or with a changed '${names.NS_FILE}' file. ` +
   'For documentation about the rules for custom code placement, ' +
-  'please see https://www.nostack.net/ns-front/.\n' +
+  'please see https://github.com/NoStackApp/ns-flip/wiki/Safe-Custom-Code.\n' +
   '\n' +
   'Essentially, the test generates a new version of the code ' +
   'and then simply compares it against your current version.  ' +
@@ -17,7 +17,7 @@ export default class Test extends Command {
   static description = String(descriptionString)
 
   static examples = [
-    '$ nsfront test -c ~/temp/myApp',
+    '$ ns test -c ~/temp/myApp',
   ];
 
   static flags = {
@@ -37,7 +37,7 @@ export default class Test extends Command {
     }
 
     const {flags} = this.parse(Test)
-    const codeDir = flags.codeDir || isRequired('appDir', 'makecode', 'a')
+    const codeDir = flags.codeDir || isRequired('appDir', 'test', 'c')
 
     const testDir = `${codeDir}${names.TEST_DIR_SUFFIX}`
     const testMetaDir = `${testDir}/${names.META_DIR}`

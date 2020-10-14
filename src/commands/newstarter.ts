@@ -17,7 +17,7 @@ export default class Newstarter extends Command {
   }
 
   static examples = [
-    '$ nostack newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter',
+    '$ ns newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter',
   ]
   // static args = [{name: 'file'}]
 

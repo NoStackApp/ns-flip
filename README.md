@@ -161,7 +161,7 @@ _See code: [src/commands/newstarter.ts](https://github.com/NoStackApp/ns-flip/bl
 
 ## `ns test`
 
-Confirms that your custom changes have been entered safely, allowing you to generate with an updated or replaced template, or with a changed 'ns.yml' file. For documentation about the rules for custom code placement, please see https://www.nostack.net/ns-flip/.
+Confirms that your custom changes have been entered safely, allowing you to generate with an updated or replaced template, or with a changed 'ns.yml' file. For documentation about the rules for custom code placement, please see https://www.nostack.net/ns-front/.
 
 ```
 USAGE

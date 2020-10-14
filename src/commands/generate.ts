@@ -46,7 +46,7 @@ export default class Generate extends Command {
     ' The code directory must have been created for the first time using `newcode`.'
 
   static examples = [
-    '$ nostack makecode -a ~/temp/myapp',
+    '$ nd generate -c ~/temp/myapp',
   ]
 
   static flags = {
