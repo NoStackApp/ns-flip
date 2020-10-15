@@ -6,7 +6,7 @@ A tool for creating and using *updatable* code templates.  Supports regeneration
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/ns-flip.svg)](https://npmjs.org/package/ns-flip)
 [![Downloads/week](https://img.shields.io/npm/dw/ns-flip.svg)](https://npmjs.org/package/ns-flip)
-[![License](https://img.shields.io/npm/l/ns-flip.svg)](https://github.com/https://github.com/NoStackApp/ns-flip/blob/master/package.json)
+[![License](https://img.shields.io/npm/l/ns-flip.svg)](https://github.com/NoStackApp/ns-flip/blob/master/package.json)
 
 <!-- toc -->
 * [Why](#why)
@@ -61,7 +61,7 @@ See the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [
 * `ns.yml` interactive generator.
 
 # Contributing
-Please do! [Open an issue](https://github.com/https://github.com/NoStackApp/ns-flip/issues/new) and start talking to us!  Or just reach out to info at nostack dot net.
+Please do! [Open an issue](https://github.com/NoStackApp/ns-flip/issues/new) and start talking to us!  Or just reach out to info at nostack dot net.
 
 # Usage
 <!-- usage -->
@@ -181,6 +181,3 @@ EXAMPLE
 
 _See code: [src/commands/test.ts](https://github.com/NoStackApp/ns-flip/blob/v1.0.1/src/commands/test.ts)_
 <!-- commandsstop -->
-
-
-[//]: # (add)
