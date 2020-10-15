@@ -18,7 +18,7 @@
     "versions",
     "versioning"
   ],
-  "bugs": "https://github.com/https://github.com/NoStackApp/ns-flip/issues",
+  "bugs": "https://github.com/NoStackApp/ns-flip/issues",
   "dependencies": {
     "@mrmlnc/readdir-enhanced": "^2.2.1",
     "@oclif/command": "^1.8.0",
@@ -68,7 +68,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/https://github.com/NoStackApp/ns-flip",
+  "homepage": "https://github.com/NoStackApp/ns-flip",
   "license": "MIT",
   "main": "lib/index.js",
   "oclif": {
