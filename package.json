@@ -1,6 +1,6 @@
 {
   "name": "ns-flip",
-  "description": "updatable templates: build and use them.  The custom code is preserved when reapplied",
+  "description": "build and use updatable templates: can be reapplied to code losing custom changes to files",
   "version": "1.2.0",
   "author": "YizYah @YizYah",
   "bin": {
