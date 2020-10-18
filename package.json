@@ -1,7 +1,7 @@
 {
   "name": "ns-flip",
   "description": "updatable templates: reapply templates and preserve custom code in the same files",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "author": "YizYah @YizYah",
   "bin": {
     "ns": "./bin/run"
