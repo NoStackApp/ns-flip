@@ -220,10 +220,15 @@ export interface StaticFileTypesSpecList {
   [fileType: string]: StaticFileTypeSpec;
 }
 
+export interface FormatSpec {
+  codeFileFilter: string;
+}
+
 export interface Configuration {
   name: string;
   version: string;
   category: string;
+  format: FormatSpec;
   componentTypes: ComponentTypes;
   dataFunctionTypes: DataFunctionTypes;
   dirs: ConfigurationDirectories;
