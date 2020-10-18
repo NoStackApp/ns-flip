@@ -115,7 +115,7 @@ async function storeCustomCodeRegions(
   customCodeFile: string,
   config: Configuration
 ) {
-  const fileNameFormat = config.format.codeFileFilter
+  const fileNameFormat = config.format.customFileFilter
   const {custom} = config.dirs
   const exludeModules = `node_modules/**/${fileNameFormat}`
   const general = `${rootDir}/**/${fileNameFormat}`

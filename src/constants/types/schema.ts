@@ -221,7 +221,7 @@ export interface StaticFileTypesSpecList {
 }
 
 export interface FormatSpec {
-  codeFileFilter: string;
+  customFileFilter: string;
 }
 
 export interface Configuration {
