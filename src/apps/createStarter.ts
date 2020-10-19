@@ -3,6 +3,7 @@ import {dirOptions} from '../constants/dirOptions'
 import {getCodeInfo} from '../constants/getCodeInfo'
 import {getConfiguration} from '../constants/getConfiguration'
 import {CustomCodeRepository} from '../constants/types/custom'
+import {NsInfo} from '../constants/types/nsInfo'
 import {CommandSpec, Configuration} from '../constants/types/schema'
 
 import {errorMessage} from '../constants/errorMessage'
@@ -19,9 +20,16 @@ function convertCommandArgs(args: string[]|undefined, appDir: string) {
   if (!args) return
   // const output = args.map((arg: string) => arg.replace('$appDir', appDir)).push(`>> ${LOGFILE}`)
   const output = args.map((arg: string) => arg.replace('$appDir', appDir))
-  output.push(`>> ${LOGFILE}`)
+  // output.push(`>> ${LOGFILE}`)
   return output
 }
+
+// function emptyNsInfo() {
+//   const nsInfo: NsInfo = {
+//     codeName: '',
+//   }
+//   return nsInfo
+// }
 
 export async function createStarter(
   starterDir: string,
@@ -123,7 +131,9 @@ Here is the error reported:\n${error}`)
         const metaDir = `${starterDir}/${names.META_DIR}`
         const nsYml = `${metaDir}/${names.NS_FILE}`
         const customCode = `${metaDir}/${names.CUSTOM_CODE_FILE}`
-        const appInfo = await getCodeInfo(`${templateDir}/sample.${names.NS_FILE}`)
+        let appInfo = await getCodeInfo(`${templateDir}/sample.${names.NS_FILE}`)
+        if (!appInfo)
+          appInfo = x
         appInfo.starter = starterDir
         const customCodeRepository: CustomCodeRepository = {
           addedCode: {},
