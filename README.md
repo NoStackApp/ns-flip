@@ -70,7 +70,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/1.3.5 linux-x64 node-v14.9.0
+ns-flip/1.3.6 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -102,7 +102,7 @@ EXAMPLE
   $ nd generate -c ~/temp/myapp
 ```
 
-_See code: [src/commands/generate.ts](https://github.com/NoStackApp/ns-flip/blob/v1.3.5/src/commands/generate.ts)_
+_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.6/lib/commands/generate.js)_
 
 ## `ns help [COMMAND]`
 
@@ -138,7 +138,7 @@ EXAMPLE
   $ ns newcode -c ~/temp/myapp -s ~/temp/starter
 ```
 
-_See code: [src/commands/newcode.ts](https://github.com/NoStackApp/ns-flip/blob/v1.3.5/src/commands/newcode.ts)_
+_See code: [lib/commands/newcode.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.6/lib/commands/newcode.js)_
 
 ## `ns newstarter`
 
@@ -157,7 +157,7 @@ EXAMPLE
   $ ns newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter
 ```
 
-_See code: [src/commands/newstarter.ts](https://github.com/NoStackApp/ns-flip/blob/v1.3.5/src/commands/newstarter.ts)_
+_See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.6/lib/commands/newstarter.js)_
 
 ## `ns test`
 
@@ -179,5 +179,5 @@ EXAMPLE
   $ ns test -c ~/temp/myApp
 ```
 
-_See code: [src/commands/test.ts](https://github.com/NoStackApp/ns-flip/blob/v1.3.5/src/commands/test.ts)_
+_See code: [lib/commands/test.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.6/lib/commands/test.js)_
 <!-- commandsstop -->
