@@ -65,6 +65,7 @@
     "/bin",
     "/lib",
     "/resources",
+    "tsconfig.json",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
