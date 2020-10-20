@@ -39,6 +39,8 @@
     "prompts": "^2.3.2",
     "read-pkg": "^5.2.0",
     "traverse": "^0.6.6",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7",
     "walkdir": "^0.4.1",
     "write-pkg": "^4.0.0"
   },
@@ -54,9 +56,7 @@
     "eslint-config-oclif-typescript": "^0.1.0",
     "globby": "^10.0.2",
     "mocha": "^7.1.2",
-    "nyc": "^14.1.1",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.7"
+    "nyc": "^14.1.1"
   },
   "engines": {
     "node": ">=9.0.0"
