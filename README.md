@@ -50,7 +50,7 @@ See the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [
 # Plans
 * Add a default test before generating unless `--force` is used
 * Allow sample.custom.json for a starter.  A starter could optionally be a fully customized app.
-* Remove the extra tags in custom delimiters (They are no longer necessary in the current implmentation)
+* Remove the extra tags in custom delimiters (They are no longer necessary in the current implementation)
 * Allow the template to specify comment delimiters.  (Currently, the languages must support at least one of the comment formats of javascript (that is, `// comment` or `/* comment */`) or embed them within additional comment delimiters).
 * Templates should contain precise specification of frameworks supported and code sections, so that different templates can be compared for compatibility.  That way, if a project's code base was generated with one template, it could be moved over to other compatible templates.
 * A searchable repository of templates.
