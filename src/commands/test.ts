@@ -4,6 +4,9 @@ import {isRequired} from '../isRequired'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
 
+const updateNotifier = require('update-notifier')
+const pkg = require('../../package.json')
+
 const descriptionString = 'Confirms that your custom changes have been entered safely, ' +
   `allowing you to generate with an updated or replaced template, or with a changed '${names.NS_FILE}' file. ` +
   'For documentation about the rules for custom code placement, ' +
@@ -29,6 +32,8 @@ export default class Test extends Command {
   static args = [];
 
   async run() {
+    updateNotifier({pkg}).notify()
+
     // npm version 8 has a known bug with fs-extra...
     const nodeRelease = parseFloat(process.versions.node)
     if (nodeRelease < 9) {
