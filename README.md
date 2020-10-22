@@ -38,7 +38,7 @@ A _template_ is a directory with requirements explained in the [documentation](h
 ![ns-flip-commands](.github/ns-flip-commands.png)
 
 To create code from a template:
-1. Create a "starter" directory by calling [`ns newstarter -t <template> -s <starter>`](#ns-newstarter).  
+1. Create a _starter_ directory by calling [`ns newstarter -t <template> -s <starter>`](#ns-newstarter).  
 2. Create a code base using the starter: [`ns newcode -c <code path> -s <starter>`](#ns-newcode).
 3. The code base will have a `meta` directory with a sample ns file `meta/ns.yml`.  You can modify the ns file to change data types for dynamic files and any static information needed.  After any modifications, regenerate the code using [`ns regenerate -c <code>`](#ns regenerate)
 4. Anyone can add custom code.  But periodically run  [`ns test -c <code>`](#ns-test) to be certain you did it right.  (Otherwise, some of your changes will not be preserved when `ns regenerate` is run in the future.)
