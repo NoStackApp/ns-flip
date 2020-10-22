@@ -6,7 +6,6 @@ import {insertAddedCode} from '../codeGeneration/insertAddedCode'
 import {storeAddedCode} from '../codeGeneration/storeAddedCode'
 import {names} from '../constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {checkNodeVersion} from '../shared/checkNodeVersion'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
 import {isRequired} from '../inputs/isRequired'
@@ -68,7 +67,6 @@ export default class Regenerate extends Command {
       'You need a starter to generate code.')
 
     try {
-      checkNodeVersion()
       checkForUpdates()
 
       // // for now, this is removed.

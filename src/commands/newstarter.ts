@@ -3,7 +3,6 @@ import {Command, flags} from '@oclif/command'
 import {createStarter} from '../apps/createStarter'
 import {isRequired} from '../inputs/isRequired'
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {checkNodeVersion} from '../shared/checkNodeVersion'
 
 function isRequiredForNewStarter(paramName: string, flag: string) {
   return isRequired(paramName, 'newstarter', flag)
@@ -24,7 +23,6 @@ export default class Newstarter extends Command {
   // static args = [{name: 'file'}]
 
   async run() {
-    checkNodeVersion()
     checkForUpdates()
 
     const {flags} = this.parse(Newstarter)

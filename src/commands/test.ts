@@ -1,7 +1,6 @@
 import {Command, flags} from '@oclif/command'
 import {links, names} from '../constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {checkNodeVersion} from '../shared/checkNodeVersion'
 import {isRequired} from '../shared/isRequired'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
@@ -31,7 +30,6 @@ export default class Test extends Command {
   static args = [];
 
   async run() {
-    checkNodeVersion()
     checkForUpdates()
 
     const {flags} = this.parse(Test)
