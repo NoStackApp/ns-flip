@@ -13,7 +13,7 @@ A tool for creating and using *updatable* code templates.  Supports regeneration
 * [What](#what)
 * [How](#how)
 * [Plans](#plans)
-* [Contributing](#contributing)
+* [Help](#help)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
@@ -34,16 +34,17 @@ A template can support three types of files:
 You can create templates with locations designated for custom code.  You can also name regions that can be replaced or removed in the generated code.  Ns-flip stores the custom changes before regenerating and restores them.
 
 # How
+![ns-flip-commands](.github/ns-flip-commands.png)
 
 A template is a directory with requirements explained in the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
 To create code from a template:
 1. Create a "starter" directory by calling [`ns newstarter -t <template> -s <starter>`](#ns-newstarter).  
 2. Create a code base using the starter: [`ns newcode -c <code path> -s <starter>`](#ns-newcode).
-3. The code base will have a `meta` directory with a sample ns file `meta/ns.yml`.  You can modify the ns file to change data types for dynamic files and any static information needed.  After any modifications, regenerate the code using [`ns generate -c <code>`](#ns-generate)
-4. Anyone can add custom code.  But periodically run  [`ns test -c <code>`](#ns-test) to be certain you did it right.  (Otherwise, some of your changes will not be preserved when `ns-generate` is run in the future.)
+3. The code base will have a `meta` directory with a sample ns file `meta/ns.yml`.  You can modify the ns file to change data types for dynamic files and any static information needed.  After any modifications, regenerate the code using [`ns regenerate -c <code>`](#ns regenerate)
+4. Anyone can add custom code.  But periodically run  [`ns test -c <code>`](#ns-test) to be certain you did it right.  (Otherwise, some of your changes will not be preserved when `ns regenerate` is run in the future.)
 
-Whenever you want to run an updated version of the template, create a new starter (as in step 1) and then run `ns generate -c <code>` again.
+Whenever you want to run an updated version of the template, create a new starter (as in step 1) and then run `ns regenerate -c <code>` again.
 
 See the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
 
@@ -60,7 +61,7 @@ See the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [
 * Input fields in `ns.yml` files to accept fields defined in another file. 
 * `ns.yml` interactive generator.
 
-# Contributing
+# Help
 Please do! [Open an issue](https://github.com/NoStackApp/ns-flip/issues/new) and start talking to us! Or just reach out to info at nostack dot net ☺.
 
 # Usage
@@ -80,29 +81,11 @@ USAGE
 
 # Commands
 <!-- commands -->
-* [`ns generate`](#ns-generate)
 * [`ns help [COMMAND]`](#ns-help-command)
 * [`ns newcode`](#ns-newcode)
 * [`ns newstarter`](#ns-newstarter)
+* [`ns regenerate`](#ns-regenerate)
 * [`ns test`](#ns-test)
-
-## `ns generate`
-
-generates (or regenerates) code based on a meta file `ns.yml`, preserving custom changes. The code directory must have been created for the first time using `newcode`.
-
-```
-USAGE
-  $ ns generate
-
-OPTIONS
-  -c, --codeDir=codeDir  code directory
-  -h, --help             show CLI help
-
-EXAMPLE
-  $ nd generate -c ~/temp/myapp
-```
-
-_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.6/lib/commands/generate.js)_
 
 ## `ns help [COMMAND]`
 
@@ -158,6 +141,24 @@ EXAMPLE
 ```
 
 _See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.6/lib/commands/newstarter.js)_
+
+## `ns regenerate`
+
+regenerates code based on a meta file `ns.yml`, custom changes, and a starter. The code directory must have been created for the first time using `newcode`.
+
+```
+USAGE
+  $ ns regenerate
+
+OPTIONS
+  -c, --codeDir=codeDir  code directory
+  -h, --help             show CLI help
+
+EXAMPLE
+  $ nd regenerate -c ~/temp/myapp
+```
+
+_See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.6/lib/commands/regenerate.js)_
 
 ## `ns test`
 
