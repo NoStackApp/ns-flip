@@ -1,6 +1,3 @@
-// const errorEx = require('error-ex')
-// const fs = require('fs-extra')
-
 import {Command, flags} from '@oclif/command'
 import {copyCodeBaseToNewDir} from '../codeGeneration/copyCodeBaseToNewDir'
 
@@ -8,17 +5,15 @@ import {generateCode} from '../codeGeneration/generateCode'
 import {insertAddedCode} from '../codeGeneration/insertAddedCode'
 import {storeAddedCode} from '../codeGeneration/storeAddedCode'
 import {names} from '../constants'
-import {getCodeInfo} from '../constants/getCodeInfo'
-import {getConfiguration} from '../constants/getConfiguration'
+import {checkForUpdates} from '../shared/checkForUpdates'
+import {checkNodeVersion} from '../shared/checkNodeVersion'
+import {getCodeInfo} from '../shared/getCodeInfo'
+import {getConfiguration} from '../shared/getConfiguration'
 import {isRequired} from '../inputs/isRequired'
 import {ensureIgnoredExist} from '../testing/ensureIgnoredExist'
-// import {mergePackageJsons} from '../testing/mergePackageJsons'
 import execa = require('execa')
-// import writePackage = require('write-pkg')
 
 const fs = require('fs-extra')
-
-// export const NoNameError = errorEx('noNameError')
 
 async function restoreMetaDir(codeDir: string) {
   const backupDir = `${codeDir}${names.BACKUP_DIR_SUFFIX}`
@@ -57,13 +52,6 @@ export default class Regenerate extends Command {
   static args = []
 
   async run() {
-    // npm version 8 has a known bug with fs-extra...
-    const nodeRelease = parseFloat(process.versions.node)
-    if (nodeRelease < 9) {
-      throw new Error(`Minimum required node version to run ns-front is 9.
-        You are currently running node ${process.version}`)
-    }
-
     const {flags} = this.parse(Regenerate)
 
     const codeDir = flags.codeDir || isRequiredForRegenerate('codeDir', 'c')
@@ -80,6 +68,9 @@ export default class Regenerate extends Command {
       'You need a starter to generate code.')
 
     try {
+      checkNodeVersion()
+      checkForUpdates()
+
       // // for now, this is removed.
       // const problemsFound = await failsTests(codeDir)
       // if (problemsFound)

@@ -6,7 +6,7 @@ import {
   pluralLowercaseName,
   pluralName,
   singularName,
-} from '../tools/inflections'
+} from '../shared/inflections'
 
 const Handlebars = require('handlebars')
 

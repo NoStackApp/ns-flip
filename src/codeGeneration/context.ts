@@ -8,7 +8,7 @@ import {
   queryForSource,
   relationshipsForSource,
   singularName,
-} from '../tools/inflections'
+} from '../shared/inflections'
 import {componentName} from './typeFiles/componentName'
 
 const Handlebars = require('handlebars')

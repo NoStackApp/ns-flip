@@ -1,4 +1,4 @@
-import {NsInfo} from './types/nsInfo'
+import {NsInfo} from '../constants/types/nsInfo'
 
 const fs = require('fs-extra')
 const yaml = require('js-yaml')

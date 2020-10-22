@@ -1,11 +1,10 @@
 import {Command, flags} from '@oclif/command'
 import {links, names} from '../constants'
-import {isRequired} from '../isRequired'
+import {checkForUpdates} from '../shared/checkForUpdates'
+import {checkNodeVersion} from '../shared/checkNodeVersion'
+import {isRequired} from '../shared/isRequired'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
-
-const updateNotifier = require('update-notifier')
-const pkg = require('../../package.json')
 
 const descriptionString = 'Confirms that your custom changes have been entered safely, ' +
   `allowing you to generate with an updated or replaced template, or with a changed '${names.NS_FILE}' file. ` +
@@ -32,14 +31,8 @@ export default class Test extends Command {
   static args = [];
 
   async run() {
-    updateNotifier({pkg}).notify()
-
-    // npm version 8 has a known bug with fs-extra...
-    const nodeRelease = parseFloat(process.versions.node)
-    if (nodeRelease < 9) {
-      throw new Error(`Minimum required node version to run ns-front is 9.
-        You are currently running node ${process.version}`)
-    }
+    checkNodeVersion()
+    checkForUpdates()
 
     const {flags} = this.parse(Test)
     const codeDir = flags.codeDir || isRequired('appDir', 'test', 'c')

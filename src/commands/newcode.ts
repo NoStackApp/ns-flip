@@ -2,6 +2,8 @@ import {Command, flags} from '@oclif/command'
 import {createCode} from '../apps/createCode'
 
 import {isRequired} from '../inputs/isRequired'
+import {checkForUpdates} from '../shared/checkForUpdates'
+import {checkNodeVersion} from '../shared/checkNodeVersion'
 
 function isRequiredForNewCode(paramName: string, flag: string) {
   return isRequired(paramName, 'newapp', flag)
@@ -22,6 +24,9 @@ export default class Newcode extends Command {
   // static args = [{name: 'file'}]
 
   async run() {
+    checkNodeVersion()
+    checkForUpdates()
+
     const {flags} = this.parse(Newcode)
     const codeDir = flags.codeDir || ''
     if (codeDir.length === 0) isRequiredForNewCode('codeDir', '-c')

@@ -1,7 +1,11 @@
 #ns-flip
 A tool for creating and using *updatable* code templates.  Supports regeneration of code without losing custom changes. Framework agnostic.
 
-
+<a href="https://spectrum.chat/ns-flip">
+    <img alt="Join our new community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg">
+  </a>
+  
+  
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/ns-flip.svg)](https://npmjs.org/package/ns-flip)
 [![Downloads/week](https://img.shields.io/npm/dw/ns-flip.svg)](https://npmjs.org/package/ns-flip)
@@ -45,23 +49,10 @@ To create code from a template:
 
 Whenever you want to run an updated version of the template, create a new starter (as in step 1) and then run `ns regenerate -c <code>` again.
 
-See the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
-
-# Plans
-* Add a default test before generating unless `--force` is used
-* Allow sample.custom.json for a starter.  A starter could optionally be a fully customized app.
-* Remove the extra tags in custom delimiters (They are no longer necessary in the current implementation)
-* Allow the template to specify comment delimiters.  (Currently, the languages must support at least one of the comment formats of javascript (that is, `// comment` or `/* comment */`) or embed them within additional comment delimiters).
-* Templates should contain precise specification of frameworks supported and code sections, so that different templates can be compared for compatibility.  That way, if a project's code base was generated with one template, it could be moved over to other compatible templates.
-* A searchable repository of templates.
-* A new command `ns checkVersion -t <template>` which checks for updates.
-* Commands to simplify creation of templates from sample code.
-* Instructions for using a template added to the `meta` directory.
-* Input fields in `ns.yml` files to accept fields defined in another file. 
-* `ns.yml` interactive generator.
+See the [full documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
 
 # Help
-Please do! [Open an issue](https://github.com/NoStackApp/ns-flip/issues/new) and start talking to us! Or just reach out to info at nostack dot net ☺.
+Please [give feedback](https://spectrum.chat/ns-flip) or  [open an issue](https://github.com/NoStackApp/ns-flip/issues/new)!
 
 # Usage
 <!-- usage -->
