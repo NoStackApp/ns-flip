@@ -36,17 +36,17 @@ async function restoreMetaDir(codeDir: string) {
   )
 }
 
-function isRequiredForGenerate(paramName: string, flag: string) {
-  return isRequired(paramName, 'generate', flag)
+function isRequiredForRegenerate(paramName: string, flag: string) {
+  return isRequired(paramName, 'regenerate', flag)
 }
 
-export default class Generate extends Command {
-  static description = 'generates (or regenerates) code based on a meta file `ns.yml`,' +
-    ' preserving custom changes.' +
+export default class Regenerate extends Command {
+  static description = 'regenerates code based on a meta file `ns.yml`,' +
+    ' custom changes, and a starter.' +
     ' The code directory must have been created for the first time using `newcode`.'
 
   static examples = [
-    '$ nd generate -c ~/temp/myapp',
+    '$ nd regenerate -c ~/temp/myapp',
   ]
 
   static flags = {
@@ -64,9 +64,9 @@ export default class Generate extends Command {
         You are currently running node ${process.version}`)
     }
 
-    const {flags} = this.parse(Generate)
+    const {flags} = this.parse(Regenerate)
 
-    const codeDir = flags.codeDir || isRequiredForGenerate('codeDir', 'c')
+    const codeDir = flags.codeDir || isRequiredForRegenerate('codeDir', 'c')
 
     const metaDir = `${codeDir}/${names.META_DIR}`
     const nsYml = `${metaDir}/${names.NS_FILE}`
@@ -85,8 +85,8 @@ export default class Generate extends Command {
       // if (problemsFound)
       //   throw new Error('generation is not possible right now, because at least one test ' +
       //     'of the code base is failing.  That means that generating will remove custom' +
-      //     'changes.  Please run \'test\' for more information.  If you want to generate' +
-      //     'even though changes will be lost, you may run \'generate\' with the \'--force\'' +
+      //     'changes.  Please run \'test\' for more information.  If you want to regenerate' +
+      //     'even though changes will be lost, you may run \'regenerate\' with the \'--force\'' +
       //     'flag.  (Usually not recommended)')
 
       // store added code before generating new code.
