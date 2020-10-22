@@ -20,10 +20,8 @@
   ],
   "bugs": "https://github.com/NoStackApp/ns-flip/issues",
   "dependencies": {
-    "@mrmlnc/readdir-enhanced": "^2.2.1",
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
-    "@oclif/plugin-help": "^3.2.0",
     "arr-diff": "^4.0.0",
     "chalk": "^4.1.0",
     "execa": "^4.0.3",
@@ -34,15 +32,13 @@
     "jsonfile": "^6.0.1",
     "just-handlebars-helpers": "^1.0.18",
     "listr": "^0.14.3",
-    "merge-anything": "^3.0.6",
     "pluralize": "^8.0.0",
     "prompts": "^2.3.2",
     "read-pkg": "^5.2.0",
     "traverse": "^0.6.6",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7",
-    "walkdir": "^0.4.1",
-    "write-pkg": "^4.0.0"
+    "walkdir": "^0.4.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",

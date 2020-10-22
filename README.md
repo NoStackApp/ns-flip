@@ -61,7 +61,7 @@ See the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [
 * `ns.yml` interactive generator.
 
 # Contributing
-Please do! [Open an issue](https://github.com/NoStackApp/ns-flip/issues/new) and start talking to us!  Or just reach out to info at nostack dot net.
+Please do! [Open an issue](https://github.com/NoStackApp/ns-flip/issues/new) and start talking to us! Or just reach out to info at nostack dot net ☺.
 
 # Usage
 <!-- usage -->
