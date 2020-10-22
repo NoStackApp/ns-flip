@@ -24,6 +24,7 @@
     "@oclif/config": "^1.17.0",
     "arr-diff": "^4.0.0",
     "chalk": "^4.1.0",
+    "currencyformatter.js": "^1.0.4",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "handlebars": "^4.7.6",
@@ -32,12 +33,15 @@
     "jsonfile": "^6.0.1",
     "just-handlebars-helpers": "^1.0.18",
     "listr": "^0.14.3",
+    "moment": "^2.22.0",
     "pluralize": "^8.0.0",
     "prompts": "^2.3.2",
     "read-pkg": "^5.2.0",
+    "sprintf-js": "^1.1.1",
     "traverse": "^0.6.6",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7",
+    "update-notifier": "^5.0.0",
     "walkdir": "^0.4.1"
   },
   "devDependencies": {

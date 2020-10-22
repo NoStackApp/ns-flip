@@ -1,5 +1,4 @@
-ns-flip
-========
+#ns-flip
 A tool for creating and using *updatable* code templates.  Supports regeneration of code without losing custom changes. Framework agnostic.
 
 
@@ -34,9 +33,9 @@ A template can support three types of files:
 You can create templates with locations designated for custom code.  You can also name regions that can be replaced or removed in the generated code.  Ns-flip stores the custom changes before regenerating and restores them.
 
 # How
-![ns-flip-commands](.github/ns-flip-commands.png)
+A _template_ is a directory with requirements explained in the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
-A template is a directory with requirements explained in the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
+![ns-flip-commands](.github/ns-flip-commands.png)
 
 To create code from a template:
 1. Create a "starter" directory by calling [`ns newstarter -t <template> -s <starter>`](#ns-newstarter).  
