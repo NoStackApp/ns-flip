@@ -14,7 +14,7 @@ import {
   FileCustomCode,
 } from '../constants/types/custom'
 import {regExAddedCodeSection} from '../constants/Regex/regExAddedCodeSection'
-import {singularName} from '../tools/inflections'
+import {singularName} from '../shared/inflections'
 
 const fs = require('fs-extra')
 

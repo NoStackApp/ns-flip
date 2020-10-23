@@ -1,5 +1,5 @@
 import {getAppDir} from '../inputs/getAppDir'
-import {errorMessage} from '../constants/errorMessage'
+import {errorMessage} from '../shared/errorMessage'
 
 const chalk = require('chalk')
 const execa = require('execa')

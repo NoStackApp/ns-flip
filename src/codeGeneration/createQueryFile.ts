@@ -1,7 +1,7 @@
 // const fs = require('fs-extra')
 //
 // import {AppInfo, StackInfo} from '../constants/types'
-// import {allCaps} from '../tools/inflections'
+// import {allCaps} from '../shared/inflections'
 // import {loadFileTemplate} from './loadFileTemplate'
 //
 // const Handlebars = require('handlebars')

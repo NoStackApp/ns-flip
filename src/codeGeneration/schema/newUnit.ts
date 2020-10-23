@@ -4,7 +4,7 @@ import {Schema, SpecNameInfo, Configuration} from '../../constants/types/schema'
 
 const traverse = require('traverse')
 
-import {allCaps} from '../../tools/inflections'
+import {allCaps} from '../../shared/inflections'
 import {newType} from './newType'
 // const pluralize = require('pluralize');
 import {parseSpecName} from '../../constants/parseSpecName'

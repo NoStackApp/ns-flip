@@ -1,5 +1,5 @@
 import {ComponentTypeSpec} from '../../constants/types/schema'
-import {pluralName, singularName} from '../../tools/inflections'
+import {pluralName, singularName} from '../../shared/inflections'
 
 export const componentName = (
   type: string,

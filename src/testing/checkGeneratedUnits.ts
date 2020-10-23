@@ -1,5 +1,5 @@
 import {checkDirForDiscrepancies} from '../testing/checkDirForDiscrepancies'
-import {singularName} from '../tools/inflections'
+import {singularName} from '../shared/inflections'
 
 export async function checkGeneratedUnits(
   units: string[],

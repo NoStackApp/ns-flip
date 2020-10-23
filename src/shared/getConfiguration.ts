@@ -1,4 +1,4 @@
-import {Configuration} from './types/schema'
+import {Configuration} from '../constants/types/schema'
 
 const fs = require('fs-extra')
 const yaml = require('js-yaml')

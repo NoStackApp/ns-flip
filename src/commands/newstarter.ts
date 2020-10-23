@@ -2,6 +2,7 @@ import {Command, flags} from '@oclif/command'
 
 import {createStarter} from '../apps/createStarter'
 import {isRequired} from '../inputs/isRequired'
+import {checkForUpdates} from '../shared/checkForUpdates'
 
 function isRequiredForNewStarter(paramName: string, flag: string) {
   return isRequired(paramName, 'newstarter', flag)
@@ -22,6 +23,8 @@ export default class Newstarter extends Command {
   // static args = [{name: 'file'}]
 
   async run() {
+    checkForUpdates()
+
     const {flags} = this.parse(Newstarter)
     const starterDir = flags.starterDir || ''
     if (starterDir.length === 0) isRequiredForNewStarter('starterDir', '-s')

@@ -1,11 +1,11 @@
 import {names} from '../constants'
-import {dirOptions} from '../constants/dirOptions'
-import {getCodeInfo} from '../constants/getCodeInfo'
-import {getConfiguration} from '../constants/getConfiguration'
+import {dirOptions} from '../shared/dirOptions'
+import {getCodeInfo} from '../shared/getCodeInfo'
+import {getConfiguration} from '../shared/getConfiguration'
 import {CustomCodeRepository} from '../constants/types/custom'
 import {CommandSpec, Configuration} from '../constants/types/schema'
 
-import {errorMessage} from '../constants/errorMessage'
+import {errorMessage} from '../shared/errorMessage'
 
 const chalk = require('chalk')
 const execa = require('execa')

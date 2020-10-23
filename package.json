@@ -69,7 +69,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/NoStackApp/ns-flip",
+  "homepage": "https://spectrum.chat/ns-flip",
   "license": "MIT",
   "main": "lib/index.js",
   "oclif": {

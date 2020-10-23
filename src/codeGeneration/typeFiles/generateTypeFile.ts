@@ -3,7 +3,7 @@
 import {BoilerPlateInfoType} from '../../constants'
 import {NsInfo} from '../../constants/types/nsInfo'
 import {Configuration, Schema} from '../../constants/types/schema'
-import {singularName} from '../../tools/inflections'
+import {singularName} from '../../shared/inflections'
 import {context} from '../context'
 import {loadFileTemplate} from '../loadFileTemplate'
 import {makeDirs} from '../makeDirs'
