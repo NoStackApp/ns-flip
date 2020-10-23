@@ -15,7 +15,6 @@ A tool for creating and using *updatable* code templates.  Supports regeneration
 * [Why](#why)
 * [What](#what)
 * [How](#how)
-* [Plans](#plans)
 * [Help](#help)
 * [Usage](#usage)
 * [Commands](#commands)
@@ -61,7 +60,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/1.3.9 linux-x64 node-v14.9.0
+ns-flip/1.3.10 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -111,8 +110,6 @@ EXAMPLE
   $ ns newcode -c ~/temp/myapp -s ~/temp/starter
 ```
 
-_See code: [lib/commands/newcode.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.9/lib/commands/newcode.js)_
-
 ## `ns newstarter`
 
 create new starter from a template.  You can then generate a new code base from it using `newCode`.
@@ -130,8 +127,6 @@ EXAMPLE
   $ ns newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter
 ```
 
-_See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.9/lib/commands/newstarter.js)_
-
 ## `ns regenerate`
 
 regenerates code based on a meta file `ns.yml`, custom changes, and a starter. The code directory must have been created for the first time using `newcode`.
@@ -147,8 +142,6 @@ OPTIONS
 EXAMPLE
   $ nd regenerate -c ~/temp/myapp
 ```
-
-_See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.9/lib/commands/regenerate.js)_
 
 ## `ns test`
 
@@ -169,6 +162,4 @@ DESCRIPTION
 EXAMPLE
   $ ns test -c ~/temp/myApp
 ```
-
-_See code: [lib/commands/test.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.9/lib/commands/test.js)_
 <!-- commandsstop -->
