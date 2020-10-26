@@ -38,7 +38,7 @@ You can create templates with locations designated for custom code.  You can als
 # How
 A _template_ is a directory with requirements explained in the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
-![ns-flip-commands](.github/ns-flip-commands.png)
+![ns-flip-commands](images/ns-flip-commands.png)
 
 To create code from a template:
 1. Create a _starter_ directory by calling [`ns newstarter -t <template> -s <starter>`](#ns-newstarter).  
@@ -110,6 +110,8 @@ EXAMPLE
   $ ns newcode -c ~/temp/myapp -s ~/temp/starter
 ```
 
+_See code: [lib/commands/newcode.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.10/lib/commands/newcode.js)_
+
 ## `ns newstarter`
 
 create new starter from a template.  You can then generate a new code base from it using `newCode`.
@@ -127,6 +129,8 @@ EXAMPLE
   $ ns newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter
 ```
 
+_See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.10/lib/commands/newstarter.js)_
+
 ## `ns regenerate`
 
 regenerates code based on a meta file `ns.yml`, custom changes, and a starter. The code directory must have been created for the first time using `newcode`.
@@ -142,6 +146,8 @@ OPTIONS
 EXAMPLE
   $ nd regenerate -c ~/temp/myapp
 ```
+
+_See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.10/lib/commands/regenerate.js)_
 
 ## `ns test`
 
@@ -162,4 +168,6 @@ DESCRIPTION
 EXAMPLE
   $ ns test -c ~/temp/myApp
 ```
+
+_See code: [lib/commands/test.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.10/lib/commands/test.js)_
 <!-- commandsstop -->
