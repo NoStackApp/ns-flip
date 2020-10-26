@@ -38,7 +38,7 @@ You can create templates with locations designated for custom code.  You can als
 # How
 A _template_ is a directory with requirements explained in the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
-![ns-flip-commands](.github/ns-flip-commands.png)
+![ns-flip-commands](images/ns-flip-commands.png)
 
 To create code from a template:
 1. Create a _starter_ directory by calling [`ns newstarter -t <template> -s <starter>`](#ns-newstarter).  
