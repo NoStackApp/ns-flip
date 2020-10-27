@@ -1,12 +1,13 @@
 'use strict'
 
 import {NsInfo} from '../../constants/types/nsInfo'
-import {Configuration, Schema} from '../../constants/types/schema'
+import {Schema} from '../../constants/types/schema'
 import {addUserClass} from './newUserClass'
 
 import {addUnits} from './addUnits'
 import {addJoins} from './addJoins'
 import {setSelectionRoots} from './setSelectionRoots'
+import {Configuration} from '../../constants/types/configuration'
 const emptySchema: Schema = {
   userClasses: {},
   sources: {},

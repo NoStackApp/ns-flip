@@ -1,7 +1,8 @@
 import {unitTypes} from '../../constants'
 import {NsInfo} from '../../constants/types/nsInfo'
-import {Configuration, Schema} from '../../constants/types/schema'
+import {Schema} from '../../constants/types/schema'
 import {generateFilesForType} from './generateFilesForType'
+import {Configuration} from '../../constants/types/configuration'
 
 export async function generateUnitTypeFiles(
   source: string,

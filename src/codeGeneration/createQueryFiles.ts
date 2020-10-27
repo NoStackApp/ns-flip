@@ -1,7 +1,8 @@
+import {Configuration} from '../constants/types/configuration'
+
 const fs = require('fs-extra')
 
 import {NsInfo} from '../constants/types/nsInfo'
-import {Configuration} from '../constants/types/schema'
 import {allCaps} from '../shared/inflections'
 import {loadFileTemplate} from './loadFileTemplate'
 import {parseSpecName} from '../constants/parseSpecName'

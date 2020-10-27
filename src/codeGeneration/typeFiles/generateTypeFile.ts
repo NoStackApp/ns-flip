@@ -2,7 +2,7 @@
 // import {fileURLToPath} from 'url'
 import {BoilerPlateInfoType} from '../../constants'
 import {NsInfo} from '../../constants/types/nsInfo'
-import {Configuration, Schema} from '../../constants/types/schema'
+import {Schema} from '../../constants/types/schema'
 import {singularName} from '../../shared/inflections'
 import {context} from '../context'
 import {loadFileTemplate} from '../loadFileTemplate'
@@ -10,6 +10,7 @@ import {makeDirs} from '../makeDirs'
 import {registerHelpers} from '../registerHelpers'
 import {registerPartials} from '../registerPartials'
 import {componentName} from './componentName'
+import {Configuration} from '../../constants/types/configuration'
 // import {generic} from '../sections/generic'
 
 const Handlebars = require('handlebars')

@@ -1,6 +1,6 @@
 import {associationTypes, BoilerPlateInfoType, dataTypes, nodeTypes} from '../constants'
 import {NsInfo} from '../constants/types/nsInfo'
-import {Configuration, Schema, TreeTypeChildrenList} from '../constants/types/schema'
+import {Schema, TreeTypeChildrenList} from '../constants/types/schema'
 import {
   allCaps,
   pluralLowercaseName,
@@ -10,6 +10,7 @@ import {
   singularName,
 } from '../shared/inflections'
 import {componentName} from './typeFiles/componentName'
+import {Configuration} from '../constants/types/configuration'
 
 const Handlebars = require('handlebars')
 

@@ -1,12 +1,13 @@
 import {names} from '../constants'
 import {NsInfo} from '../constants/types/nsInfo'
-import {Configuration, Schema} from '../constants/types/schema'
+import {Schema} from '../constants/types/schema'
 import {configuredDirs} from './configuredDirs'
 import {createQueryFiles} from './createQueryFiles'
 import {buildSchema} from './schema/buildSchema'
 import {standardFiles} from './standardFiles'
 import {staticFiles} from './staticFiles'
 import {generateAppTypeFiles} from './typeFiles/generateAppTypeFiles'
+import {Configuration} from '../constants/types/configuration'
 
 // const fs = require('fs-extra')
 

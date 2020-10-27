@@ -1,5 +1,5 @@
-import {Configuration} from '../constants/types/schema'
 import {unitNameFromSpec} from './unitNameFromSpec'
+import {Configuration} from '../constants/types/configuration'
 
 const fs = require('fs-extra')
 

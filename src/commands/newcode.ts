@@ -29,7 +29,7 @@ export default class Newcode extends Command {
     const codeDir = flags.codeDir || ''
     if (codeDir.length === 0) isRequiredForNewCode('codeDir', '-c')
     const starterDir = flags.starterDir || ''
-    if (codeDir.length === 0) isRequiredForNewCode('starterDir', '-s')
+    if (starterDir.length === 0) isRequiredForNewCode('starterDir', '-s')
 
     const newAppTasks = await createCode(codeDir, starterDir)
     await newAppTasks.run().catch((error: any) => {
