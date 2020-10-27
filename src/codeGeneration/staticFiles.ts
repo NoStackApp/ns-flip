@@ -1,9 +1,10 @@
 import {NsInfo} from '../constants/types/nsInfo'
-import {Configuration, Schema} from '../constants/types/schema'
+import {Schema} from '../constants/types/schema'
 import {contextForStandard} from './contextForStandard'
 import {loadFileTemplate} from './loadFileTemplate'
 import {registerHelpers} from './registerHelpers'
 import {registerPartials} from './registerPartials'
+import {Configuration} from '../constants/types/configuration'
 
 const fs = require('fs-extra')
 

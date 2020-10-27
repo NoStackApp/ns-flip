@@ -11,6 +11,8 @@ A tool for creating and using *updatable* code templates.  Supports regeneration
 [![Downloads/week](https://img.shields.io/npm/dw/ns-flip.svg)](https://npmjs.org/package/ns-flip)
 [![License](https://img.shields.io/npm/l/ns-flip.svg)](https://github.com/NoStackApp/ns-flip/blob/master/package.json)
 
+
+
 <!-- toc -->
 * [Why](#why)
 * [What](#what)
@@ -25,22 +27,24 @@ After you generate code with a template or tool, you make changes to the code.  
 
 # What
 ns-flip is a CLI to support code templates that can be exchanged as easily as WordPress themes.
+![](images/distributed-maintenance.png)
 
+A template can generate three types of files:
 
-A template can support three types of files:
-
-1. standard (appear in every generated code base, e.g. 'App.jsx')
+1. standard (appear in every generated code base, e.g. `App.jsx`)
 2. custom static (static, but must be custom specified for each code base, e.g. steps in an input stepper)
 3. custom dynamic (based on queries e.g. components showing query results).
 
 You can create templates with locations designated for custom code.  You can also name regions that can be replaced or removed in the generated code.  Ns-flip stores the custom changes before regenerating and restores them.
+
+See some [standard use cases](https://github.com/NoStackApp/ns-flip/wiki/Uses).
 
 # How
 A _template_ is a directory with requirements explained in the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
 ![ns-flip-commands](images/ns-flip-commands.png)
 
-To create code from a template:
+To generate code from a template:
 1. Create a _starter_ directory by calling [`ns newstarter -t <template> -s <starter>`](#ns-newstarter).  
 2. Create a code base using the starter: [`ns newcode -c <code path> -s <starter>`](#ns-newcode).
 3. The code base will have a `meta` directory with a sample ns file `meta/ns.yml`.  You can modify the ns file to change data types for dynamic files and any static information needed.  After any modifications, regenerate the code using [`ns regenerate -c <code>`](#ns regenerate)

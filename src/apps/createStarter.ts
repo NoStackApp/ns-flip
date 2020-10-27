@@ -3,9 +3,9 @@ import {dirOptions} from '../shared/dirOptions'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
 import {CustomCodeRepository} from '../constants/types/custom'
-import {CommandSpec, Configuration} from '../constants/types/schema'
 
 import {errorMessage} from '../shared/errorMessage'
+import {CommandSpec, Configuration} from '../constants/types/configuration'
 
 const chalk = require('chalk')
 const execa = require('execa')
@@ -13,12 +13,53 @@ const fs = require('fs-extra')
 const Listr = require('listr')
 const yaml = require('js-yaml')
 
-function convertCommandArgs(args: string[]|undefined, appDir: string) {
-  if (!args) return
+function convertCommandArgs(args: string[]|undefined, codeDir: string) {
+  if (!args) return []
   // const output = args.map((arg: string) => arg.replace('$appDir', appDir)).push(`>> ${LOGFILE}`)
-  const output = args.map((arg: string) => arg.replace('$appDir', appDir))
+  const output = args.map((arg: string) => arg.replace('$appDir', codeDir))
   // output.push(`>> ${LOGFILE}`)
   return output
+}
+
+async function spawnInteractiveChildProcess(commandSpec: CommandSpec) {
+  await execa(
+    commandSpec.file,
+    commandSpec.arguments,
+    commandSpec.options,
+  ).catch(
+    (error: any) => {
+      throw new Error(`error with executing ${commandSpec.file}: ${error}`)
+    },
+  )
+}
+
+async function checkFolder(starterDir: string) {
+  const isAppFolder = await fs.pathExists(starterDir)
+
+  if (isAppFolder) {
+    throw new Error(errorMessage(`a folder for ${starterDir} already exists. Please choose a different app name`))
+  }
+
+  const upperCaseCheck = /(.*[A-Z].*)/
+  if (upperCaseCheck.test(starterDir)) {
+    throw new Error(errorMessage(`The ${starterDir} contains at least one capital, which create-react-app does not permit.`))
+  }
+}
+
+async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string) {
+  let i
+  for (i = 0; i < commandSpecs.length; i++) {
+    const commandSpec = {...commandSpecs[i]}
+    if (!commandSpec) {
+      continue
+    }
+
+    commandSpec.arguments = convertCommandArgs(commandSpec.arguments, codeDir)
+
+    if (!commandSpec.options) commandSpec.options = {}
+    commandSpec.options.stdio = 'inherit'
+    await spawnInteractiveChildProcess(commandSpec)
+  }
 }
 
 export async function createStarter(
@@ -27,24 +68,30 @@ export async function createStarter(
 ) {
   const config: Configuration = await getConfiguration(templateDir)
   const {placeholderAppCreation} = config
-  const {mainInstallation, devInstallation, preCommands} = placeholderAppCreation
+  const {mainInstallation, devInstallation, preCommands, interactive} = placeholderAppCreation
+
+  await checkFolder(starterDir)
+  if (interactive) await interactiveSequence(interactive, starterDir)
+  // await execa(
+  //   'oclif',
+  //   ['multi', 'foo'],
+  //   {stdio: 'inherit'},
+  // ).catch(
+  //   (error: any) => {
+  //     console.log(error)
+  //     throw new Error(`error with oclif: ${error}`)
+  //   },
+  // )
+
+  // const oclifCommandSpec: CommandSpec = {
+  //   file: 'oclif',
+  //   arguments: ['multi', 'foo'],
+  //   options: {stdio: 'inherit'},
+  // }
+  //
+  // await spawnInteractiveChildProcess(oclifCommandSpec)
 
   const tasksFullInstallation = new Listr([
-    {
-      title: 'Create Starter Directory',
-      task: async () => {
-        const isAppFolder = await fs.pathExists(starterDir)
-
-        if (isAppFolder) {
-          throw new Error(errorMessage(`a folder for ${starterDir} already exists. Please choose a different app name`))
-        }
-
-        const upperCaseCheck = /(.*[A-Z].*)/
-        if (upperCaseCheck.test(starterDir)) {
-          throw new Error(errorMessage(`The ${starterDir} contains at least one capital, which create-react-app does not permit.`))
-        }
-      },
-    },
     {
       title: 'Execute Pre-Commands',
       task: async () => {

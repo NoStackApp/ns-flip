@@ -1,7 +1,8 @@
 import {Units} from '../../constants/types/nsInfo'
-import {Configuration, Schema} from '../../constants/types/schema'
+import {Schema} from '../../constants/types/schema'
 
 import {newUnit} from  './newUnit'
+import {Configuration} from '../../constants/types/configuration'
 
 export function addUnits(units: Units, schema: Schema, config: Configuration) {
   if (units) {

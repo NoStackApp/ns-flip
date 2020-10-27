@@ -6,7 +6,7 @@ import {regExAddedCodeSection} from '../constants/Regex/regExAddedCodeSection'
 // import {regExFileInfo} from '../constants/Regex/regExFileInfo'
 import {regExReplacedCodeSection} from '../constants/Regex/regExReplacedCodeSection'
 import {CustomCodeRepository} from '../constants/types/custom'
-import {Configuration} from '../constants/types/schema'
+import {Configuration} from '../constants/types/configuration'
 
 const fs = require('fs-extra')
 const globby = require('globby')
