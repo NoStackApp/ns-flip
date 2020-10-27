@@ -5,7 +5,6 @@ import {getConfiguration} from '../shared/getConfiguration'
 import {CustomCodeRepository} from '../constants/types/custom'
 
 import {errorMessage} from '../shared/errorMessage'
-import {error} from 'util'
 import {CommandSpec, Configuration} from '../constants/types/configuration'
 
 const chalk = require('chalk')
@@ -29,7 +28,6 @@ async function spawnInteractiveChildProcess(commandSpec: CommandSpec) {
     commandSpec.options,
   ).catch(
     (error: any) => {
-      console.log(error)
       throw new Error(`error with executing ${commandSpec.file}: ${error}`)
     },
   )
@@ -60,7 +58,6 @@ async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string)
 
     if (!commandSpec.options) commandSpec.options = {}
     commandSpec.options.stdio = 'inherit'
-    console.log(`commandSpec=${JSON.stringify(commandSpec)}`)
     await spawnInteractiveChildProcess(commandSpec)
   }
 }
