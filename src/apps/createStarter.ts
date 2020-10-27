@@ -169,7 +169,7 @@ Here is the error reported:\n${error}`)
         const nsYml = `${metaDir}/${names.NS_FILE}`
         const customCode = `${metaDir}/${names.CUSTOM_CODE_FILE}`
         const appInfo = await getCodeInfo(`${templateDir}/sample.${names.NS_FILE}`)
-        appInfo.starter = starterDir
+        if (appInfo) appInfo.starter = starterDir
         const customCodeRepository: CustomCodeRepository = {
           addedCode: {},
           replacedCode: {},
@@ -178,7 +178,7 @@ Here is the error reported:\n${error}`)
 
         try {
           await fs.ensureDir(metaDir, dirOptions)
-          await fs.outputFile(nsYml, yaml.safeDump(appInfo))
+          if (appInfo) await fs.outputFile(nsYml, yaml.safeDump(appInfo))
           await fs.outputJson(customCode, customCodeRepository)
           // console.log('success creating dirs')
         } catch (error) {
