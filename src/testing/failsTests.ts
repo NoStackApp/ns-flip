@@ -36,7 +36,7 @@ export async function failsTests(codeDir: string) {
   try {
     await fs.remove(testDir)
     await copyCodeBaseToNewDir(starter, testDir)
-    await moveOverIgnored(codeDir)
+    await moveOverIgnored(codeDir, testDir, config)
     // const mergedJson = await mergePackageJsons(starter, codeDir)
     // await writePackage(`${testDir}/package.json`, mergedJson)
 

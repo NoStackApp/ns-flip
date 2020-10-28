@@ -1,6 +1,6 @@
 interface ConfigurationDirectories {
     components: string;
-
+    custom: string;
     [key: string]: string;
 }
 
@@ -61,4 +61,5 @@ export interface Configuration {
     dirs: ConfigurationDirectories;
     placeholderAppCreation: PlaceholderAppCreation;
     static: StaticFileTypesSpecList;
+    ignore?: string[];
 }
