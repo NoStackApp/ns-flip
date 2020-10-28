@@ -11,6 +11,7 @@ import {getConfiguration} from '../shared/getConfiguration'
 import {isRequired} from '../inputs/isRequired'
 import {ensureIgnoredExist} from '../testing/ensureIgnoredExist'
 import execa = require('execa')
+import {moveOverIgnored} from '../testing/moveOverIgnored'
 
 const fs = require('fs-extra')
 
@@ -94,6 +95,7 @@ export default class Regenerate extends Command {
       // // @ts-ignore
       // await writePackage(`${codeDir}/package.json`, mergedJson)
 
+      await moveOverIgnored(oldDir, codeDir, config)
       await generateCode(codeDir, nsInfo, config)
 
       const addedCodeDoc = `${metaDir}/${names.CUSTOM_CODE_FILE}`
