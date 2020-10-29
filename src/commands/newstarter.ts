@@ -15,10 +15,11 @@ export default class Newstarter extends Command {
     help: flags.help({char: 'h'}),
     templateDir: flags.string({char: 't', description: 'template directory'}),
     starterDir: flags.string({char: 's', description: 'starter directory'}),
+    sampleDir: flags.string({char: 'b', description: 'optional sample generated base code directory'}),
   }
 
   static examples = [
-    '$ ns newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter',
+    '$ ns newstarter -t ~/ns/templates/basicTemplate -s ~/ns/starters/mystarter -b ~/ns/samples/sampleout',
   ]
   // static args = [{name: 'file'}]
 
@@ -30,8 +31,9 @@ export default class Newstarter extends Command {
     if (starterDir.length === 0) isRequiredForNewStarter('starterDir', '-s')
     const templateDir = flags.templateDir || ''
     if (templateDir.length === 0) isRequiredForNewStarter('templateDir', '-t')
+    const sampleDir = flags.sampleDir || ''
 
-    const newAppTasks = await createStarter(starterDir, templateDir)
+    const newAppTasks = await createStarter(starterDir, templateDir, sampleDir)
     await newAppTasks.run().catch((error: any) => {
       this.error(error)
     })

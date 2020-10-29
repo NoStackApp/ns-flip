@@ -113,6 +113,7 @@ export const names = {
   BACKUP_DIR_SUFFIX: '.backup',
   TEST_DIR_SUFFIX: '.test',
   CUSTOM_CODE_FILE: 'customCode.json',
+  SLUG_PLACEHOLDER: '__slug__',
 }
 
 const NS_DOMAIN = 'https://www.nostack.net'

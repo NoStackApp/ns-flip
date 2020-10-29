@@ -8,7 +8,7 @@ import {loadFileTemplate} from './loadFileTemplate'
 import {parseSpecName} from '../constants/parseSpecName'
 import {unitNameFromSpec} from './unitNameFromSpec'
 
-export async function createQueryFiles(config: Configuration, appInfo: NsInfo, appDir: string) {
+export async function dynamicFiles(config: Configuration, appInfo: NsInfo, appDir: string) {
   if (!appInfo.backend ||
     !appInfo.backend.queries ||
     !config.dirs.queries
@@ -16,6 +16,7 @@ export async function createQueryFiles(config: Configuration, appInfo: NsInfo, a
 
   // create query files in the directory specified by the template.
   const {units, template, backend} = appInfo
+  if (!units) return
   const templateDir = template.dir
   const queriesDir = `${appDir}/${config.dirs.queries}`
 

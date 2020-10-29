@@ -2,7 +2,7 @@ import {names} from '../constants'
 import {NsInfo} from '../constants/types/nsInfo'
 import {Schema} from '../constants/types/schema'
 import {configuredDirs} from './configuredDirs'
-import {createQueryFiles} from './createQueryFiles'
+import {dynamicFiles} from './dynamicFiles'
 import {buildSchema} from './schema/buildSchema'
 import {standardFiles} from './standardFiles'
 import {staticFiles} from './staticFiles'
@@ -36,7 +36,9 @@ export async function generateCode(
 
   // console.log(`units is: ${JSON.stringify(Object.keys(units), null, 2)}`)
   try {
-    await configuredDirs(config, codeDir, Object.keys(units))
+    if (units) {
+      await configuredDirs(config, codeDir, Object.keys(units))
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
@@ -56,7 +58,9 @@ export async function generateCode(
   // }
 
   // mapObject
-  await createQueryFiles(config, nsInfo, codeDir)
+  if (units) {
+    await dynamicFiles(config, nsInfo, codeDir)
+  }
   // if (config.dirs.queries) {
   //   // create query files in the directory specified by the template.
   //   const queriesDir = config.dirs.queries

@@ -1,19 +1,19 @@
-import {dataTypes, nodeTypes} from '../constants'
-import {NsInfo, BackendIdList} from '../constants/types/nsInfo'
-import {Schema} from '../constants/types/schema'
+import {dataTypes, nodeTypes} from '../../constants'
+import {NsInfo, BackendIdList} from '../../constants/types/nsInfo'
+import {Schema} from '../../constants/types/schema'
 import {
   allCaps,
   pluralLowercaseName,
   pluralName,
   singularName,
-} from '../shared/inflections'
+} from '../../shared/inflections'
 
 const Handlebars = require('handlebars')
 
 const fileInfoString = Handlebars.compile('unit: {{unitName}}, comp: {{component}}')
 
 export const contextForStandard = (
-  appInfo: NsInfo,
+  nsInfo: NsInfo,
   stackInfo: Schema,
   component: string
 ) => {
@@ -51,8 +51,8 @@ export const contextForStandard = (
   })
 
   let typeIds: BackendIdList
-  if (appInfo.backend && appInfo.backend.ids && appInfo.backend.ids.types)
-    typeIds = appInfo.backend.ids.types
+  if (nsInfo.backend && nsInfo.backend.ids && nsInfo.backend.ids.types)
+    typeIds = nsInfo.backend.ids.types
   const typesText = Object.keys(stackInfo.types).map(typeName => {
     return {
       typeConst: `TYPE_${allCaps(typeName)}_ID`,
@@ -61,7 +61,7 @@ export const contextForStandard = (
   })
 
   // previously hard-coded: const topUnit = singularName(appInfo.topUnits[0])
-  const userClass = appInfo.userClass
+  const userClass = nsInfo.userClass
   const userTypeId = `TYPE_${allCaps(userClass)}_ID`
 
   // content
@@ -82,11 +82,10 @@ export const contextForStandard = (
     fileInfo,
     // topUnit,
     userTypeId,
-    appName: appInfo.codeName,
+    appName: nsInfo.codeName,
     sources: sourceList,
     types: typesText,
-    actionTypes: actionTypeList,
     stackInfo,
-    appInfo,
+    nsInfo,
   }
 }

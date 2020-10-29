@@ -40,11 +40,16 @@ export interface DataFunctionTypes {
 
 export interface StaticFileTypeSpec {
     suffix: string;
-    specs?: any;
+    name: string;
+    directory: string;
 }
 
-export interface StaticFileTypesSpecList {
-    [fileType: string]: StaticFileTypeSpec;
+export interface StaticTypeSpec {
+  [fileType: string]: StaticFileTypeSpec;
+}
+
+export interface StaticTypesSpecList {
+    [staticType: string]: StaticTypeSpec;
 }
 
 export interface FormatSpec {
@@ -60,6 +65,6 @@ export interface Configuration {
     dataFunctionTypes: DataFunctionTypes;
     dirs: ConfigurationDirectories;
     placeholderAppCreation: PlaceholderAppCreation;
-    static: StaticFileTypesSpecList;
+    static: StaticTypesSpecList;
     ignore?: string[];
 }

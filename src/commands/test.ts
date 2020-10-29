@@ -18,7 +18,7 @@ export default class Test extends Command {
   static description = String(descriptionString)
 
   static examples = [
-    '$ ns test -c ~/temp/myApp',
+    '$ ns test -c ~/projects/myapp',
   ];
 
   static flags = {

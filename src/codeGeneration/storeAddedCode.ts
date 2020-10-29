@@ -24,8 +24,8 @@ async function storeCustomCodeForFile(
   customCode: CustomCodeRepository,
   rootDir: string
 ) {
-  // if (filePath.endsWith('.md'))
-  //   console.log(`in storeCustomCodeForFile filePath=${filePath}`)
+  if (filePath.endsWith('Item/index.jsx'))
+    console.log(`in storeCustomCodeForFile filePath=${filePath}`)
 
   const {addedCode, replacedCode, removedCode} = customCode
 
@@ -122,7 +122,8 @@ async function storeCustomCodeRegions(
   const nodeModules = `!${rootDir}/${exludeModules}`
   const customModules = `!${rootDir}/${custom}/**/${fileNameFormat}`
   const files = await globby([general, nodeModules, customModules])
-  // console.log(`number of files: ${files.length}`)
+  console.log(`here are the patterns: ${[general, nodeModules, customModules]}`)
+  console.log(`number of files: ${files.length}`)
 
   let i
   for (i = 0; i < files.length; i++) {
@@ -145,6 +146,8 @@ export const storeAddedCode = async (rootDir: string, config: Configuration) => 
   const compsDir = `${rootDir}/src/${names.COMP_DIR}`
   const metaDir = `${rootDir}/${names.META_DIR}`
   const customCodeFile = `${metaDir}/${names.CUSTOM_CODE_FILE}`
+
+  console.log(`in storeAddedCode. compsDir=${compsDir} metaDir=${metaDir} customCodeFil=${customCodeFile} `)
 
   const existsComponents = await fs.pathExists(compsDir)
   if (!existsComponents) return

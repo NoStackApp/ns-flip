@@ -9,6 +9,7 @@ export async function moveOverIgnored(sourceDir: string, updatedDir: string, con
     allIgnored = [...allIgnored, ...config.ignore]
   allIgnored.push(config.dirs.custom)
   await Promise.all(allIgnored.map(async fileOrFolder => {
-    await fs.copy(`${sourceDir}/${fileOrFolder}`, `${updatedDir}/${fileOrFolder}`)
+    if (await fs.pathExists(fileOrFolder))
+      await fs.copy(`${sourceDir}/${fileOrFolder}`, `${updatedDir}/${fileOrFolder}`)
   }))
 }

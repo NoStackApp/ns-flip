@@ -1,10 +1,11 @@
 import {NsInfo} from '../constants/types/nsInfo'
 import {Schema} from '../constants/types/schema'
-import {contextForStandard} from './contextForStandard'
 import {loadFileTemplate} from './loadFileTemplate'
 import {registerHelpers} from './registerHelpers'
 import {registerPartials} from './registerPartials'
 import {Configuration} from '../constants/types/configuration'
+import {names} from '../constants'
+import {contextForStatic} from './context/contextForStatic'
 
 const fs = require('fs-extra')
 
@@ -32,18 +33,18 @@ const fs = require('fs-extra')
 
 export async function staticFiles(
   templateDir: string,
-  appDir: string,
-  appInfo: NsInfo,
+  codeDir: string,
+  nsInfo: NsInfo,
   stackInfo: Schema,
   config: Configuration,
 ) {
-  const staticDirLocalPath = config.dirs.static
-  if (!staticDirLocalPath) return
-  const staticDir = `${appDir}/${staticDirLocalPath}`
+  // const staticDirLocalPath = config.dirs.static
+  // if (!staticDirLocalPath) return
+  // const staticDir = `${appDir}/${staticDirLocalPath}`
 
-  const staticFiles = appInfo.static
-  if (!staticFiles) return
-  const fileTypes = Object.keys(staticFiles)
+  const staticInfo = nsInfo.static
+  if (!staticInfo) return
+  const staticTypesWithFiles = Object.keys(staticInfo)
 
   try {
     await registerPartials(`${templateDir}/partials`)
@@ -57,20 +58,30 @@ correctly specified:
 ${error}`)
   }
 
-  await Promise.all(fileTypes.map(async (fileType: string) => {
-    const fileTypeInfo = config.static[fileType]
-    if (!fileTypeInfo) throw new Error(`app.yml refers to static type ${fileType} not defined in the template`)
-    const {suffix} = fileTypeInfo
-    const fileTemplate = await loadFileTemplate(`${templateDir}/static/${fileType}.hbs`)
+  await Promise.all(staticTypesWithFiles.map(async (staticType: string) => {
+    const staticTypeInfo = config.static[staticType]
+    if (!staticTypeInfo) throw new Error(`app.yml refers to static type ${staticType} ` +
+      'not defined in the template')
+    const fileTypeList = Object.keys(staticTypeInfo)
 
-    const files = staticFiles[fileType]
-    await Promise.all(Object.keys(files).map(async fileName => {
-      const fileInfo = files[fileName]
-      const {slug} = fileInfo
-      const fullFilePath = `${staticDir}/${fileType}/${slug}${suffix}`
-      const fileText = await fileTemplate(contextForStandard(appInfo, stackInfo, fileName))
-      await fs.outputFile(fullFilePath, fileText)
-    }
-    ))
+    const instancesForType = staticInfo[staticType]
+    const instanceNamesForType = Object.keys(instancesForType)
+
+    instanceNamesForType.map(async instance => {
+      const instanceInfo = instancesForType[instance]
+      fileTypeList.map(async (fileType: string) => {
+        const fileTypeInfo: any = staticTypeInfo[fileType]
+        const {name, suffix, directory} = fileTypeInfo
+        const fileTemplate = await loadFileTemplate(`${templateDir}/static/${fileType}.hbs`)
+
+        const {slug, specs} = instanceInfo
+        const fileName = name.replace(names.SLUG_PLACEHOLDER, slug)
+        const fullFilePath = `${codeDir}/${directory}/${fileName}${suffix}`
+
+        const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config)
+        const fileText = await fileTemplate(context)
+        await fs.outputFile(fullFilePath, fileText)
+      })
+    })
   }))
 }
