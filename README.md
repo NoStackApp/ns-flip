@@ -68,7 +68,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/1.3.14 linux-x64 node-v14.9.0
+ns-flip/1.4.0 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -118,7 +118,7 @@ EXAMPLE
   $ ns newcode -c ~/projects/myapp -s ~/ns/starters/current
 ```
 
-_See code: [lib/commands/newcode.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.14/lib/commands/newcode.js)_
+_See code: [lib/commands/newcode.js](https://github.com/NoStackApp/ns-flip/blob/v1.4.0/lib/commands/newcode.js)_
 
 ## `ns newstarter`
 
@@ -138,7 +138,7 @@ EXAMPLE
   $ ns newstarter -t ~/ns/templates/basicTemplate -s ~/ns/starters/mystarter -c ~/ns/samples/out
 ```
 
-_See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.14/lib/commands/newstarter.js)_
+_See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.4.0/lib/commands/newstarter.js)_
 
 ## `ns regenerate`
 
@@ -156,7 +156,7 @@ EXAMPLE
   $ nd regenerate -c ~/projects/myapp
 ```
 
-_See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.14/lib/commands/regenerate.js)_
+_See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/blob/v1.4.0/lib/commands/regenerate.js)_
 
 ## `ns test`
 
@@ -178,5 +178,5 @@ EXAMPLE
   $ ns test -c ~/projects/myapp
 ```
 
-_See code: [lib/commands/test.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.14/lib/commands/test.js)_
+_See code: [lib/commands/test.js](https://github.com/NoStackApp/ns-flip/blob/v1.4.0/lib/commands/test.js)_
 <!-- commandsstop -->
