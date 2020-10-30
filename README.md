@@ -52,10 +52,14 @@ To generate code from a template:
 
 Whenever you want to run an updated version of the template, create a new starter (as in step 1) and then run `ns regenerate -c <code>` again.
 
-See the [full documentation](https://github.com/NoStackApp/ns-flip/wiki).  Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
+Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
 
 # Help
-Please [give feedback](https://spectrum.chat/ns-flip) or  [open an issue](https://github.com/NoStackApp/ns-flip/issues/new)!
+* Read our [documentation](https://github.com/NoStackApp/ns-flip/wiki)
+* Post questions on our [Community](https://spectrum.chat/ns-flip)
+*  [open issues](https://github.com/NoStackApp/ns-flip/issues/new)
+
+In short: don't be shy!
 
 # Usage
 <!-- usage -->
@@ -111,7 +115,7 @@ OPTIONS
   -s, --starterDir=starterDir  starter directory.
 
 EXAMPLE
-  $ ns newcode -c ~/temp/myapp -s ~/temp/starter
+  $ ns newcode -c ~/projects/myapp -s ~/ns/starters/current
 ```
 
 _See code: [lib/commands/newcode.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.14/lib/commands/newcode.js)_
@@ -125,12 +129,13 @@ USAGE
   $ ns newstarter
 
 OPTIONS
+  -c, --sampleDir=sampleDir      optional sample generated code directory
   -h, --help                     show CLI help
   -s, --starterDir=starterDir    starter directory
   -t, --templateDir=templateDir  template directory
 
 EXAMPLE
-  $ ns newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter
+  $ ns newstarter -t ~/ns/templates/basicTemplate -s ~/ns/starters/mystarter -c ~/ns/samples/out
 ```
 
 _See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.14/lib/commands/newstarter.js)_
@@ -148,7 +153,7 @@ OPTIONS
   -h, --help             show CLI help
 
 EXAMPLE
-  $ nd regenerate -c ~/temp/myapp
+  $ nd regenerate -c ~/projects/myapp
 ```
 
 _See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.14/lib/commands/regenerate.js)_
@@ -170,7 +175,7 @@ DESCRIPTION
   If there are differences, then there is a problem with your code.
 
 EXAMPLE
-  $ ns test -c ~/temp/myApp
+  $ ns test -c ~/projects/myapp
 ```
 
 _See code: [lib/commands/test.js](https://github.com/NoStackApp/ns-flip/blob/v1.3.14/lib/commands/test.js)_

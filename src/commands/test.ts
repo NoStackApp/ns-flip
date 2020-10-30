@@ -57,12 +57,18 @@ See the log file ${logFile} or the above messages for more information.`)
 
 :( The app did not pass the tests. :(`, false)
       await logEntry(logFile, logMessage, true)
+
+      this.log('see documentation: https://github.com/NoStackApp/ns-flip/wiki')
+
       return 1
     }
 
     logMessage = `
 :) The app is passing all tests! :)`
     await logEntry(logFile, logMessage, true)
+
+    this.log('see documentation: https://github.com/NoStackApp/ns-flip/wiki')
+
     return 0
   }
 }

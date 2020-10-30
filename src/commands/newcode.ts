@@ -36,5 +36,7 @@ export default class Newcode extends Command {
       this.error(error)
     })
     // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${appDir}"`)
+
+    this.log('see documentation: https://github.com/NoStackApp/ns-flip/wiki')
   }
 }

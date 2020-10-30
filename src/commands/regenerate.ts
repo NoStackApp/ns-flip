@@ -28,5 +28,7 @@ export default class Regenerate extends Command {
     const codeDir = flags.codeDir || isRequiredForRegenerate('codeDir', 'c')
 
     await regenerateCode(codeDir)
+
+    this.log('see documentation: https://github.com/NoStackApp/ns-flip/wiki')
   }
 }
