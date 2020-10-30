@@ -1,6 +1,6 @@
 {
   "name": "ns-flip",
-  "description": "build and use updatable templates: can be reapplied to code without losing custom changes to files",
+  "description": "build and use updatable templates: can be reapplied to code without losing custom changes to files. Documentation: https://github.com/NoStackApp/ns-flip/wiki",
   "version": "1.3.14",
   "author": "YizYah @YizYah",
   "bin": {
