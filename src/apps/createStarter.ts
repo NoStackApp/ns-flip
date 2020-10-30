@@ -204,7 +204,6 @@ Here is the error reported:\n${error}`)
               task: async () => {
                 const isSampleBaseAlready = await fs.pathExists(sampleDir)
 
-                console.log(`isSampleBaseAlready: ${isSampleBaseAlready}`)
                 if (!isSampleBaseAlready) {
                   try {
                     const newAppTasks = await createCode(sampleDir, starterDir)

@@ -28,20 +28,6 @@ export const contextForStandard = (
     component,
   }
 
-  const actionTypeList = Object.keys(stackInfo.actions).map(actionType => {
-    const actionsForCurrentType = stackInfo.actions[actionType]
-    return {
-      actionType,
-      actions: Object.keys(actionsForCurrentType).map(action => {
-        const currentActionInfo = actionsForCurrentType[action]
-        return {
-          actionConst: currentActionInfo.const,
-          actionId: currentActionInfo.id,
-        }
-      }),
-    }
-  })
-
   const sourceList = Object.keys(stackInfo.sources).map(sourceName => {
     const currentSourceInfo = stackInfo.sources[sourceName]
     return {

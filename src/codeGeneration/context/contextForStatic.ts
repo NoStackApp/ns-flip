@@ -33,8 +33,6 @@ export const contextForStatic = async (
     component: names.component,
   })
 
-  console.log(`specs.params=${JSON.stringify(specs.params, null, 1)}`)
-
   return {
     specs,
     slug,
