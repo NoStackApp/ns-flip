@@ -1,6 +1,6 @@
-import {associationTypes, BoilerPlateInfoType, dataTypes, nodeTypes} from '../constants'
-import {NsInfo} from '../constants/types/nsInfo'
-import {Schema, TreeTypeChildrenList} from '../constants/types/schema'
+import {associationTypes, BoilerPlateInfoType, dataTypes, nodeTypes} from '../../constants'
+import {NsInfo} from '../../constants/types/nsInfo'
+import {Schema, TreeTypeChildrenList} from '../../constants/types/schema'
 import {
   allCaps,
   pluralLowercaseName,
@@ -8,18 +8,18 @@ import {
   queryForSource,
   relationshipsForSource,
   singularName,
-} from '../shared/inflections'
-import {componentName} from './typeFiles/componentName'
-import {Configuration} from '../constants/types/configuration'
+} from '../../shared/inflections'
+import {componentName} from '../typeFiles/componentName'
+import {Configuration} from '../../constants/types/configuration'
 
 const Handlebars = require('handlebars')
 
 const fileInfoString = Handlebars.compile('unit: {{unitName}}, comp: {{component}}')
 
-export const context = async (
+export const contextForDynamic = async (
   type: string,
   unit: string,
-  appInfo: NsInfo,
+  nsInfo: NsInfo,
   stackInfo: Schema,
   boilerPlateInfo: BoilerPlateInfoType,
   config: Configuration,
@@ -155,5 +155,7 @@ export const context = async (
     names,
     childrenInfo,
     fileInfo,
+    nsInfo,
+    config,
   }
 }

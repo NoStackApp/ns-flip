@@ -64,6 +64,7 @@ export interface JoinsData {
 
 export interface StaticSpec {
   slug: string;
+  specs?: any;
 }
 
 export interface StaticFileList {

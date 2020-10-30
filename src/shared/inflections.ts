@@ -2,7 +2,6 @@ const pluralize = require('pluralize')
 const inflection = require('inflection')
 
 export function allCaps(text: string) {
-  // console.log(`in allCaps, text: ${text}`)inflections
   if (text) return inflection.underscore(text).toUpperCase()
 }
 

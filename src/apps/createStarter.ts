@@ -6,6 +6,9 @@ import {CustomCodeRepository} from '../constants/types/custom'
 
 import {errorMessage} from '../shared/errorMessage'
 import {CommandSpec, Configuration} from '../constants/types/configuration'
+// import {getAppDir} from '../inputs/getAppDir'
+import {createCode} from './createCode'
+import {regenerateCode} from '../codeGeneration/regenerateCode'
 
 const chalk = require('chalk')
 const execa = require('execa')
@@ -65,6 +68,7 @@ async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string)
 export async function createStarter(
   starterDir: string,
   templateDir: string,
+  sampleDir: string,
 ) {
   const config: Configuration = await getConfiguration(templateDir)
   const {placeholderAppCreation} = config
@@ -91,7 +95,7 @@ export async function createStarter(
   //
   // await spawnInteractiveChildProcess(oclifCommandSpec)
 
-  const tasksFullInstallation = new Listr([
+  const taskList = [
     {
       title: 'Execute Pre-Commands',
       task: async () => {
@@ -187,8 +191,42 @@ Here is the error reported:\n${error}`)
         }
       },
     },
-  ])
+  ]
 
-  return tasksFullInstallation
+  if (sampleDir) {
+    taskList.push(
+      {
+        title: 'Create Sample Base Code',
+        task: async () => {
+          return new Listr([
+            {
+              title: 'Create Sample Base Code if None Exists',
+              task: async () => {
+                const isSampleBaseAlready = await fs.pathExists(sampleDir)
+
+                if (!isSampleBaseAlready) {
+                  try {
+                    const newAppTasks = await createCode(sampleDir, starterDir)
+                    await newAppTasks.run()
+                  } catch (error) {
+                    throw new Error(`cannot create sample app at ${sampleDir}: ${error}`)
+                  }
+                }
+              },
+            },
+            {
+              title: 'Create Sample Dir',
+              task: async () => {
+                await fs.ensureFile(`${sampleDir}/meta/ns.yml`)
+                await regenerateCode(sampleDir)
+              },
+            },
+          ])
+        },
+      }
+    )
+  }
+
+  return new Listr(taskList)
   // logProgress(`${chalk.green('Installation is complete!')} Run the other utilities to create the full app`)
 }

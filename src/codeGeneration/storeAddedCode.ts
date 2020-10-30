@@ -24,7 +24,7 @@ async function storeCustomCodeForFile(
   customCode: CustomCodeRepository,
   rootDir: string
 ) {
-  // if (filePath.endsWith('.md'))
+  // if (filePath.endsWith('Item/index.jsx'))
   //   console.log(`in storeCustomCodeForFile filePath=${filePath}`)
 
   const {addedCode, replacedCode, removedCode} = customCode

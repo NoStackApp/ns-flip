@@ -4,7 +4,7 @@ import {BoilerPlateInfoType} from '../../constants'
 import {NsInfo} from '../../constants/types/nsInfo'
 import {Schema} from '../../constants/types/schema'
 import {singularName} from '../../shared/inflections'
-import {context} from '../context'
+import {contextForDynamic} from '../context/contextForDynamic'
 import {loadFileTemplate} from '../loadFileTemplate'
 import {makeDirs} from '../makeDirs'
 import {registerHelpers} from '../registerHelpers'
@@ -58,7 +58,7 @@ ${error}`)
     path,
   ]
 
-  const tags = await context(
+  const tags = await contextForDynamic(
     type,
     source,
     appInfo,
@@ -66,8 +66,8 @@ ${error}`)
     boilerPlateInfo,
     config,
   )
-  // console.log(`tags.context.formTypes.LIST=${JSON.stringify(tags.context.formTypes.LIST)}`)
-  // console.log(`tags.context.boilerPlateInfo.formType=${JSON.stringify(tags.context.boilerPlateInfo.formType)}`)
+  // console.log(`tags.contextForDynamic.formTypes.LIST=${JSON.stringify(tags.contextForDynamic.formTypes.LIST)}`)
+  // console.log(`tags.contextForDynamic.boilerPlateInfo.formType=${JSON.stringify(tags.contextForDynamic.boilerPlateInfo.formType)}`)
 
   // if (boilerPlate === 'genericCreationFormRoot') {
   //   console.log(`tags = ${JSON.stringify(tags, null, 2)}`)

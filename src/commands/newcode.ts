@@ -18,7 +18,7 @@ export default class Newcode extends Command {
   }
 
   static examples = [
-    '$ ns newcode -c ~/temp/myapp -s ~/temp/starter',
+    '$ ns newcode -c ~/projects/myapp -s ~/ns/starters/current',
   ]
   // static args = [{name: 'file'}]
 
