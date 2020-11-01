@@ -5,7 +5,7 @@ import {getConfiguration} from '../shared/getConfiguration'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {storeAddedCode} from './storeAddedCode'
 import {copyCodeBaseToNewDir} from './copyCodeBaseToNewDir'
-import {ensureIgnoredExist} from '../testing/ensureIgnoredExist'
+// import {ensureIgnoredExist} from '../testing/ensureIgnoredExist'
 import {moveOverIgnored} from '../testing/moveOverIgnored'
 import {generateCode} from './generateCode'
 import {insertAddedCode} from './insertAddedCode'
@@ -35,7 +35,7 @@ export async function regenerateCode(codeDir: string) {
 
   const {template, starter} = nsInfo
   const config = await getConfiguration(template.dir)
-  const oldDir = `${codeDir}${names.BACKUP_DIR_SUFFIX}`
+  const backupDir = `${codeDir}${names.BACKUP_DIR_SUFFIX}`
 
   if (!starter) throw new Error(`the '${names.NS_FILE}' file contains no starter.  ` +
         'You need a starter to generate code.')
@@ -56,23 +56,23 @@ export async function regenerateCode(codeDir: string) {
     await storeAddedCode(codeDir, config)
 
     // replace the backup
-    await fs.remove(oldDir)
-    await copyCodeBaseToNewDir(codeDir, oldDir)
+    await fs.remove(backupDir)
+    await copyCodeBaseToNewDir(codeDir, backupDir)
     await fs.remove(codeDir)
 
     // regenerate the code
     await copyCodeBaseToNewDir(starter, codeDir)
     await restoreMetaDir(codeDir)
-    await ensureIgnoredExist(codeDir)
+    // await ensureIgnoredExist(codeDir)
     // const mergedJson: object = await mergePackageJsons(starter, codeDir)
     // // @ts-ignore
     // await writePackage(`${codeDir}/package.json`, mergedJson)
 
-    await moveOverIgnored(oldDir, codeDir, config)
+    await moveOverIgnored(backupDir, codeDir, config)
     await generateCode(codeDir, nsInfo, config)
 
-    const addedCodeDoc = `${metaDir}/${names.CUSTOM_CODE_FILE}`
-    await insertAddedCode(codeDir, addedCodeDoc)
+    const customCodeDoc = `${metaDir}/${names.CUSTOM_CODE_FILE}`
+    await insertAddedCode(codeDir, customCodeDoc)
   } catch (error) {
     // console.log(error)
     throw new Error(`could not regenerate the code: ${error}`)

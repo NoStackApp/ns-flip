@@ -37,6 +37,6 @@ export default class Newcode extends Command {
     })
     // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${appDir}"`)
 
-    this.log('see documentation: https://github.com/NoStackApp/ns-flip/wiki')
+    this.log('Created the code base.  For documentation: https://github.com/NoStackApp/ns-flip/wiki')
   }
 }
