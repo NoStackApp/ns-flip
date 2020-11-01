@@ -16,10 +16,13 @@ export default class Newstarter extends Command {
     templateDir: flags.string({char: 't', description: 'template directory'}),
     starterDir: flags.string({char: 's', description: 'starter directory'}),
     sampleDir: flags.string({char: 'c', description: 'optional sample generated code directory'}),
+    force: flags.boolean({char: 'f', description: 'when force is used, the starter is overwritten without warning.'}),
   }
 
   static examples = [
-    '$ ns newstarter -t ~/ns/templates/basicTemplate -s ~/ns/starters/mystarter -c ~/ns/samples/out',
+    '$ ns newstarter -t ~/ns/templates/basicTemplate -s ~/ns/starters/mystarter',
+    '$ ns newstarter -t $TEMPLATE -s $STARTER -c ~/ns/samples/out',
+    '$ ns newstarter -t $TEMPLATE -s $STARTER -c $CODE -f',
   ]
   // static args = [{name: 'file'}]
 
@@ -27,13 +30,14 @@ export default class Newstarter extends Command {
     checkForUpdates()
 
     const {flags} = this.parse(Newstarter)
+    const force = flags.force
     const starterDir = flags.starterDir || ''
     if (starterDir.length === 0) isRequiredForNewStarter('starterDir', '-s')
     const templateDir = flags.templateDir || ''
     if (templateDir.length === 0) isRequiredForNewStarter('templateDir', '-t')
     const sampleDir = flags.sampleDir || ''
 
-    const newAppTasks = await createStarter(starterDir, templateDir, sampleDir)
+    const newAppTasks = await createStarter(starterDir, templateDir, sampleDir, force)
     await newAppTasks.run().catch((error: any) => {
       this.error(error)
     })
