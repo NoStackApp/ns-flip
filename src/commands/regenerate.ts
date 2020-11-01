@@ -29,6 +29,6 @@ export default class Regenerate extends Command {
 
     await regenerateCode(codeDir)
 
-    this.log('see documentation: https://github.com/NoStackApp/ns-flip/wiki')
+    this.log('Successfully regenerated!  For documentation: https://github.com/NoStackApp/ns-flip/wiki')
   }
 }

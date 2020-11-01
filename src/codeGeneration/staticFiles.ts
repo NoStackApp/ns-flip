@@ -75,8 +75,8 @@ ${error}`)
         const fileTemplate = await loadFileTemplate(`${templateDir}/static/${fileType}.hbs`)
 
         const {slug, specs} = instanceInfo
-        const fileName = name.replace(names.SLUG_PLACEHOLDER, slug)
-        const fullFilePath = `${codeDir}/${directory}/${fileName}${suffix}`
+        const fileName = name.replace(names.SLUG_PLACEHOLDER, slug) + suffix
+        const fullFilePath = `${codeDir}/${directory}/${fileName}`
 
         const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config)
         const fileText = await fileTemplate(context)

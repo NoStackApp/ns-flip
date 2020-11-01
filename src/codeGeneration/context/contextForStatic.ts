@@ -29,7 +29,7 @@ export const contextForStatic = async (
   }
 
   const fileInfo = fileInfoString({
-    unitName: fileName,
+    unitName: `static-${staticType}`,
     component: names.component,
   })
 

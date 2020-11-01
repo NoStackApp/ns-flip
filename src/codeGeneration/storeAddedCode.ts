@@ -25,17 +25,16 @@ async function storeCustomCodeForFile(
   rootDir: string
 ) {
   // if (filePath.endsWith('Item/index.jsx'))
-  //   console.log(`in storeCustomCodeForFile filePath=${filePath}`)
+  // console.log(`in storeCustomCodeForFile customCode=${JSON.stringify(customCode, null, 1)}`)
 
   const {addedCode, replacedCode, removedCode} = customCode
 
-  // console.log(`for file ${filePath}`)
   const fileText = await fs.readFile(filePath, 'utf-8')
   let fileUnit = ''
   let fileComponent = ''
 
   // temp
-  const regexTextTest = '\\/\\/ ns__file unit: (\\w*), comp: (\\w*)'
+  const regexTextTest = '\\/\\/ ns__file unit: (\\[^\\s]*), comp: (\\[^\\s]*)'
   const regExFileInfoTest = new RegExp(regexTextTest, 'g')
   const regexRemovedTest = '\\/\\/ ns__remove_import (\\w*)'
   const regExRemoved = new RegExp(regexRemovedTest, 'g')
@@ -45,22 +44,21 @@ async function storeCustomCodeForFile(
   if (fileInfoMatch) {
     fileUnit = fileInfoMatch[1]
     fileComponent = fileInfoMatch[2]
-    // console.log(`file=${file}: fileUnit=${fileUnit}, fileComponent=${fileComponent}`)
-  } else {
-    // console.log(`DIDN'T WORK! regExFileInfoTest.exec(fileText)=${JSON.stringify(regExFileInfoTest.exec(fileText))}`)
   }
-  // console.log(`fileText: ${fileText}`)
 
   let match
   // eslint-disable-next-line no-cond-assign
   while (match = regExAddedCodeSection.exec(fileText)) {
     // if (!output[match[1]])
+
     const unit: string = match[2]
     const component: string = match[3]
     const location: string = match[4]
 
     // const firstLineEnding = match[5]
     let contents = match[6]
+    // console.log(`match found: unit: ${unit} component: ${component} location: ${location} contents: ${contents}`)
+
     if (!contents || contents === '') contents = ' '
 
     if (!addedCode[unit]) addedCode[unit] = {}
@@ -83,8 +81,6 @@ async function storeCustomCodeForFile(
     if (!contents || contents === '') contents = ' '
     // const firstLineEnding = match[5]
 
-    // console.log(`match found: unit: ${unit} component: ${component} location: ${location} contents: ${contents}`)
-    // console.log(`**MATCH FOUND** for replace in ${file}: unit: ${unit} component: ${component} location: ${location}`)
     if (!replacedCode[unit]) replacedCode[unit] = {}
     if (!replacedCode[unit][component])
       replacedCode[unit][component] = {
@@ -107,6 +103,8 @@ async function storeCustomCodeForFile(
       }
     removedCode[unit][component][location] = 'true'
   }
+
+  return customCode
 }
 
 async function storeCustomCodeRegions(
@@ -128,7 +126,7 @@ async function storeCustomCodeRegions(
   for (i = 0; i < files.length; i++) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      await storeCustomCodeForFile(files[i], customCode, rootDir)
+      customCode = await storeCustomCodeForFile(files[i], customCode, rootDir)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)
@@ -136,18 +134,14 @@ async function storeCustomCodeRegions(
     }
   }
 
-  // console.log(`addedCode: ${JSON.stringify(customCode, null, 2)}`)
   await fs.writeJson(customCodeFile, customCode)
   return customCode
 }
 
 export const storeAddedCode = async (rootDir: string, config: Configuration) => {
-  const compsDir = `${rootDir}/src/${names.COMP_DIR}`
+  // const compsDir = `${rootDir}/src/${names.COMP_DIR}`
   const metaDir = `${rootDir}/${names.META_DIR}`
   const customCodeFile = `${metaDir}/${names.CUSTOM_CODE_FILE}`
-
-  const existsComponents = await fs.pathExists(compsDir)
-  if (!existsComponents) return
 
   const customCode: CustomCodeRepository = {
     addedCode: {},

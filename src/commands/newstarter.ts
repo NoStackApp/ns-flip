@@ -42,7 +42,7 @@ export default class Newstarter extends Command {
       this.error(error)
     })
 
-    this.log('see documentation: https://github.com/NoStackApp/ns-flip/wiki')
+    this.log('Created the starter.  For documentation: https://github.com/NoStackApp/ns-flip/wiki')
     // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${appDir}"`)
   }
 }
