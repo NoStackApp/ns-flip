@@ -13,7 +13,7 @@ import {
   CustomCodeRepository,
   FileCustomCode,
 } from '../constants/types/custom'
-import {regExAddedCodeSection} from '../constants/Regex/regExAddedCodeSection'
+import {regExCustomLocation} from '../constants/Regex/regExCustomLocation'
 import {singularName} from '../shared/inflections'
 
 const fs = require('fs-extra')
@@ -58,7 +58,7 @@ async function updateCustomCodeForFile(filePath: string, fileCustomCode: FileCus
 
   const {addedCode, replacedCode} = fileCustomCode
 
-  fileText = fileText.replace(regExAddedCodeSection, function (
+  fileText = fileText.replace(regExCustomLocation, function (
     match: string,
     p1: string,
     p2: string,
@@ -154,6 +154,21 @@ async function updateCustomCodeForFile(filePath: string, fileCustomCode: FileCus
     return `${opening} ns__${prefix}_${type} ${location}${endOfLine}`
   })
 
+  const customDelimiter = `${commentOpen} ns__custom_(start|end) unit: ${locationSpec}${endOfLine}`
+  const regExCustomCleanUp = new RegExp(customDelimiter, 'g')
+
+  fileText = fileText.replace(regExCustomCleanUp, function (
+    match: string,
+    opening: string,
+    prefix: string,
+    p3: string,
+    p4: string,
+    location: string,
+    endOfLine: string,
+  ) {
+    return `${opening} ns__custom_${prefix} ${location}${endOfLine}`
+  })
+
   try {
     await fs.outputFile(filePath, fileText)
   } catch (error) {
@@ -230,7 +245,7 @@ async function updateCustomCode(customCode: CustomCodeRepository, rootDir: strin
   }))
 }
 
-export const insertAddedCode = async (rootDir: string, addedCodeDoc: string) => {
+export const insertCustomChanges = async (rootDir: string, addedCodeDoc: string) => {
   const baseDir = path.resolve(process.cwd(), rootDir)
   // const gruntDir = path.resolve(__dirname, '../..')
 

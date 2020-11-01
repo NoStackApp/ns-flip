@@ -1,4 +1,4 @@
-import {dataTypes, nodeTypes} from '../../constants'
+import {dataTypes, nodeTypes, magicStrings} from '../../constants'
 import {NsInfo, BackendIdList} from '../../constants/types/nsInfo'
 import {Schema} from '../../constants/types/schema'
 import {
@@ -18,7 +18,7 @@ export const contextForStandard = (
   component: string
 ) => {
   // stack data
-  const unit = 'general'
+  const unit = magicStrings.STANDARD_UNIT
 
   const names = {
     singular: singularName(component),

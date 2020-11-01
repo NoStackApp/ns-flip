@@ -104,7 +104,7 @@ export const unitPrefixes = {
   SELECTABLE: 'selectable',
 }
 
-export const names = {
+export const magicStrings = {
   NS_FILE: 'ns.yml',
   META_DIR: 'meta',
   DIFFS: 'diffs',
@@ -114,6 +114,7 @@ export const names = {
   TEST_DIR_SUFFIX: '.test',
   CUSTOM_CODE_FILE: 'customCode.json',
   SLUG_PLACEHOLDER: '__slug__',
+  STANDARD_UNIT: 'standard',
 }
 
 const NS_DOMAIN = 'https://www.nostack.net'

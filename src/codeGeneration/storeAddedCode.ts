@@ -1,8 +1,9 @@
 
-import {names} from '../constants'
+import {magicStrings} from '../constants'
 
 // const findInFiles = require('find-in-files')
-import {regExAddedCodeSection} from '../constants/Regex/regExAddedCodeSection'
+import {regExCustomLocation} from '../constants/Regex/regExCustomLocation'
+import {regExNewCustomLocation} from '../constants/Regex/regExNewCustomLocation'
 // import {regExFileInfo} from '../constants/Regex/regExFileInfo'
 import {regExReplacedCodeSection} from '../constants/Regex/regExReplacedCodeSection'
 import {CustomCodeRepository} from '../constants/types/custom'
@@ -34,7 +35,7 @@ async function storeCustomCodeForFile(
   let fileComponent = ''
 
   // temp
-  const regexTextTest = '\\/\\/ ns__file unit: (\\[^\\s]*), comp: (\\[^\\s]*)'
+  const regexTextTest = '\\/\\/ ns__file unit: (\\S*), comp: (\\S*)'
   const regExFileInfoTest = new RegExp(regexTextTest, 'g')
   const regexRemovedTest = '\\/\\/ ns__remove_import (\\w*)'
   const regExRemoved = new RegExp(regexRemovedTest, 'g')
@@ -48,7 +49,7 @@ async function storeCustomCodeForFile(
 
   let match
   // eslint-disable-next-line no-cond-assign
-  while (match = regExAddedCodeSection.exec(fileText)) {
+  while (match = regExCustomLocation.exec(fileText)) {
     // if (!output[match[1]])
 
     const unit: string = match[2]
@@ -58,6 +59,28 @@ async function storeCustomCodeForFile(
     // const firstLineEnding = match[5]
     let contents = match[6]
     // console.log(`match found: unit: ${unit} component: ${component} location: ${location} contents: ${contents}`)
+
+    if (!contents || contents === '') contents = ' '
+
+    if (!addedCode[unit]) addedCode[unit] = {}
+    if (!addedCode[unit][component]) {
+      addedCode[unit][component] = {
+        path: removeRootDir(filePath, rootDir),
+      }
+    }
+    addedCode[unit][component][location] = contents
+  }
+
+  // eslint-disable-next-line no-cond-assign
+  while (match = regExNewCustomLocation.exec(fileText)) {
+    // if (!output[match[1]])
+
+    const unit: string = fileUnit
+    const component: string = fileComponent
+    const location: string = match[2]
+
+    // const firstLineEnding = match[5]
+    let contents = match[4]
 
     if (!contents || contents === '') contents = ' '
 
@@ -140,8 +163,8 @@ async function storeCustomCodeRegions(
 
 export const storeAddedCode = async (rootDir: string, config: Configuration) => {
   // const compsDir = `${rootDir}/src/${names.COMP_DIR}`
-  const metaDir = `${rootDir}/${names.META_DIR}`
-  const customCodeFile = `${metaDir}/${names.CUSTOM_CODE_FILE}`
+  const metaDir = `${rootDir}/${magicStrings.META_DIR}`
+  const customCodeFile = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
 
   const customCode: CustomCodeRepository = {
     addedCode: {},

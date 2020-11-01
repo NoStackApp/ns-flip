@@ -4,7 +4,7 @@ import {loadFileTemplate} from './loadFileTemplate'
 import {registerHelpers} from './registerHelpers'
 import {registerPartials} from './registerPartials'
 import {Configuration} from '../constants/types/configuration'
-import {names} from '../constants'
+import {magicStrings} from '../constants'
 import {contextForStatic} from './context/contextForStatic'
 
 const fs = require('fs-extra')
@@ -75,7 +75,7 @@ ${error}`)
         const fileTemplate = await loadFileTemplate(`${templateDir}/static/${fileType}.hbs`)
 
         const {slug, specs} = instanceInfo
-        const fileName = name.replace(names.SLUG_PLACEHOLDER, slug) + suffix
+        const fileName = name.replace(magicStrings.SLUG_PLACEHOLDER, slug) + suffix
         const fullFilePath = `${codeDir}/${directory}/${fileName}`
 
         const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config)

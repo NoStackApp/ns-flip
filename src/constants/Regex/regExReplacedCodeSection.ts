@@ -2,7 +2,7 @@
 import {commentOpen, content, endOfLine, locationRepetition, locationSpec} from './regExShared'
 
 // for saving replaced code
-const firstLineBody = `${commentOpen} ns__start_replacement (\\w*)${endOfLine}`
+const firstLineBody = `${commentOpen} ns__start_replacement (\\S*)${endOfLine}`
 const fullRegExBody = `${firstLineBody}${content}${commentOpen} ns__end_replacement \\2${endOfLine}`
 export const regExReplacedCodeSection = new RegExp(fullRegExBody, 'g')
 

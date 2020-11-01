@@ -1,4 +1,4 @@
-import {names} from '../constants'
+import {magicStrings} from '../constants'
 import {dirOptions} from '../shared/dirOptions'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
@@ -160,10 +160,10 @@ Here is the error reported:\n${error}`)
     {
       title: 'Add Meta-Data',
       task: async () => {
-        const metaDir = `${starterDir}/${names.META_DIR}`
-        const nsYml = `${metaDir}/${names.NS_FILE}`
-        const customCode = `${metaDir}/${names.CUSTOM_CODE_FILE}`
-        const appInfo = await getCodeInfo(`${templateDir}/sample.${names.NS_FILE}`)
+        const metaDir = `${starterDir}/${magicStrings.META_DIR}`
+        const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
+        const customCode = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+        const appInfo = await getCodeInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
         const customDir = `${starterDir}/${config.dirs.custom}`
         if (appInfo) appInfo.starter = starterDir
         const customCodeRepository: CustomCodeRepository = {
