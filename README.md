@@ -130,12 +130,15 @@ USAGE
 
 OPTIONS
   -c, --sampleDir=sampleDir      optional sample generated code directory
+  -f, --force                    when force is used, the starter is overwritten without warning.
   -h, --help                     show CLI help
   -s, --starterDir=starterDir    starter directory
   -t, --templateDir=templateDir  template directory
 
-EXAMPLE
-  $ ns newstarter -t ~/ns/templates/basicTemplate -s ~/ns/starters/mystarter -c ~/ns/samples/out
+EXAMPLES
+  $ ns newstarter -t ~/ns/templates/basicTemplate -s ~/ns/starters/mystarter
+  $ ns newstarter -t $TEMPLATE -s $STARTER -c ~/ns/samples/out
+  $ ns newstarter -t $TEMPLATE -s $STARTER -c $CODE -f
 ```
 
 _See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.4.0/lib/commands/newstarter.js)_

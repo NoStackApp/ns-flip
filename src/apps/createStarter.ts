@@ -36,7 +36,15 @@ async function spawnInteractiveChildProcess(commandSpec: CommandSpec) {
   )
 }
 
-async function checkFolder(starterDir: string) {
+async function checkFolder(starterDir: string, force: boolean) {
+  if (force && await fs.pathExists(starterDir)) {
+    try {
+      await fs.remove(starterDir)
+    } catch (error) {
+      throw new Error(`cannot remove the starter ${starterDir}: ${error}`)
+    }
+  }
+
   const isAppFolder = await fs.pathExists(starterDir)
 
   if (isAppFolder) {
@@ -69,31 +77,14 @@ export async function createStarter(
   starterDir: string,
   templateDir: string,
   sampleDir: string,
+  force: boolean,
 ) {
   const config: Configuration = await getConfiguration(templateDir)
   const {placeholderAppCreation} = config
   const {mainInstallation, devInstallation, preCommands, interactive} = placeholderAppCreation
 
-  await checkFolder(starterDir)
+  await checkFolder(starterDir, force)
   if (interactive) await interactiveSequence(interactive, starterDir)
-  // await execa(
-  //   'oclif',
-  //   ['multi', 'foo'],
-  //   {stdio: 'inherit'},
-  // ).catch(
-  //   (error: any) => {
-  //     console.log(error)
-  //     throw new Error(`error with oclif: ${error}`)
-  //   },
-  // )
-
-  // const oclifCommandSpec: CommandSpec = {
-  //   file: 'oclif',
-  //   arguments: ['multi', 'foo'],
-  //   options: {stdio: 'inherit'},
-  // }
-  //
-  // await spawnInteractiveChildProcess(oclifCommandSpec)
 
   const taskList = [
     {
@@ -173,6 +164,7 @@ Here is the error reported:\n${error}`)
         const nsYml = `${metaDir}/${names.NS_FILE}`
         const customCode = `${metaDir}/${names.CUSTOM_CODE_FILE}`
         const appInfo = await getCodeInfo(`${templateDir}/sample.${names.NS_FILE}`)
+        const customDir = `${starterDir}/${config.dirs.custom}`
         if (appInfo) appInfo.starter = starterDir
         const customCodeRepository: CustomCodeRepository = {
           addedCode: {},
@@ -182,9 +174,9 @@ Here is the error reported:\n${error}`)
 
         try {
           await fs.ensureDir(metaDir, dirOptions)
+          await fs.ensureDir(customDir, dirOptions)
           if (appInfo) await fs.outputFile(nsYml, yaml.safeDump(appInfo))
           await fs.outputJson(customCode, customCodeRepository)
-          // console.log('success creating dirs')
         } catch (error) {
           // eslint-disable-next-line no-console
           console.error(error)
