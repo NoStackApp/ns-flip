@@ -1,5 +1,5 @@
 import execa = require('execa');
-import {names} from '../constants'
+import {magicStrings} from '../constants'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
 import {checkForUpdates} from '../shared/checkForUpdates'
@@ -8,14 +8,14 @@ import {copyCodeBaseToNewDir} from './copyCodeBaseToNewDir'
 // import {ensureIgnoredExist} from '../testing/ensureIgnoredExist'
 import {moveOverIgnored} from '../testing/moveOverIgnored'
 import {generateCode} from './generateCode'
-import {insertAddedCode} from './insertAddedCode'
+import {insertCustomChanges} from './insertCustomChanges'
 
 const fs = require('fs-extra')
 
 async function restoreMetaDir(codeDir: string) {
-  const backupDir = `${codeDir}${names.BACKUP_DIR_SUFFIX}`
-  const backupMetaDir = `${backupDir}/${names.META_DIR}`
-  const metaDir = `${codeDir}/${names.META_DIR}`
+  const backupDir = `${codeDir}${magicStrings.BACKUP_DIR_SUFFIX}`
+  const backupMetaDir = `${backupDir}/${magicStrings.META_DIR}`
+  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
   await fs.remove(metaDir)
 
   await execa(
@@ -23,21 +23,21 @@ async function restoreMetaDir(codeDir: string) {
     ['-r', backupMetaDir, metaDir],
   ).catch(
     (error: any) => {
-      throw new Error(`error restoring ${names.META_DIR} from ${backupMetaDir}: ${error}`)
+      throw new Error(`error restoring ${magicStrings.META_DIR} from ${backupMetaDir}: ${error}`)
     },
   )
 }
 
 export async function regenerateCode(codeDir: string) {
-  const metaDir = `${codeDir}/${names.META_DIR}`
-  const nsYml = `${metaDir}/${names.NS_FILE}`
+  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
+  const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
   const nsInfo = await getCodeInfo(nsYml)
 
   const {template, starter} = nsInfo
   const config = await getConfiguration(template.dir)
-  const backupDir = `${codeDir}${names.BACKUP_DIR_SUFFIX}`
+  const backupDir = `${codeDir}${magicStrings.BACKUP_DIR_SUFFIX}`
 
-  if (!starter) throw new Error(`the '${names.NS_FILE}' file contains no starter.  ` +
+  if (!starter) throw new Error(`the '${magicStrings.NS_FILE}' file contains no starter.  ` +
         'You need a starter to generate code.')
 
   try {
@@ -71,8 +71,8 @@ export async function regenerateCode(codeDir: string) {
     await moveOverIgnored(backupDir, codeDir, config)
     await generateCode(codeDir, nsInfo, config)
 
-    const customCodeDoc = `${metaDir}/${names.CUSTOM_CODE_FILE}`
-    await insertAddedCode(codeDir, customCodeDoc)
+    const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+    await insertCustomChanges(codeDir, customCodeDoc)
   } catch (error) {
     // console.log(error)
     throw new Error(`could not regenerate the code: ${error}`)

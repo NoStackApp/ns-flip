@@ -1,4 +1,4 @@
-import {names} from '../constants'
+import {magicStrings} from '../constants'
 import {NsInfo} from '../constants/types/nsInfo'
 import {Schema} from '../constants/types/schema'
 import {configuredDirs} from './configuredDirs'
@@ -18,7 +18,7 @@ export async function generateCode(
   // jsonPath: string,
 ) {
   const {userClass, units, template, starter} = nsInfo
-  if (!starter) throw new Error(`the '${names.NS_FILE}' file contains no starter.  ` +
+  if (!starter) throw new Error(`the '${magicStrings.NS_FILE}' file contains no starter.  ` +
     'You need a starter to generate code.')
 
   const stackInfo: Schema = await buildSchema(nsInfo, config)

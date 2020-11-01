@@ -1,12 +1,12 @@
 import {Command, flags} from '@oclif/command'
-import {links, names} from '../constants'
+import {links, magicStrings} from '../constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {isRequired} from '../shared/isRequired'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
 
 const descriptionString = 'Confirms that your custom changes have been entered safely, ' +
-  `allowing you to generate with an updated or replaced template, or with a changed '${names.NS_FILE}' file. ` +
+  `allowing you to generate with an updated or replaced template, or with a changed '${magicStrings.NS_FILE}' file. ` +
   'For documentation about the rules for custom code placement, ' +
   'please see https://github.com/NoStackApp/ns-flip/wiki/Safe-Custom-Code.\n' +
   '\n' +
@@ -35,11 +35,11 @@ export default class Test extends Command {
     const {flags} = this.parse(Test)
     const codeDir = flags.codeDir || isRequired('appDir', 'test', 'c')
 
-    const testDir = `${codeDir}${names.TEST_DIR_SUFFIX}`
-    const testMetaDir = `${testDir}/${names.META_DIR}`
+    const testDir = `${codeDir}${magicStrings.TEST_DIR_SUFFIX}`
+    const testMetaDir = `${testDir}/${magicStrings.META_DIR}`
 
-    const diffsFile = `${testMetaDir}/${names.DIFFS}`
-    const logFile = `${testMetaDir}/${names.TESTS_LOG}`
+    const diffsFile = `${testMetaDir}/${magicStrings.DIFFS}`
+    const logFile = `${testMetaDir}/${magicStrings.TESTS_LOG}`
 
     const problemsFound = await failsTests(codeDir)
 

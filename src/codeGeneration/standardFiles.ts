@@ -63,7 +63,7 @@ ${error}`)
     //   the .hbs extension.`)
     // }
 
-    const fileText = await fileTemplate(contextForStandard(appInfo, stackInfo, parsed.name.replace(/\./g, '')))
+    const fileText = await fileTemplate(contextForStandard(appInfo, stackInfo, localPath))
     await fs.outputFile(newFileName, fileText)
   })
 
