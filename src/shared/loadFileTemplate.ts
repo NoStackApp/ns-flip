@@ -1,6 +1,10 @@
 const fs = require('fs-extra')
 const Handlebars = require('handlebars')
 
+Handlebars.registerHelper('curly', function (object: any, open: any) {
+  return open ? '{' : '}'
+})
+
 export async function loadFileTemplate(path: string) {
   let template = ''
   try {

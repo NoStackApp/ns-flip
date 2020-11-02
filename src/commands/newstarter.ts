@@ -37,10 +37,14 @@ export default class Newstarter extends Command {
     if (templateDir.length === 0) isRequiredForNewStarter('templateDir', '-t')
     const sampleDir = flags.sampleDir || ''
 
-    const newAppTasks = await createStarter(starterDir, templateDir, sampleDir, force)
-    await newAppTasks.run().catch((error: any) => {
-      this.error(error)
-    })
+    try {
+      const newAppTasks = await createStarter(starterDir, templateDir, sampleDir, force)
+      await newAppTasks.run().catch((error: any) => {
+        this.error(error)
+      })
+    } catch (error) {
+      throw new Error(`Problem creating starter: ${error}`)
+    }
 
     this.log('Created the starter.  For documentation: https://github.com/NoStackApp/ns-flip/wiki')
     // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${appDir}"`)

@@ -115,6 +115,12 @@ export const magicStrings = {
   CUSTOM_CODE_FILE: 'customCode.json',
   SLUG_PLACEHOLDER: '__slug__',
   STANDARD_UNIT: 'standard',
+  START_OF_FILE_FILE: 'START_OF_FILE.hbs',
+  FILE_TEMPLATES: 'fileTemplates',
+  GENERIC_FILE: 'generic.hbs',
+  CONFIG_FILE: 'config.yml',
+  SAMPLE_NS_FILE: 'sample.ns.yml',
+  README_FILE: 'README.md',
 }
 
 const NS_DOMAIN = 'https://www.nostack.net'
