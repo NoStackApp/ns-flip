@@ -81,6 +81,7 @@ USAGE
 * [`ns help [COMMAND]`](#ns-help-command)
 * [`ns newcode`](#ns-newcode)
 * [`ns newstarter`](#ns-newstarter)
+* [`ns newtemplate`](#ns-newtemplate)
 * [`ns regenerate`](#ns-regenerate)
 * [`ns test`](#ns-test)
 
@@ -142,6 +143,23 @@ EXAMPLES
 ```
 
 _See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.5.0/lib/commands/newstarter.js)_
+
+## `ns newtemplate`
+
+create new template.
+
+```
+USAGE
+  $ ns newtemplate
+
+OPTIONS
+  -h, --help  show CLI help
+
+EXAMPLE
+  $ ns newtemplate
+```
+
+_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v1.5.0/lib/commands/newtemplate.js)_
 
 ## `ns regenerate`
 

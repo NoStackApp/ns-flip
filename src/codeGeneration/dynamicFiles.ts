@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 
 import {NsInfo} from '../constants/types/nsInfo'
 import {allCaps} from '../shared/inflections'
-import {loadFileTemplate} from './loadFileTemplate'
+import {loadFileTemplate} from '../shared/loadFileTemplate'
 import {parseSpecName} from '../constants/parseSpecName'
 import {unitNameFromSpec} from './unitNameFromSpec'
 
