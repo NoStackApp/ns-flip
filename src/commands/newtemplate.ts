@@ -19,9 +19,9 @@ function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
 
   const originalParsed = path.parse(originalPath)
   const originalName = originalParsed.name
-  const templateNameShortened = templateName.replace('ns-template-', '')
+  // const templateNameShortened = templateName.replace('ns-template-', '')
 
-  return `Created the template at '${fullNsDir}/templates/${templateName}'.
+  return `Created the template at '${fullNsDir}/templates/ns-template-${templateName}'.
 See instructions to get it working:
     https://github.com/NoStackApp/ns-flip/wiki/Creating-Templates.
 
@@ -29,15 +29,15 @@ Paste the following into your browser to set the variables used in the examples 
 (you may want to save the following lines to a file to reuse easily):
 
 NS_DIR=${fullNsDir}
-TEMPLATES=$NS_DIR/templates~
+TEMPLATES=$NS_DIR/templates
 STARTERS=$NS_DIR/starters
 SAMPLES=$NS_DIR/samples
 ORIGINAL=${originalPath}
 
-TEMPLATE=$TEMPLATES/${templateName}
+TEMPLATE=$TEMPLATES/ns-template-${templateName}
 SAMPLE=$SAMPLES/${originalName}
-STARTER=$STARTERS/${templateNameShortened}-starter
-CODE=$SAMPLES/${templateNameShortened}-code
+STARTER=$STARTERS/${templateName}-starter
+CODE=$SAMPLES/${templateName}-code
 `
 }
 
