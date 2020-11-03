@@ -17,8 +17,10 @@ const questions = [
   {
     type: 'input',
     name: 'templateName',
-    message: 'What would you like to name your template?  We recommend `ns-template-<description>`',
-    default: 'ns-template-first',
+    message: 'What would you like to name your template? ' +
+      '(No spaces!  Do not use the words \'ns\' or \'template\', because ns-flip will add those anyway.' +
+      ' You can always remove them later.)',
+    default: 'practice',
   },
   {
     type: 'input',
