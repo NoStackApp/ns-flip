@@ -19,6 +19,7 @@ function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
 
   const originalParsed = path.parse(originalPath)
   const originalName = originalParsed.name
+  const templateNameShortened = templateName.replace('ns-template-', '')
 
   return `Created the template at '${fullNsDir}/templates/${templateName}'.
 See instructions to get it working:
@@ -28,15 +29,15 @@ Paste the following into your browser to set the variables used in the examples 
 (you may want to save the following lines to a file to reuse easily):
 
 NS_DIR=${fullNsDir}
-TEMPLATES=$NS_DIR/templates
+TEMPLATES=$NS_DIR/templates~
 STARTERS=$NS_DIR/starters
 SAMPLES=$NS_DIR/samples
 ORIGINAL=${originalPath}
 
 TEMPLATE=$TEMPLATES/${templateName}
 SAMPLE=$SAMPLES/${originalName}
-STARTER=$STARTERS/${templateName}1
-CODE=$SAMPLES/${templateName}
+STARTER=$STARTERS/${templateNameShortened}-starter
+CODE=$SAMPLES/${templateNameShortened}-code
 `
 }
 
