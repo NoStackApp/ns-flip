@@ -39,6 +39,7 @@
     "pluralize": "^8.0.0",
     "prompts": "^2.3.2",
     "read-pkg": "^5.2.0",
+    "semver": "^7.3.2",
     "sprintf-js": "^1.1.1",
     "traverse": "^0.6.6",
     "ts-node": "^8.10.2",

@@ -9,6 +9,7 @@ import {copyCodeBaseToNewDir} from './copyCodeBaseToNewDir'
 import {moveOverIgnored} from '../testing/moveOverIgnored'
 import {generateCode} from './generateCode'
 import {insertCustomChanges} from './insertCustomChanges'
+import {updatePackageJson} from './updatePackageJson'
 
 const fs = require('fs-extra')
 
@@ -73,8 +74,9 @@ export async function regenerateCode(codeDir: string) {
 
     const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
     await insertCustomChanges(codeDir, customCodeDoc)
+
+    await updatePackageJson(codeDir, starter)
   } catch (error) {
-    // console.log(error)
     throw new Error(`could not regenerate the code: ${error}`)
   }
 }
