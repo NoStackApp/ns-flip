@@ -18,7 +18,7 @@ const questions = [
     type: 'input',
     name: 'templateName',
     message: 'What would you like to name your template? ' +
-      '(Do not write the words \'ns\' or \'template\', because ns-flip will add those anyway.' +
+      '(No spaces!  Do not use the words \'ns\' or \'template\', because ns-flip will add those anyway.' +
       ' You can always remove them later.)',
     default: 'practice',
   },
