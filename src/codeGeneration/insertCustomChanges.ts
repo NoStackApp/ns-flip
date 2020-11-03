@@ -60,9 +60,9 @@ async function updateCustomCodeForFile(filePath: string, fileCustomCode: FileCus
 
   fileText = fileText.replace(regExCustomLocation, function (
     match: string,
-    p1: string,
-    p2: string,
-    p3: string,
+    commentStart: string,
+    unit: string,
+    comp: string,
     location: string,
   ) {
     if (!addedCode[location]) return match // this shouldn't happen
@@ -123,12 +123,7 @@ async function updateCustomCodeForFile(filePath: string, fileCustomCode: FileCus
 
     if (!replacedCode[location]) return match
     const lines = match.split('\n')
-    // console.log(`firstCommentOpen=${firstCommentOpen}`)
-    // console.log(`endOfLine=${endOfLine}`)
-    // console.log(`content=${content}`)
-    // console.log(`p7=${p7}`)
-    // console.log(`commentOpen=${commentOpen}`)
-    // console.log(`finalEndOfLine=${finalEndOfLine}`)
+
     const fullReplacement = lines[0] +
       '\n' + replacedCode[location] +
       commentOpen +

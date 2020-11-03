@@ -38,9 +38,9 @@ ${error}`)
   const emitter = walk(standardDir)
 
   emitter.on('file', async function (fileName: any) {
-    const localPath = fileName.replace(standardDir, '')
+    const localPath = fileName.replace(standardDir + '/', '')
     if (localPath in standardIgnored) return
-    const newPath = `${appDir}${localPath}`
+    const newPath = `${appDir}/${localPath}`
     const parsed = path.parse(newPath)
     const {ext} = parsed
 
@@ -56,14 +56,9 @@ ${error}`)
 
     const fileTemplate = await loadFileTemplate(fileName)
     const newFileName = path.join(parsed.dir, parsed.name)
-    // const {ext} = parsed.ext
-    // if (ext !== '.hbs') {
-    //   throw new Error(`the file ${filename} in the template standard dir
-    //   does not end with the .hbs extension.  The only files permitted must have
-    //   the .hbs extension.`)
-    // }
+    const newLocalFileName = newFileName.replace(appDir + '/', '')
 
-    const fileText = await fileTemplate(contextForStandard(appInfo, stackInfo, localPath))
+    const fileText = await fileTemplate(contextForStandard(appInfo, stackInfo, newLocalFileName))
     await fs.outputFile(newFileName, fileText)
   })
 

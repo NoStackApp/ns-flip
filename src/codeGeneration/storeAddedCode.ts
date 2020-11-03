@@ -143,7 +143,7 @@ async function storeCustomCodeRegions(
   const nodeModules = `!${rootDir}/${exludeModules}`
   const customModules = `!${rootDir}/${custom}/**/${fileNameFormat}`
   const files = await globby([general, nodeModules, customModules])
-  // console.log(`number of files: ${files.length}`)
+  // console.log(`number of files: ${files.length} files = ${JSON.stringify(files)}`)
 
   let i
   for (i = 0; i < files.length; i++) {
