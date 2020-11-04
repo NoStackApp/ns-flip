@@ -78,7 +78,7 @@ ${error}`)
         const fileName = name.replace(magicStrings.SLUG_PLACEHOLDER, slug) + suffix
         const fullFilePath = `${codeDir}/${directory}/${fileName}`
 
-        const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config)
+        const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config, codeDir)
         const fileText = await fileTemplate(context)
         await fs.outputFile(fullFilePath, fileText)
       })

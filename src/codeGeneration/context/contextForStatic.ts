@@ -1,10 +1,7 @@
 import {Configuration} from '../../constants/types/configuration'
 import {NsInfo} from '../../constants/types/nsInfo'
-import {
-  pluralLowercaseName,
-  pluralName,
-  singularName,
-} from '../../shared/inflections'
+import {pluralLowercaseName, pluralName, singularName} from '../../shared/inflections'
+import {createGeneralInfo} from './createGeneralInfo'
 
 const Handlebars = require('handlebars')
 
@@ -18,6 +15,7 @@ export const contextForStatic = async (
   fileName: string,
   nsInfo: NsInfo,
   config: Configuration,
+  codeDir: string,
 ) => {
   const names = {
     singular: singularName(instance),
@@ -33,6 +31,8 @@ export const contextForStatic = async (
     component: names.component,
   })
 
+  const general = createGeneralInfo(nsInfo, codeDir)
+
   return {
     specs,
     slug,
@@ -40,5 +40,6 @@ export const contextForStatic = async (
     fileInfo,
     nsInfo,
     config,
+    general,
   }
 }

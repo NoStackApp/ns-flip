@@ -7,15 +7,17 @@ import {
   pluralName,
   singularName,
 } from '../../shared/inflections'
+import {createGeneralInfo} from './createGeneralInfo'
 
 const Handlebars = require('handlebars')
 
 const fileInfoString = Handlebars.compile('unit: {{unitName}}, comp: {{component}}')
 
-export const contextForStandard = (
+export const contextForStandard = async (
   nsInfo: NsInfo,
   stackInfo: Schema,
-  component: string
+  component: string,
+  codeDir: string,
 ) => {
   // stack data
   const unit = magicStrings.STANDARD_UNIT
@@ -61,6 +63,8 @@ export const contextForStandard = (
   //   component: names.component,
   // }) + ', loc:'
 
+  const general = await createGeneralInfo(nsInfo, codeDir)
+
   return {
     nodeTypes,
     dataTypes,
@@ -73,5 +77,6 @@ export const contextForStandard = (
     types: typesText,
     stackInfo,
     nsInfo,
+    general,
   }
 }

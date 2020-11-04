@@ -86,4 +86,5 @@ export interface NsInfo {
   inputs?: object;
   backend?: BackendData;
   joins?: JoinsData;
+  general?: any;
 }

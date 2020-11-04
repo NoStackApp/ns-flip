@@ -17,8 +17,8 @@ const options = {
 
 export async function standardFiles(
   templateDir: string,
-  appDir: string,
-  appInfo: NsInfo,
+  codeDir: string,
+  nsInfo: NsInfo,
   stackInfo: Schema,
 ) {
   const standardDir = `${templateDir}/standard`
@@ -40,7 +40,7 @@ ${error}`)
   emitter.on('file', async function (fileName: any) {
     const localPath = fileName.replace(standardDir + '/', '')
     if (localPath in standardIgnored) return
-    const newPath = `${appDir}/${localPath}`
+    const newPath = `${codeDir}/${localPath}`
     const parsed = path.parse(newPath)
     const {ext} = parsed
 
@@ -56,15 +56,20 @@ ${error}`)
 
     const fileTemplate = await loadFileTemplate(fileName)
     const newFileName = path.join(parsed.dir, parsed.name)
-    const newLocalFileName = newFileName.replace(appDir + '/', '')
+    const newLocalFileName = newFileName.replace(codeDir + '/', '')
 
-    const fileText = await fileTemplate(contextForStandard(appInfo, stackInfo, newLocalFileName))
+    const fileText = await fileTemplate(await contextForStandard(
+      nsInfo,
+      stackInfo,
+      newLocalFileName,
+      codeDir
+    ))
     await fs.outputFile(newFileName, fileText)
   })
 
   emitter.on('directory', async function (path: any) {
     const localPath = path.replace(standardDir, '')
-    const newPath = `${appDir}${localPath}`
+    const newPath = `${codeDir}${localPath}`
     try {
       // await fs.ensureDir(childrenAppDir, options)
       await fs.ensureDir(newPath, options)
