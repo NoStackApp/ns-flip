@@ -112,7 +112,7 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
           const sampleNsFileTemplate = await loadFileTemplate(sampleNs)
           await fs.outputFile(`${template}/${magicStrings.SAMPLE_NS_FILE}`, sampleNsFileTemplate(context))
           const startOfFileTemplate = await loadFileTemplate(startOfFile)
-          await fs.outputFile(`${template}/${magicStrings.START_OF_FILE_FILE}`, startOfFileTemplate(context))
+          await fs.outputFile(`${template}/partials/${magicStrings.START_OF_FILE_FILE}`, startOfFileTemplate(context))
         } catch (error) {
           throw new Error(`${chalk.red('error creating recommended TEMPLATE directories:')}
           ${error}`)
