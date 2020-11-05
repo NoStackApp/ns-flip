@@ -157,7 +157,7 @@ async function storeCustomCodeRegions(
     }
   }
 
-  await fs.writeJson(customCodeFile, customCode)
+  await fs.writeJson(customCodeFile, customCode, {spaces: 2})
   return customCode
 }
 
