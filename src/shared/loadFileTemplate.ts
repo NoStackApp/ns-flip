@@ -5,6 +5,10 @@ Handlebars.registerHelper('curly', function (object: any, open: any) {
   return open ? '{' : '}'
 })
 
+Handlebars.registerHelper('safe', function (text: string) {
+  return new Handlebars.SafeString(text)
+})
+
 export async function loadFileTemplate(path: string) {
   let template = ''
   try {
