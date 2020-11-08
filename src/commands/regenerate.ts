@@ -1,6 +1,7 @@
 import {Command, flags} from '@oclif/command'
 import {isRequired} from '../inputs/isRequired'
 import {regenerateCode} from '../codeGeneration/regenerateCode'
+import {magicStrings} from '../constants'
 
 function isRequiredForRegenerate(paramName: string, flag: string) {
   return isRequired(paramName, 'regenerate', flag)
@@ -29,6 +30,6 @@ export default class Regenerate extends Command {
 
     await regenerateCode(codeDir)
 
-    this.log('Successfully regenerated!  For documentation: https://github.com/NoStackApp/ns-flip/wiki')
+    this.log(`Successfully regenerated!  For documentation: ${magicStrings.DOCUMENTATION}`)
   }
 }

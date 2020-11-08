@@ -40,7 +40,7 @@ You can create templates with locations designated for custom code.  You can als
 See some [standard use cases](https://github.com/NoStackApp/ns-flip/wiki/Uses).
 
 # How
-A _template_ is a directory with requirements explained in the [documentation](https://github.com/NoStackApp/ns-flip/wiki).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
+A _template_ is a directory with requirements explained in the [documentation](http://ns-flip.nostack.net/).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
 ![ns-flip-commands](images/ns-flip-commands.png)
 
@@ -55,11 +55,9 @@ Whenever you want to run an updated version of the template, create a new starte
 Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
 
 # Help
-* Read our [documentation](https://github.com/NoStackApp/ns-flip/wiki)
+* Read our [documentation](http://ns-flip.nostack.net)
 * Post questions on our [Community](https://spectrum.chat/ns-flip)
 *  [open issues](https://github.com/NoStackApp/ns-flip/issues/new)
-
-In short: don't be shy!
 
 # Usage
 <!-- usage -->
@@ -181,7 +179,7 @@ _See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/bl
 
 ## `ns test`
 
-Confirms that your custom changes have been entered safely, allowing you to generate with an updated or replaced template, or with a changed 'ns.yml' file. For documentation about the rules for custom code placement, please see https://github.com/NoStackApp/ns-flip/wiki/Safe-Custom-Code.
+Confirms that your custom changes have been entered safely, allowing you to generate with an updated or replaced template, or with a changed 'ns.yml' file. For documentation about the rules for custom code placement, please see http://ns-flip.nostack.net//Safe-Custom-Code.
 
 ```
 USAGE

@@ -83,7 +83,7 @@ export async function createStarter(
   const {placeholderAppCreation} = config
   if (!placeholderAppCreation) throw new Error('\'newstarter\' cannot run because ' +
     '\'placeholderAppCreation\' is undefined in the config of the template.' +
-    ' See https://github.com/NoStackApp/ns-flip/wiki/Setup-Sequence.')
+    ` See ${magicStrings.DOCUMENTATION}/Setup-Sequence.`)
 
   const {mainInstallation, devInstallation, preCommands, interactive} = placeholderAppCreation
 

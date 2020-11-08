@@ -3,6 +3,7 @@ import {checkForUpdates} from '../shared/checkForUpdates'
 import {newTemplateQuestions} from '../templates/newTemplateQuestions'
 import {TemplateRequirements} from '../templates/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/generateTemplateFiles'
+import {magicStrings} from '../constants'
 
 const expandTilde = require('expand-tilde')
 const path = require('path')
@@ -23,7 +24,7 @@ function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
 
   return `Created the template at '${fullNsDir}/templates/ns-template-${templateName}'.
 See instructions to get it working:
-    https://github.com/NoStackApp/ns-flip/wiki/Creating-Templates.
+    ${magicStrings.DOCUMENTATION}/Creating-Templates.
 
 Paste the following into your browser to set the variables used in the examples there
 (you may want to save the following lines to a file to reuse easily):

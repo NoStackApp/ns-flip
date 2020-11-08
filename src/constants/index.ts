@@ -121,6 +121,7 @@ export const magicStrings = {
   CONFIG_FILE: 'config.yml',
   SAMPLE_NS_FILE: 'sample.ns.yml',
   README_FILE: 'README.md',
+  DOCUMENTATION: 'http://ns-flip.nostack.net/',
 }
 
 const NS_DOMAIN = 'https://www.nostack.net'
