@@ -3,5 +3,5 @@ import {regExTemplateAbbreviation} from '../constants/Regex/regExTemplateAbbrevi
 export function expandNsAbbreviations(template: string) {
   return template
   .replace(regExTemplateAbbreviation, '{{$1 \'$2\'}}')
-  .replace('/{{nsFile}}/g', '// ns__file {{fileInfo}}')
+  .replace('{{nsFile}}', '// ns__file {{fileInfo}}')
 }

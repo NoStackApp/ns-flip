@@ -1,13 +1,19 @@
+import {expandNsAbbreviations} from '../shared/expandNsbbreviations'
+
 const path = require('path')
 const Handlebars = require('handlebars')
 const fs = require('fs-extra')
 
-function registerPartial(path: string, name: string) {
-  // Require partial
-  const template = require(path)
+async function registerPartial(path: string, name: string) {
+  let templateString = ''
+  try {
+    templateString = await fs.readFile(path, 'utf-8')
+  } catch (error) {
+    throw new Error(`couldn't read the partial file ${path}`)
+  }
 
-  // Register partial
-  Handlebars.registerPartial(name, template)
+  templateString = expandNsAbbreviations(templateString)
+  Handlebars.registerPartial(name, templateString)
 }
 
 export async function registerPartials(dir: string) {
@@ -24,7 +30,7 @@ export async function registerPartials(dir: string) {
 
     if (fileType === '.hbs' || fileType === '.handlebars') {
       const partialName = path.parse(filePath).name
-      registerPartial(filePath, partialName)
+      await registerPartial(filePath, partialName)
     }
   },
   ))

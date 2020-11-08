@@ -16,9 +16,9 @@ Handlebars.registerHelper('safe', function (text: string) {
 //   return new Handlebars.SafeString(`// ns__start_section ${sectionName.fileInfo}, loc: ${sectionName}`)
 // })
 
-Handlebars.registerHelper('nsFile', function (general: any) {
-  return new Handlebars.SafeString(`/* ns__file  ${general.fileInfo} */`)
-})
+// Handlebars.registerHelper('nsFile', function (general: any) {
+//   return new Handlebars.SafeString(`/* ns__file  ${general.fileInfo} */`)
+// })
 
 Handlebars.registerHelper('start', function (locationName: string) {
   return new Handlebars.SafeString(`/* ns__start_section ${locationName} */`)
