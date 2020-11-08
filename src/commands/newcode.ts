@@ -3,6 +3,7 @@ import {createCode} from '../apps/createCode'
 
 import {isRequired} from '../inputs/isRequired'
 import {checkForUpdates} from '../shared/checkForUpdates'
+import {magicStrings} from '../constants'
 
 function isRequiredForNewCode(paramName: string, flag: string) {
   return isRequired(paramName, 'newapp', flag)
@@ -37,6 +38,6 @@ export default class Newcode extends Command {
     })
     // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${appDir}"`)
 
-    this.log('Created the code base.  For documentation: https://github.com/NoStackApp/ns-flip/wiki')
+    this.log(`Created the code base.  For documentation: ${magicStrings.DOCUMENTATION}`)
   }
 }

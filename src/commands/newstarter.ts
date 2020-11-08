@@ -3,6 +3,7 @@ import {Command, flags} from '@oclif/command'
 import {createStarter} from '../apps/createStarter'
 import {isRequired} from '../inputs/isRequired'
 import {checkForUpdates} from '../shared/checkForUpdates'
+import {magicStrings} from '../constants'
 
 function isRequiredForNewStarter(paramName: string, flag: string) {
   return isRequired(paramName, 'newstarter', flag)
@@ -46,7 +47,7 @@ export default class Newstarter extends Command {
       throw new Error(`Problem creating starter: ${error}`)
     }
 
-    this.log('Created the starter.  For documentation: https://github.com/NoStackApp/ns-flip/wiki')
+    this.log(`Created the starter.  For documentation: ${magicStrings.DOCUMENTATION}`)
     // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${appDir}"`)
   }
 }
