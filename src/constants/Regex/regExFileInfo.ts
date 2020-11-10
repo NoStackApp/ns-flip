@@ -1,4 +1,7 @@
-import {commentClose, commentOpen, possibleSpace, space} from './regExShared'
+import {closing, opening, space, specString} from './regExShared'
+import {markupTags} from '..'
 
-const regExFileText = `${commentOpen}${space}ns__file unit:${space}(\\S*),${space}comp:${space}(\\S*)${possibleSpace}${commentClose}`
-export const regExFileInfo = new RegExp(regExFileText, 'g')
+export const regExFileText = opening + markupTags.FILE_INFO +
+  space + 'unit:' + specString + ',' +
+  space + 'comp:' + specString +
+  closing

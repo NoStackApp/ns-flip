@@ -1,21 +1,21 @@
-import {Configuration} from '../constants/types/configuration'
+import {Configuration} from '../../constants/types/configuration'
 
 const fs = require('fs-extra')
 
-import {NsInfo} from '../constants/types/nsInfo'
-import {allCaps} from '../shared/inflections'
-import {loadFileTemplate} from '../shared/loadFileTemplate'
-import {parseSpecName} from '../constants/parseSpecName'
+import {NsInfo} from '../../constants/types/nsInfo'
+import {allCaps} from '../../shared/inflections'
+import {loadFileTemplate} from '../../shared/loadFileTemplate'
+import {parseSpecName} from '../../constants/parseSpecName'
 import {unitNameFromSpec} from './unitNameFromSpec'
 
-export async function dynamicFiles(config: Configuration, appInfo: NsInfo, appDir: string) {
-  if (!appInfo.backend ||
-    !appInfo.backend.queries ||
+export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, appDir: string) {
+  if (!nsInfo.backend ||
+    !nsInfo.backend.queries ||
     !config.dirs.queries
   ) return
 
   // create query files in the directory specified by the template.
-  const {units, template, backend} = appInfo
+  const {units, template, backend} = nsInfo
   if (!units) return
   const templateDir = template.dir
   const queriesDir = `${appDir}/${config.dirs.queries}`

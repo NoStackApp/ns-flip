@@ -1,7 +1,7 @@
-import {commentOpen, content, commentClose, possibleSpace} from './regExShared'
+import {content, openingMarker, closingMarker} from './regExShared'
+import {markupTags} from '..'
 
-const firstLineBody = `${commentOpen} ns__custom_start (\\S*)${possibleSpace}${commentClose}`
-const fullRegExBody = `${firstLineBody}${content}${commentOpen} ns__custom_end \\2${possibleSpace}${commentClose}`
+const openCustom = openingMarker(markupTags.CUSTOM_START)
+const closeCustom = closingMarker(markupTags.CUSTOM_END)
 
-export const regExNewCustomLocation = new RegExp(fullRegExBody, 'g')
-export const regExForFirstLine = new RegExp(firstLineBody, 'g')
+export const customLocationNewRegExString = openCustom + content + closeCustom

@@ -1,7 +1,12 @@
-import {commentOpen, content, commentClose, locationRepetition, locationSpec} from './regExShared'
+// just for backward compatibility
+import {
+  content,
+  locationRepetition,
+  locationSpec,
+  space,
+  opening,
+  closing,
+} from './regExShared'
 
-const firstLineBody = `${commentOpen}[ \\t]*ns__custom_start[ \\t]+unit: ${locationSpec}${commentClose}`
-const fullRegExBody = `${firstLineBody}${content}${commentOpen}[ \\t]*ns__custom_end[ \\t]+unit: ${locationRepetition}${commentClose}`
-
-export const regExCustomLocation = new RegExp(fullRegExBody, 'g')
-export const regExForFirstLine = new RegExp(firstLineBody, 'g')
+const firstLineBody = `${opening}ns__custom_start${space}unit:${space}${locationSpec}${closing}`
+export const customLocationRegExString = `${firstLineBody}${content}${opening}ns__custom_end${space}unit:${space}${locationRepetition}${closing}`

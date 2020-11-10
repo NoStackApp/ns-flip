@@ -1,8 +1,8 @@
-import {BoilerPlateInfoType, nodeTypes} from '../../constants'
-import {NsInfo} from '../../constants/types/nsInfo'
-import {SourceInfo, Schema} from '../../constants/types/schema'
+import {BoilerPlateInfoType, nodeTypes} from '../../../constants'
+import {NsInfo} from '../../../constants/types/nsInfo'
+import {SourceInfo, Schema} from '../../../constants/types/schema'
 import {generateTypeFile} from './generateTypeFile'
-import {Configuration} from '../../constants/types/configuration'
+import {Configuration} from '../../../constants/types/configuration'
 
 export async function generateFilesForType(
   appInfo: NsInfo,

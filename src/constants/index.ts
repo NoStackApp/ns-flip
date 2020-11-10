@@ -124,6 +124,16 @@ export const magicStrings = {
   DOCUMENTATION: 'http://ns-flip.nostack.net/',
 }
 
+export const markupTags = {
+  CUSTOM_START: 'ns__custom_start',
+  CUSTOM_END: 'ns__custom_end',
+  SECTION_START: 'ns__start_section',
+  SECTION_END: 'ns__end_section',
+  REPLACEMENT_START: 'ns__start_replacement',
+  REPLACEMENT_END: 'ns__end_replacement',
+  FILE_INFO: 'ns__file',
+}
+
 const NS_DOMAIN = 'https://www.nostack.net'
 const NS_FLIP_NPM = 'https://www.npmjs.com/package/ns-front'
 

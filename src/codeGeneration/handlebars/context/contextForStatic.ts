@@ -1,6 +1,6 @@
-import {Configuration} from '../../constants/types/configuration'
-import {NsInfo} from '../../constants/types/nsInfo'
-import {pluralLowercaseName, pluralName, singularName} from '../../shared/inflections'
+import {Configuration} from '../../../constants/types/configuration'
+import {NsInfo} from '../../../constants/types/nsInfo'
+import {pluralLowercaseName, pluralName, singularName} from '../../../shared/inflections'
 import {createGeneralInfo} from './createGeneralInfo'
 
 const Handlebars = require('handlebars')

@@ -1,11 +1,11 @@
-import {NsInfo} from '../constants/types/nsInfo'
-import {Schema} from '../constants/types/schema'
-import {loadFileTemplate} from '../shared/loadFileTemplate'
-import {registerHelpers} from './registerHelpers'
-import {registerPartials} from './registerPartials'
-import {Configuration} from '../constants/types/configuration'
-import {magicStrings} from '../constants'
-import {contextForStatic} from './context/contextForStatic'
+import {NsInfo} from '../../constants/types/nsInfo'
+import {Schema} from '../../constants/types/schema'
+import {loadFileTemplate} from '../../shared/loadFileTemplate'
+import {registerHelpers} from '../handlebars/registerHelpers'
+import {registerPartials} from '../handlebars/registerPartials'
+import {Configuration} from '../../constants/types/configuration'
+import {magicStrings} from '../../constants'
+import {contextForStatic} from '../handlebars/context/contextForStatic'
 
 const fs = require('fs-extra')
 

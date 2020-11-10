@@ -1,10 +1,10 @@
-import {standardIgnored} from '../constants'
-import {NsInfo} from '../constants/types/nsInfo'
-import {Schema} from '../constants/types/schema'
-import {contextForStandard} from './context/contextForStandard'
-import {loadFileTemplate} from '../shared/loadFileTemplate'
-import {registerHelpers} from './registerHelpers'
-import {registerPartials} from './registerPartials'
+import {standardIgnored} from '../../constants'
+import {NsInfo} from '../../constants/types/nsInfo'
+import {Schema} from '../../constants/types/schema'
+import {contextForStandard} from '../handlebars/context/contextForStandard'
+import {loadFileTemplate} from '../../shared/loadFileTemplate'
+import {registerHelpers} from '../handlebars/registerHelpers'
+import {registerPartials} from '../handlebars/registerPartials'
 
 const fs = require('fs-extra')
 const path = require('path')

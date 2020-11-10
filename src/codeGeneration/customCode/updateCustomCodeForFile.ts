@@ -1,11 +1,12 @@
 import {FileCustomCode} from '../../constants/types/custom'
-import {regExCustomLocation} from '../../constants/Regex/regExCustomLocation'
+import {customLocationRegExString} from '../../constants/Regex/regExCustomLocation'
 import {
   regExReplacedCodeSectionGenerated,
   regExReplacedCodeSectionTagged,
 } from '../../constants/Regex/regExReplacedCodeSection'
-import {commentClose, commentOpen, locationSpec} from '../../constants/Regex/regExShared'
-import {regExNewCustomLocation} from '../../constants/Regex/regExNewCustomLocation'
+import {customLocationNewRegExString} from '../../constants/Regex/regExNewCustomLocation'
+import {regExCleanupText} from '../../constants/Regex/regExCleanupText'
+import {customCleanupRegExText} from '../../constants/Regex/regExCustomCleanup'
 
 export const fs = require('fs-extra')
 
@@ -38,6 +39,8 @@ NEW:
     let contents = match[4]
 
    */
+  const regExNewCustomLocation = new RegExp(customLocationNewRegExString, 'g')
+
   fileText = fileText.replace(regExNewCustomLocation, function (
     match: string,
     commentOpen: string,
@@ -62,6 +65,7 @@ NEW:
     // return lines[0] + '\n' + addedCode[location] + lines[lines.length - 1].trimLeft()
   })
 
+  const regExCustomLocation = new RegExp(customLocationRegExString, 'g')
   fileText = fileText.replace(regExCustomLocation, function (
     match: string,
     commentOpen: string,
@@ -113,22 +117,16 @@ NEW:
   fileText = fileText.replace(regExReplacedCodeSectionGenerated, function (
     match: string,
     firstCommentOpen: string,
-    unit: string,
-    comp: string,
     location: string,
   ) {
-    // console.log(`unit=${unit} comp=${comp} location=${location}`)
-
     if (!replacedCode[location]) return match
-    // console.log(`replacement found: unit=${unit} comp=${comp} location=${location}`)
+
     return match.replace('ns__start_section', 'ns__start_replacement')
   })
 
   fileText = fileText.replace(regExReplacedCodeSectionTagged, function (
     match: string,
     firstCommentOpen: string,
-    unit: string,
-    comp: string,
     location: string,
     endOfLine: string,
     content: string,
@@ -136,22 +134,19 @@ NEW:
     commentOpen: string,
     finalEndOfLine: string,
   ) {
-    // console.log(`unit=${unit} comp=${comp} location=${location}`)
-
     if (!replacedCode[location]) return match
     const lines = match.split('\n')
 
     const fullReplacement = lines[0] +
             '\n' + replacedCode[location] +
             commentOpen +
-            ` ns__end_replacement unit: ${unit}, comp: ${comp}, loc: ${location}` +
+            ` ns__end_replacement ${location} ` +
             finalEndOfLine
     return fullReplacement
   })
 
   // clean up
-  const delimiter = `${commentOpen} ns__(start|end)_(section|replacement) unit: ${locationSpec}${commentClose}`
-  const regExCleanUp = new RegExp(delimiter, 'g')
+  const regExCleanUp = new RegExp(regExCleanupText, 'g')
 
   fileText = fileText.replace(regExCleanUp, function (
     match: string,
@@ -166,8 +161,7 @@ NEW:
     return `${opening} ns__${prefix}_${type} ${location}${endOfLine}`
   })
 
-  const customDelimiter = `${commentOpen} ns__custom_(start|end) unit: ${locationSpec}${commentClose}`
-  const regExCustomCleanUp = new RegExp(customDelimiter, 'g')
+  const regExCustomCleanUp = new RegExp(customCleanupRegExText, 'g')
 
   fileText = fileText.replace(regExCustomCleanUp, function (
     match: string,
