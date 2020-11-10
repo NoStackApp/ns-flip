@@ -1,7 +1,7 @@
 import {CustomCodeRepository} from '../../constants/types/custom'
-import {regExCustomLocation} from '../../constants/Regex/regExCustomLocation'
-import {regExNewCustomLocation} from '../../constants/Regex/regExNewCustomLocation'
-import {regExReplacedCodeSection} from '../../constants/Regex/regExReplacedCodeSection'
+import {customLocationRegExString} from '../../constants/Regex/regExCustomLocation'
+import {customLocationNewRegExString} from '../../constants/Regex/regExNewCustomLocation'
+import {replacedRexExText} from '../../constants/Regex/regExReplacedCodeSection'
 import {getFileInfo} from './getFileInfo'
 
 export const fs = require('fs-extra')
@@ -26,7 +26,9 @@ export async function storeCustomCodeForFile(
   const fileText = await fs.readFile(filePath, 'utf-8')
   const fileInfo = getFileInfo(fileText)
 
+  const regExCustomLocation = new RegExp(customLocationRegExString, 'g')
   let match
+
   // eslint-disable-next-line no-cond-assign
   while (match = regExCustomLocation.exec(fileText)) {
     // if (!output[match[1]])
@@ -50,6 +52,7 @@ export async function storeCustomCodeForFile(
     addedCode[unit][component][location] = contents
   }
 
+  const regExNewCustomLocation = new RegExp(customLocationNewRegExString, 'g')
   // eslint-disable-next-line no-cond-assign
   while (match = regExNewCustomLocation.exec(fileText)) {
     const {unit, component} = fileInfo
@@ -69,6 +72,7 @@ export async function storeCustomCodeForFile(
     addedCode[unit][component][location] = contents
   }
 
+  const regExReplacedCodeSection = new RegExp(replacedRexExText, 'g')
   // eslint-disable-next-line no-cond-assign
   while (match = regExReplacedCodeSection.exec(fileText)) {
     // if (!output[match[1]])

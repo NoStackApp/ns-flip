@@ -1,4 +1,4 @@
-import {dirOptions} from '../shared/dirOptions'
+import {dirOptions} from '../../shared/dirOptions'
 
 const fs = require('fs-extra')
 

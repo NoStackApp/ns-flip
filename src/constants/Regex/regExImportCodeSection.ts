@@ -1,2 +1,2 @@
-const fullRegExBody = '\\nimport (.*) from'
-export const regExReplacedCodeSection = new RegExp(fullRegExBody, 'g')
+// const importRegExText = '\\nimport (.*) from'
+// export const regExImportCodeSection = new RegExp(importRegExText, 'g')

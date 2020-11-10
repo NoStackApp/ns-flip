@@ -1,12 +1,12 @@
-import {dataTypes, nodeTypes, magicStrings} from '../../constants'
-import {NsInfo, BackendIdList} from '../../constants/types/nsInfo'
-import {Schema} from '../../constants/types/schema'
+import {dataTypes, nodeTypes, magicStrings} from '../../../constants'
+import {NsInfo, BackendIdList} from '../../../constants/types/nsInfo'
+import {Schema} from '../../../constants/types/schema'
 import {
   allCaps,
   pluralLowercaseName,
   pluralName,
   singularName,
-} from '../../shared/inflections'
+} from '../../../shared/inflections'
 import {createGeneralInfo} from './createGeneralInfo'
 
 const Handlebars = require('handlebars')
