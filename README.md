@@ -70,7 +70,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/1.6.8 linux-x64 node-v14.9.0
+ns-flip/1.6.9 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -86,6 +86,7 @@ USAGE
 * [`ns newtemplate`](#ns-newtemplate)
 * [`ns regenerate`](#ns-regenerate)
 * [`ns test`](#ns-test)
+* [`ns validate`](#ns-validate)
 
 ## `ns help [COMMAND]`
 
@@ -121,7 +122,7 @@ EXAMPLE
   $ ns newcode -c ~/projects/myapp -s ~/ns/starters/current
 ```
 
-_See code: [lib/commands/newcode.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.8/lib/commands/newcode.js)_
+_See code: [lib/commands/newcode.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/newcode.js)_
 
 ## `ns newstarter`
 
@@ -144,7 +145,7 @@ EXAMPLES
   $ ns newstarter -t $TEMPLATE -s $STARTER -c $CODE -f
 ```
 
-_See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.8/lib/commands/newstarter.js)_
+_See code: [lib/commands/newstarter.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/newstarter.js)_
 
 ## `ns newtemplate`
 
@@ -161,7 +162,7 @@ EXAMPLE
   $ ns newtemplate
 ```
 
-_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.8/lib/commands/newtemplate.js)_
+_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/newtemplate.js)_
 
 ## `ns regenerate`
 
@@ -179,7 +180,7 @@ EXAMPLE
   $ nd regenerate -c ~/projects/myapp
 ```
 
-_See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.8/lib/commands/regenerate.js)_
+_See code: [lib/commands/regenerate.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/regenerate.js)_
 
 ## `ns test`
 
@@ -201,5 +202,24 @@ EXAMPLE
   $ ns test -c ~/projects/myapp
 ```
 
-_See code: [lib/commands/test.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.8/lib/commands/test.js)_
+_See code: [lib/commands/test.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/test.js)_
+
+## `ns validate`
+
+Confirms that your custom changes have been entered safely, allowing you to generate with an updated or replaced template, or with a changed 'ns.yml' file. For documentation about the rules for custom code placement, please see http://ns-flip.nostack.net//Safe-Custom-Code.
+
+```
+USAGE
+  $ ns validate
+
+OPTIONS
+  -h, --help  show CLI help
+
+DESCRIPTION
+  Essentially, the test generates a new version of the code and then simply compares it against your current version.  
+  If there are differences, then there is a problem with your code.
+
+EXAMPLE
+  $ ns validate ~/projects/myapp
+```
 <!-- commandsstop -->
