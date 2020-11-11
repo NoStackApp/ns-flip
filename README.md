@@ -55,9 +55,13 @@ Whenever you want to run an updated version of the template, create a new starte
 Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
 
 # Help
+
 * Read our [documentation](http://ns-flip.nostack.net)
 * Post questions on our [Community](https://spectrum.chat/ns-flip)
 *  [open issues](https://github.com/NoStackApp/ns-flip/issues/new)
+
+[![Getting Started with ns-flip 1.6 Templating](http://img.youtube.com/vi/_Wg1J9KKvns/0.jpg)](http://www.youtube.com/watch?v=_Wg1J9KKvns)
+
 
 # Usage
 <!-- usage -->
