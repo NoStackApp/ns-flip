@@ -52,6 +52,14 @@ To generate code from a template:
 
 Whenever you want to run an updated version of the template, create a new starter (as in step 1) and then run `ns regenerate -c <code>` again.
 
+<!-- blank line -->
+<figure class="video_container">
+  <iframe src="https://www.youtube.com/watch?v=_Wg1J9KKvns" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
+<!-- blank line -->
+
+
+
 Here's a [sample template](https://github.com/YizYah/basicNsFrontTemplate).
 
 # Help
