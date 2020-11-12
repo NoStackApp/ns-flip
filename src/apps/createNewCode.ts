@@ -1,4 +1,4 @@
-import {getAppDir} from '../inputs/getAppDir'
+import {getCodeDir} from '../inputs/getCodeDir'
 import {errorMessage} from '../shared/errorMessage'
 import {magicStrings} from '../constants'
 import {copyTemplateToMeta} from './copyTemplateToMeta'
@@ -27,11 +27,11 @@ export async function createNewCode(
     {
       title: 'Copy directory to new app directory',
       task: async () => {
-        const finalAppDir = await getAppDir(codeDir) || ''
+        const finalCodeDir = await getCodeDir(codeDir) || ''
 
         await execa(
           'cp',
-          ['-r', starterDir, finalAppDir],
+          ['-r', starterDir, finalCodeDir],
         ).catch(
           (error: any) => {
             throw new Error(`${chalk.red(`error copying over from ${starterDir}.`)} Here is the error reported:\n${error}`)

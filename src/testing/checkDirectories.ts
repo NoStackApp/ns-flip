@@ -38,12 +38,12 @@ const permittedCompDirectories = [
 ]
 
 export async function checkDirectories(
-  appDir: string,
+  codeDir: string,
   logFile: string,
   problemsFound: boolean,
 ) {
-  const testDir = `${appDir}.test`
-  const appSrc = `${appDir}/src`
+  const testDir = `${codeDir}.test`
+  const appSrc = `${codeDir}/src`
   const testSrc = `${testDir}/src`
   const appComponents = `${appSrc}/components`
   const testComponents = `${testSrc}/components`
@@ -60,7 +60,7 @@ export async function checkDirectories(
     if (extraFiles.length > 0) {
       problemsFound = true
       const logMessage = `
-**** extra files found in the ${appDir}/src directory!!
+**** extra files found in the ${codeDir}/src directory!!
 You have the following files or directories that should not be found:
 \t${extraFiles.join('\n\t')}
 If you have extra code, it belongs in the custom directory.  Code specific to

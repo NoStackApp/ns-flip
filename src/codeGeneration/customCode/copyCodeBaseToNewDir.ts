@@ -10,7 +10,7 @@ export async function copyCodeBaseToNewDir(codeDir: string, newDir: string) {
   }
 
   // try {
-  //   await fs.copy(baseApp, testAppDir)
+  //   await fs.copy(baseApp, testCodeDir)
   //   console.log('success!')
   // } catch (err) {
   //   console.error(err)

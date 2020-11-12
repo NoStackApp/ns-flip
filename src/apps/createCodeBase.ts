@@ -18,8 +18,8 @@ const yaml = require('js-yaml')
 
 function convertCommandArgs(args: string[] | undefined, codeDir: string) {
   if (!args) return []
-  // const output = args.map((arg: string) => arg.replace('$appDir', appDir)).push(`>> ${LOGFILE}`)
-  const output = args.map((arg: string) => arg.replace('$appDir', codeDir))
+  // const output = args.map((arg: string) => arg.replace('$codeDir', codeDir)).push(`>> ${LOGFILE}`)
+  const output = args.map((arg: string) => arg.replace('$codeDir', codeDir))
   // output.push(`>> ${LOGFILE}`)
   return output
 }
@@ -164,12 +164,12 @@ export async function createCodeBase(
   }
 
   const config: Configuration = await getConfiguration(finalTemplateDir)
-  const {placeholderAppCreation} = config
-  if (!placeholderAppCreation) throw new Error('\'generate\' cannot run because ' +
-    '\'placeholderAppCreation\' is undefined in the config of the template.' +
+  const {setupSequence} = config
+  if (!setupSequence) throw new Error('\'generate\' cannot run because ' +
+    '\'setupSequence\' is undefined in the config of the template.' +
     ` See ${magicStrings.DOCUMENTATION}/${docPages.SETUP}.`)
 
-  const {mainInstallation, devInstallation, preCommands, interactive} = placeholderAppCreation
+  const {mainInstallation, devInstallation, preCommands, interactive} = setupSequence
 
   await checkFolder(starterDir)
   if (interactive) await interactiveSequence(interactive, starterDir)

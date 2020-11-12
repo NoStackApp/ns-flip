@@ -6,7 +6,7 @@ import {CustomCodeRepository} from '../constants/types/custom'
 
 import {errorMessage} from '../shared/errorMessage'
 import {CommandSpec, Configuration} from '../constants/types/configuration'
-// import {getAppDir} from '../inputs/getAppDir'
+// import {getCodeDir} from '../inputs/getCodeDir'
 import {createCode} from './createCode'
 import {regenerateCode} from '../codeGeneration/regenerateCode'
 
@@ -18,8 +18,8 @@ const yaml = require('js-yaml')
 
 function convertCommandArgs(args: string[]|undefined, codeDir: string) {
   if (!args) return []
-  // const output = args.map((arg: string) => arg.replace('$appDir', appDir)).push(`>> ${LOGFILE}`)
-  const output = args.map((arg: string) => arg.replace('$appDir', codeDir))
+  // const output = args.map((arg: string) => arg.replace('$codeDir', codeDir)).push(`>> ${LOGFILE}`)
+  const output = args.map((arg: string) => arg.replace('$codeDir', codeDir))
   // output.push(`>> ${LOGFILE}`)
   return output
 }
@@ -80,12 +80,12 @@ export async function createStarter(
   force: boolean,
 ) {
   const config: Configuration = await getConfiguration(templateDir)
-  const {placeholderAppCreation} = config
-  if (!placeholderAppCreation) throw new Error('\'newstarter\' cannot run because ' +
-    '\'placeholderAppCreation\' is undefined in the config of the template.' +
+  const {setupSequence} = config
+  if (!setupSequence) throw new Error('\'newstarter\' cannot run because ' +
+    '\'setupSequence\' is undefined in the config of the template.' +
     ` See ${magicStrings.DOCUMENTATION}/Setup-Sequence.`)
 
-  const {mainInstallation, devInstallation, preCommands, interactive} = placeholderAppCreation
+  const {mainInstallation, devInstallation, preCommands, interactive} = setupSequence
 
   await checkFolder(starterDir, force)
   if (interactive) await interactiveSequence(interactive, starterDir)

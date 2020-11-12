@@ -56,6 +56,6 @@ export default class Generate extends Command {
     }
 
     this.log(`Generated the code at ${codeDir}.  For documentation: ${magicStrings.DOCUMENTATION}`)
-    // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${appDir}"`)
+    // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${codeDir}"`)
   }
 }

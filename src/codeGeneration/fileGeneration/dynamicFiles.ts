@@ -9,7 +9,7 @@ import {parseSpecName} from '../../constants/parseSpecName'
 import {unitNameFromSpec} from './unitNameFromSpec'
 import {magicStrings} from '../../constants'
 
-export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, appDir: string) {
+export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDir: string) {
   if (!nsInfo.backend ||
     !nsInfo.backend.queries ||
     !config.dirs.queries
@@ -20,10 +20,10 @@ export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, appDir
   if (!units) return
 
   // const templateDir = template.dir
-  const queriesDir = `${appDir}/${config.dirs.queries}`
+  const queriesDir = `${codeDir}/${config.dirs.queries}`
 
   // WARNING: breaking change from 1.6.8!!
-  const metaDir = `${appDir}/${magicStrings.META_DIR}`
+  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
   const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
 
   const queryFileTemplate = await loadFileTemplate(`${templateDir}/query.hbs`)
