@@ -1,12 +1,12 @@
 import {expect, test} from '@oclif/test'
-describe('newstarter', () => {
+describe('check', () => {
   test
   .stderr()
-  .command(['newstarter', '-s', 'testStarter', '-t', 'nonExistentTemplate'])
+  .command(['check', 'nonexistentFile'])
   .catch(error => {
-    expect(error.message).to.contain('error finding the config file nonExistentTemplate')
+    expect(error.message).to.contain('no such file or directory')
   })
-  .it('requires existing starter')
+  .it('requires existent code base')
 })
 
 // describe('generate', () => {
