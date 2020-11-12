@@ -17,7 +17,7 @@ export async function generateCode(
   config: Configuration,
   // jsonPath: string,
 ) {
-  const {userClass, units, template, starter} = nsInfo
+  const {userClass, units, starter} = nsInfo
   if (!starter) throw new Error(`the '${magicStrings.NS_FILE}' file contains no starter.  ` +
     'You need a starter to generate code.')
 

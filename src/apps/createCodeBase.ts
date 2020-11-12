@@ -72,10 +72,14 @@ export async function createCodeBase(
   starterDir: string,
   templateDir: string | undefined,
   codeDir: string,
+  noSetup: boolean
 ) {
   const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
   const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
   const existsCodeTemplateDir = await fs.pathExists(codeTemplateDir)
+  if (!templateDir && noSetup) {
+    throw new Error('the noSetup flag cannot be used unless a template is specified.')
+  }
 
   if (!templateDir && !existsCodeTemplateDir) {
     if (!await fs.pathExists(codeDir)) {
@@ -132,8 +136,6 @@ export async function createCodeBase(
 
   const isStarterDir = await fs.pathExists(starterDir)
 
-  console.log(`isStarterDir=${isStarterDir}`)
-
   if (!templateDir && isStarterDir) {
     // const isInstalledTemplate = await fs.pathExists(codeMetaDir + '/' + magicStrings.TEMPLATE)
     // if (!isStarterDir || !isInstalledTemplate) {
@@ -145,7 +147,21 @@ export async function createCodeBase(
     ])
   }
 
-  console.log('there is no starter... we must build it.')
+  if (templateDir && noSetup) {
+    const copyTemplate =     {
+      title: 'Copy template to dir',
+      task: async () => {
+        const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
+        const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
+        await copyTemplateToMeta(codeTemplateDir, templateDir)
+      },
+    }
+
+    return new Listr([
+      copyTemplate,
+      generateCode,
+    ])
+  }
 
   const config: Configuration = await getConfiguration(finalTemplateDir)
   const {placeholderAppCreation} = config

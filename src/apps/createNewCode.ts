@@ -13,9 +13,6 @@ export async function createNewCode(
   starterDir: string,
   templateDir: string,
 ) {
-  const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
-  const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
-  console.log(`codeTemplateDir = ${codeTemplateDir}`)
   const tasksCopyFromBaseApp = new Listr([
     {
       title: 'Check for baseApp',

@@ -6,12 +6,11 @@ import {logEntry} from '../testing/logEntry'
 
 const descriptionString = 'Confirms that your custom changes have been entered safely, ' +
   `allowing you to generate with an updated or replaced template, or with a changed '${magicStrings.NS_FILE}' file. ` +
-  'For documentation about the rules for custom code placement, ' +
-  `please see ${magicStrings.DOCUMENTATION}/Safe-Custom-Code.\n` +
-  '\n' +
-  'Essentially, the test generates a new version of the code ' +
+  'Essentially, generates a new version of the code ' +
   'and then simply compares it against your current version.  ' +
-  'If there are differences, then there is a problem with your code.'
+  'If there are differences, then there is a problem with your code.' +
+  ' For documentation about safe custom code changes, ' +
+  `please see ${magicStrings.DOCUMENTATION}/Safe-Custom-Code.`
 
 export default class Check extends Command {
   static description = String(descriptionString)

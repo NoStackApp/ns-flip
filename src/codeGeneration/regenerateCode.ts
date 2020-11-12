@@ -34,7 +34,7 @@ export async function regenerateCode(codeDir: string) {
   const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
   const nsInfo = await getCodeInfo(nsYml)
 
-  const {template, starter} = nsInfo
+  const {starter} = nsInfo
 
   // WARNING: breaking change from 1.6.8!!
   // const config = await getConfiguration(template.dir)

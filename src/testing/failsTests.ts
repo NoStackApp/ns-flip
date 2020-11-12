@@ -23,7 +23,7 @@ export async function failsTests(codeDir: string) {
   const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
   const nsInfo = await getCodeInfo(nsYml)
 
-  const {template, starter} = nsInfo
+  const {starter} = nsInfo
 
   const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
 
