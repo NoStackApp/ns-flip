@@ -1,5 +1,5 @@
 import {Command, flags} from '@oclif/command'
-import {links, magicStrings} from '../constants'
+import {links, magicStrings, suffixes} from '../constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {isRequired} from '../shared/isRequired'
 import {failsTests} from '../testing/failsTests'
@@ -35,7 +35,7 @@ export default class Test extends Command {
     const {flags} = this.parse(Test)
     const codeDir = flags.codeDir || isRequired('appDir', 'test', 'c')
 
-    const testDir = `${codeDir}${magicStrings.TEST_DIR_SUFFIX}`
+    const testDir = `${codeDir}${suffixes.TEST_DIR}`
     const testMetaDir = `${testDir}/${magicStrings.META_DIR}`
 
     const diffsFile = `${testMetaDir}/${magicStrings.DIFFS}`

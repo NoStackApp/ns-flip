@@ -1,5 +1,5 @@
 import {Command, flags} from '@oclif/command'
-import {links, magicStrings} from '../constants'
+import {links, magicStrings, suffixes} from '../constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
@@ -13,11 +13,11 @@ const descriptionString = 'Confirms that your custom changes have been entered s
   'and then simply compares it against your current version.  ' +
   'If there are differences, then there is a problem with your code.'
 
-export default class Validate extends Command {
+export default class Check extends Command {
   static description = String(descriptionString)
 
   static examples = [
-    '$ ns validate ~/projects/myapp',
+    '$ ns check ~/projects/myapp',
   ];
 
   static flags = {
@@ -29,18 +29,18 @@ export default class Validate extends Command {
     {
       name: 'codeDir',
       required: true,
-      description: 'directory containing the code to test',
-      hidden: true,               // hide this arg from help
+      description: 'directory containing the code to check',
+      hidden: false,               // hide this arg from help
     },
   ];
 
   async run() {
     checkForUpdates()
 
-    const {args} = this.parse(Validate)
+    const {args} = this.parse(Check)
     const codeDir = args.codeDir
 
-    const testDir = `${codeDir}${magicStrings.TEST_DIR_SUFFIX}`
+    const testDir = `${codeDir}${suffixes.TEST_DIR}`
     const testMetaDir = `${testDir}/${magicStrings.META_DIR}`
 
     const diffsFile = `${testMetaDir}/${magicStrings.DIFFS}`

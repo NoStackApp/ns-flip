@@ -26,8 +26,13 @@ export async function generateCode(
   // console.log(`stacklocation=${appDir}/stack.json`)
   // const stackInfo: Schema = await fs.readJSON(jsonPath) // await generateJSON.bind(this)(template, appDir)
 
+  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
+  const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
+
   try {
-    await standardFiles(template.dir, codeDir, nsInfo, stackInfo)
+    // WARNING: breaking change from 1.6.8!!
+    // await standardFiles(template.dir, codeDir, nsInfo, stackInfo)
+    await standardFiles(templateDir, codeDir, nsInfo, stackInfo)
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
@@ -84,7 +89,7 @@ export async function generateCode(
       userClass,
       nsInfo,
       stackInfo,
-      template.dir,
+      templateDir,
       compDir,
       config
     )
@@ -94,7 +99,7 @@ export async function generateCode(
 
   try {
     await staticFiles(
-      template.dir,
+      templateDir,
       codeDir,
       nsInfo,
       stackInfo,

@@ -7,6 +7,7 @@ import {allCaps} from '../../shared/inflections'
 import {loadFileTemplate} from '../../shared/loadFileTemplate'
 import {parseSpecName} from '../../constants/parseSpecName'
 import {unitNameFromSpec} from './unitNameFromSpec'
+import {magicStrings} from '../../constants'
 
 export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, appDir: string) {
   if (!nsInfo.backend ||
@@ -15,10 +16,15 @@ export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, appDir
   ) return
 
   // create query files in the directory specified by the template.
-  const {units, template, backend} = nsInfo
+  const {units, backend} = nsInfo
   if (!units) return
-  const templateDir = template.dir
+
+  // const templateDir = template.dir
   const queriesDir = `${appDir}/${config.dirs.queries}`
+
+  // WARNING: breaking change from 1.6.8!!
+  const metaDir = `${appDir}/${magicStrings.META_DIR}`
+  const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
 
   const queryFileTemplate = await loadFileTemplate(`${templateDir}/query.hbs`)
   try {

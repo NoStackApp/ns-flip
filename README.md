@@ -222,4 +222,6 @@ DESCRIPTION
 EXAMPLE
   $ ns validate ~/projects/myapp
 ```
+
+_See code: [lib/commands/validate.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/validate.js)_
 <!-- commandsstop -->

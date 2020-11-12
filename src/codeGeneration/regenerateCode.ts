@@ -1,5 +1,5 @@
 import execa = require('execa');
-import {magicStrings} from '../constants'
+import {magicStrings, suffixes} from '../constants'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
 import {checkForUpdates} from '../shared/checkForUpdates'
@@ -14,7 +14,7 @@ import {updatePackageJson} from './updatePackageJson'
 const fs = require('fs-extra')
 
 async function restoreMetaDir(codeDir: string) {
-  const backupDir = `${codeDir}${magicStrings.BACKUP_DIR_SUFFIX}`
+  const backupDir = `${codeDir}${suffixes.BACKUP_DIR}`
   const backupMetaDir = `${backupDir}/${magicStrings.META_DIR}`
   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
   await fs.remove(metaDir)
@@ -35,8 +35,13 @@ export async function regenerateCode(codeDir: string) {
   const nsInfo = await getCodeInfo(nsYml)
 
   const {template, starter} = nsInfo
-  const config = await getConfiguration(template.dir)
-  const backupDir = `${codeDir}${magicStrings.BACKUP_DIR_SUFFIX}`
+
+  // WARNING: breaking change from 1.6.8!!
+  // const config = await getConfiguration(template.dir)
+  const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
+  const config = await getConfiguration(templateDir)
+
+  const backupDir = `${codeDir}${suffixes.BACKUP_DIR}`
 
   if (!starter) throw new Error(`the '${magicStrings.NS_FILE}' file contains no starter.  ` +
         'You need a starter to generate code.')
