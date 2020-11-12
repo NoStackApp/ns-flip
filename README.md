@@ -64,7 +64,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/1.6.9 linux-x64 node-v14.9.0
+ns-flip/2.0.0 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -97,7 +97,7 @@ EXAMPLE
   $ ns check ~/projects/myapp
 ```
 
-_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/check.js)_
+_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.0.0/lib/commands/check.js)_
 
 ## `ns generate CODEDIR`
 
@@ -125,7 +125,7 @@ EXAMPLES
   $ ns generate $CODE
 ```
 
-_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/generate.js)_
+_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.0.0/lib/commands/generate.js)_
 
 ## `ns help [COMMAND]`
 
@@ -159,5 +159,5 @@ EXAMPLE
   $ ns newtemplate
 ```
 
-_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v1.6.9/lib/commands/newtemplate.js)_
+_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.0.0/lib/commands/newtemplate.js)_
 <!-- commandsstop -->
