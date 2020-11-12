@@ -34,7 +34,7 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
   const originalName = originalParsed.name
 
   const templatesDir = `${fullNsDir}/templates`
-  const startersDir = `${fullNsDir}/starters`
+  // const startersDir = `${fullNsDir}/starters`
   const samplesDir = `${fullNsDir}/samples`
 
   const sample = `${samplesDir}/${originalName}`
@@ -47,7 +47,7 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
         try {
           await fs.ensureDir(fullNsDir, dirOptions)
           await fs.ensureDir(templatesDir, dirOptions)
-          await fs.ensureDir(startersDir, dirOptions)
+          // await fs.ensureDir(startersDir, dirOptions)
           await fs.ensureDir(samplesDir, dirOptions)
         } catch (error) {
           throw new Error(`${chalk.red('error creating recommended directories:')}

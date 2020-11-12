@@ -1,14 +1,17 @@
 import {getCodeDir} from '../inputs/getCodeDir'
 import {errorMessage} from '../shared/errorMessage'
+import {magicStrings} from '../constants'
+import {copyTemplateToMeta} from './copyTemplateToMeta'
 
 const chalk = require('chalk')
 const execa = require('execa')
 const fs = require('fs-extra')
 const Listr = require('listr')
 
-export async function createCode(
+export async function createNewCode(
   codeDir: string,
   starterDir: string,
+  templateDir: string,
 ) {
   const tasksCopyFromBaseApp = new Listr([
     {
@@ -34,6 +37,14 @@ export async function createCode(
             throw new Error(`${chalk.red(`error copying over from ${starterDir}.`)} Here is the error reported:\n${error}`)
           },
         )
+      },
+    },
+    {
+      title: 'Copy template to dir',
+      task: async () => {
+        const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
+        const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
+        await copyTemplateToMeta(codeTemplateDir, templateDir)
       },
     },
   ])

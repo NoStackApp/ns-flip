@@ -9,13 +9,13 @@ const options = {
 
 export async function configuredDirs(
   config: Configuration,
-  appDir: string,
+  codeDir: string,
   units: string[],
 ) {
   const {dirs} = config
   await Promise.all(Object.keys(dirs).map(
     async name => {
-      const dir = `${appDir}/${dirs[name]}`
+      const dir = `${codeDir}/${dirs[name]}`
       try {
         await fs.ensureDir(dir, options)
         // console.log('success creating dirs')
@@ -29,7 +29,7 @@ export async function configuredDirs(
   await Promise.all(units.map(
     async function (unitKey) {
       const unit = unitNameFromSpec(unitKey)
-      const dir = `${appDir}/${config.dirs.components}/${unit}`
+      const dir = `${codeDir}/${config.dirs.components}/${unit}`
       try {
         await fs.ensureDir(dir, options)
       // console.log('success creating dirs')

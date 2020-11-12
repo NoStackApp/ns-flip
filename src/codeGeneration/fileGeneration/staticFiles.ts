@@ -16,7 +16,7 @@ const fs = require('fs-extra')
 // async function createStaticFile (filename: any, path: string) {
 //   // const fileTemplate = await loadFileTemplate(filename)
 //   // const localPath = filename.replace(standardDir, '')
-//   // const newPath = `${appDir}${localPath}`
+//   // const newPath = `${codeDir}${localPath}`
 //   // const parsed = path.parse(newPath)
 //   // const newFileName = path +
 //   // const {ext} = parsed.ext
@@ -40,7 +40,7 @@ export async function staticFiles(
 ) {
   // const staticDirLocalPath = config.dirs.static
   // if (!staticDirLocalPath) return
-  // const staticDir = `${appDir}/${staticDirLocalPath}`
+  // const staticDir = `${codeDir}/${staticDirLocalPath}`
 
   const staticInfo = nsInfo.static
   if (!staticInfo) return

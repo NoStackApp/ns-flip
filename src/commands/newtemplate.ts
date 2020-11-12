@@ -31,13 +31,11 @@ Paste the following into your browser to set the variables used in the examples 
 
 NS_DIR=${fullNsDir}
 TEMPLATES=$NS_DIR/templates
-STARTERS=$NS_DIR/starters
 SAMPLES=$NS_DIR/samples
 ORIGINAL=${originalPath}
 
 TEMPLATE=$TEMPLATES/ns-template-${templateName}
 SAMPLE=$SAMPLES/${originalName}
-STARTER=$STARTERS/${templateName}-starter
 CODE=$SAMPLES/${templateName}-code
 `
 }

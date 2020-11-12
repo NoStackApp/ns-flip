@@ -1,14 +1,14 @@
-import {magicStrings} from '../constants'
+import {docPages, magicStrings} from '../constants'
 import {dirOptions} from '../shared/dirOptions'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
 import {CustomCodeRepository} from '../constants/types/custom'
 
-import {errorMessage} from '../shared/errorMessage'
 import {CommandSpec, Configuration} from '../constants/types/configuration'
-// import {getCodeDir} from '../inputs/getCodeDir'
-import {createCode} from './createCode'
+
 import {regenerateCode} from '../codeGeneration/regenerateCode'
+import {createNewCode} from './createNewCode'
+import {copyTemplateToMeta} from './copyTemplateToMeta'
 
 const chalk = require('chalk')
 const execa = require('execa')
@@ -16,7 +16,7 @@ const fs = require('fs-extra')
 const Listr = require('listr')
 const yaml = require('js-yaml')
 
-function convertCommandArgs(args: string[]|undefined, codeDir: string) {
+function convertCommandArgs(args: string[] | undefined, codeDir: string) {
   if (!args) return []
   // const output = args.map((arg: string) => arg.replace('$codeDir', codeDir)).push(`>> ${LOGFILE}`)
   const output = args.map((arg: string) => arg.replace('$codeDir', codeDir))
@@ -36,8 +36,8 @@ async function spawnInteractiveChildProcess(commandSpec: CommandSpec) {
   )
 }
 
-async function checkFolder(starterDir: string, force: boolean) {
-  if (force && await fs.pathExists(starterDir)) {
+async function checkFolder(starterDir: string) {
+  if (await fs.pathExists(starterDir)) {
     try {
       await fs.remove(starterDir)
     } catch (error) {
@@ -45,16 +45,11 @@ async function checkFolder(starterDir: string, force: boolean) {
     }
   }
 
-  const isAppFolder = await fs.pathExists(starterDir)
-
-  if (isAppFolder) {
-    throw new Error(errorMessage(`a folder for ${starterDir} already exists. Please choose a different app name`))
-  }
-
-  const upperCaseCheck = /(.*[A-Z].*)/
-  if (upperCaseCheck.test(starterDir)) {
-    throw new Error(errorMessage(`The ${starterDir} contains at least one capital, which create-react-app does not permit.`))
-  }
+  //
+  // const upperCaseCheck = /(.*[A-Z].*)/
+  // if (upperCaseCheck.test(starterDir)) {
+  //   throw new Error(errorMessage(`The ${starterDir} contains at least one capital, which create-react-app does not permit.`))
+  // }
 }
 
 async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string) {
@@ -73,21 +68,110 @@ async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string)
   }
 }
 
-export async function createStarter(
+export async function createCodeBase(
   starterDir: string,
-  templateDir: string,
-  sampleDir: string,
-  force: boolean,
+  templateDir: string | undefined,
+  codeDir: string,
+  noSetup: boolean
 ) {
-  const config: Configuration = await getConfiguration(templateDir)
+  const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
+  const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
+  const existsCodeTemplateDir = await fs.pathExists(codeTemplateDir)
+  if (!templateDir && noSetup) {
+    throw new Error('the noSetup flag cannot be used unless a template is specified.')
+  }
+
+  if (!templateDir && !existsCodeTemplateDir) {
+    if (!await fs.pathExists(codeDir)) {
+      throw new Error('you called \'generate\' without specifying a template' +
+        ` for a code base that does not yet exist (${codeDir}).  Please provide a template` +
+        'with the \'-t\' flag to create the code base. ' +
+        `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+    }
+    throw new Error('you called \'generate\' without specifying a template' +
+      ' for a code base that does not have proper prior template info.  ' +
+      'Please provide a template with the \'-t\' flag. ' +
+      `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+  }
+
+  const finalTemplateDir = templateDir || codeTemplateDir
+
+  const generateCode =       {
+    title: 'Generate Code',
+    task: async () => {
+      return new Listr([
+        {
+          title: 'Create Code if None Exists',
+          task: async () => {
+            const isSampleBaseAlready = await fs.pathExists(codeDir)
+
+            if (!isSampleBaseAlready) {
+              // if (!templateDir)
+              //   throw new Error('you called \'generate\' without specifying a template' +
+              //     ' for a code base that does not yet exist.  Please provide a template' +
+              //     'with the \'-t\' flag. ' +
+              //     `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+              try {
+                const newAppTasks = await createNewCode(codeDir, starterDir, finalTemplateDir)
+                await newAppTasks.run()
+              } catch (error) {
+                throw new Error(`cannot create sample app at ${codeDir}: ${error}`)
+              }
+            }
+          },
+        },
+        {
+          title: 'Generate Code',
+          task: async () => {
+            if (finalTemplateDir !== codeTemplateDir)
+              await copyTemplateToMeta(codeTemplateDir, finalTemplateDir)
+
+            await fs.ensureFile(`${codeDir}/meta/ns.yml`)
+            await regenerateCode(codeDir)
+          },
+        },
+      ])
+    },
+  }
+
+  const isStarterDir = await fs.pathExists(starterDir)
+
+  if (!templateDir && isStarterDir) {
+    // const isInstalledTemplate = await fs.pathExists(codeMetaDir + '/' + magicStrings.TEMPLATE)
+    // if (!isStarterDir || !isInstalledTemplate) {
+    //   throw new Error(`You must provide a template to create ${starterDir}.  Use -t.` +
+    //   ` See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+    // }
+    return new Listr([
+      generateCode,
+    ])
+  }
+
+  if (templateDir && noSetup) {
+    const copyTemplate =     {
+      title: 'Copy template to dir',
+      task: async () => {
+        const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
+        const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
+        await copyTemplateToMeta(codeTemplateDir, templateDir)
+      },
+    }
+
+    return new Listr([
+      copyTemplate,
+      generateCode,
+    ])
+  }
+
+  const config: Configuration = await getConfiguration(finalTemplateDir)
   const {setupSequence} = config
-  if (!setupSequence) throw new Error('\'newstarter\' cannot run because ' +
+  if (!setupSequence) throw new Error('\'generate\' cannot run because ' +
     '\'setupSequence\' is undefined in the config of the template.' +
-    ` See ${magicStrings.DOCUMENTATION}/Setup-Sequence.`)
+    ` See ${magicStrings.DOCUMENTATION}/${docPages.SETUP}.`)
 
   const {mainInstallation, devInstallation, preCommands, interactive} = setupSequence
 
-  await checkFolder(starterDir, force)
+  await checkFolder(starterDir)
   if (interactive) await interactiveSequence(interactive, starterDir)
 
   const taskList = [
@@ -167,9 +251,19 @@ Here is the error reported:\n${error}`)
         const metaDir = `${starterDir}/${magicStrings.META_DIR}`
         const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
         const customCode = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
-        const appInfo = await getCodeInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
-        const customDir = `${starterDir}/${config.dirs.custom}`
+
+        const appInfo = await getCodeInfo(`${finalTemplateDir}/sample.${magicStrings.NS_FILE}`)
         if (appInfo) appInfo.starter = starterDir
+
+        // ensure nsYml if possible
+        // let appInfo = await getCodeInfo(nsYml)
+        // if (!appInfo) {
+        //   appInfo = await getCodeInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
+        //   if (appInfo)
+        //     await fs.outputFile(nsYml, yaml.safeDump(appInfo))
+        // }
+
+        const customDir = `${starterDir}/${config.dirs.custom}`
         const customCodeRepository: CustomCodeRepository = {
           addedCode: {},
           replacedCode: {},
@@ -187,41 +281,8 @@ Here is the error reported:\n${error}`)
         }
       },
     },
+    generateCode,
   ]
-
-  if (sampleDir) {
-    taskList.push(
-      {
-        title: 'Create Sample Base Code',
-        task: async () => {
-          return new Listr([
-            {
-              title: 'Create Sample Base Code if None Exists',
-              task: async () => {
-                const isSampleBaseAlready = await fs.pathExists(sampleDir)
-
-                if (!isSampleBaseAlready) {
-                  try {
-                    const newAppTasks = await createCode(sampleDir, starterDir)
-                    await newAppTasks.run()
-                  } catch (error) {
-                    throw new Error(`cannot create sample app at ${sampleDir}: ${error}`)
-                  }
-                }
-              },
-            },
-            {
-              title: 'Create Sample Dir',
-              task: async () => {
-                await fs.ensureFile(`${sampleDir}/meta/ns.yml`)
-                await regenerateCode(sampleDir)
-              },
-            },
-          ])
-        },
-      }
-    )
-  }
 
   return new Listr(taskList)
   // logProgress(`${chalk.green('Installation is complete!')} Run the other utilities to create the full app`)

@@ -108,10 +108,9 @@ export const magicStrings = {
   NS_FILE: 'ns.yml',
   META_DIR: 'meta',
   DIFFS: 'diffs',
+  TEMPLATE: 'template',
   TESTS_LOG: 'tests.log',
   COMP_DIR: 'components',
-  BACKUP_DIR_SUFFIX: '.backup',
-  TEST_DIR_SUFFIX: '.test',
   CUSTOM_CODE_FILE: 'customCode.json',
   SLUG_PLACEHOLDER: '__slug__',
   STANDARD_UNIT: 'standard',
@@ -121,7 +120,18 @@ export const magicStrings = {
   CONFIG_FILE: 'config.yml',
   SAMPLE_NS_FILE: 'sample.ns.yml',
   README_FILE: 'README.md',
-  DOCUMENTATION: 'http://ns-flip.nostack.net/',
+  DOCUMENTATION: 'https://ns-flip.nostack.net/',
+}
+
+export const suffixes = {
+  BACKUP_DIR: '.backup',
+  TEST_DIR: '.test',
+  STARTUP_DIR: '.starter',
+}
+
+export const docPages = {
+  BUILDING_CODE_BASE: 'Building-Code-Bases',
+  SETUP: 'Setup-Sequence',
 }
 
 export const markupTags = {

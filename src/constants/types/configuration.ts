@@ -11,7 +11,7 @@ export interface CommandSpec {
     options?: any;
 }
 
-export interface PlaceholderAppCreation {
+export interface SetupSequence {
     mainInstallation?: string[];
     devInstallation?: string[];
     preCommands?: CommandSpec[];
@@ -64,7 +64,7 @@ export interface Configuration {
     componentTypes: ComponentTypes;
     dataFunctionTypes: DataFunctionTypes;
     dirs: ConfigurationDirectories;
-    placeholderAppCreation: PlaceholderAppCreation;
+    setupSequence: SetupSequence;
     static: StaticTypesSpecList;
     ignore?: string[];
 }

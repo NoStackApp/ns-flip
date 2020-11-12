@@ -4,24 +4,24 @@ const fs = require('fs-extra')
 const jsonfile = require('jsonfile')
 
 export async function createDotFiles(
-  appDir: string,
+  codeDir: string,
 ) {
   // .eslintrc file
   await fs.copy(
     `${boilerplateDir}/dotFiles/.eslintignore`,
-    `${appDir}/.eslintignore`,
+    `${codeDir}/.eslintignore`,
   )
   await fs.copy(
     `${boilerplateDir}/dotFiles/.eslintrc`,
-    `${appDir}/.eslintrc`,
+    `${codeDir}/.eslintrc`,
   )
   await fs.copy(
     `${boilerplateDir}/dotFiles/.prettierrc`,
-    `${appDir}/.prettierrc`,
+    `${codeDir}/.prettierrc`,
   )
 
   // update json.file with husky
-  const generatedJsonFile = `${appDir}/package.json`
+  const generatedJsonFile = `${codeDir}/package.json`
   const husky = {
     hooks: {
       'pre-commit': 'lint-staged',

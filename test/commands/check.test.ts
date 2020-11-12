@@ -1,12 +1,12 @@
 import {expect, test} from '@oclif/test'
-describe('newcode', () => {
+describe('check', () => {
   test
   .stderr()
-  .command(['newcode', '-c', 'codeBase', '-s', 'nonExistentStarter'])
+  .command(['check', 'nonexistentFile'])
   .catch(error => {
-    expect(error.message).to.contain('the folder for nonExistentStarter does not exist.')
+    expect(error.message).to.contain('no such file or directory')
   })
-  .it('requires existing starter')
+  .it('requires existent code base')
 })
 
 // describe('generate', () => {

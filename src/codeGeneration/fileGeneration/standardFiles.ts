@@ -125,7 +125,7 @@ ${error}`)
   //   const localPath = path.replace(standardDir, '')
   //   const newPath = `${codeDir}${localPath}`
   //   try {
-  //     // await fs.ensureDir(childrenAppDir, options)
+  //     // await fs.ensureDir(childrenCodeDir, options)
   //     await fs.ensureDir(newPath, options)
   //   } catch (error) {
   //     // eslint-disable-next-line no-console
