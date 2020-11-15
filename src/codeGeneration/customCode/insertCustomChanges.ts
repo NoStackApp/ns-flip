@@ -7,6 +7,7 @@ const chalk = require('chalk')
 
 import execa = require('execa');
 import {fs} from './updateCustomCodeForFile'
+import {Configuration} from '../../constants/types/configuration'
 
 async function updateCode(
   fileName: string,
@@ -37,7 +38,11 @@ async function updateRemovedImports(customCode: CustomCodeRepository, testDir: s
   })
 }
 
-export const insertCustomChanges = async (rootDir: string, addedCodeDoc: string) => {
+export const insertCustomChanges = async (
+  rootDir: string,
+  addedCodeDoc: string,
+  config: Configuration,
+) => {
   const baseDir = path.resolve(process.cwd(), rootDir)
 
   const existsComponents = await fs.pathExists(addedCodeDoc)
@@ -60,7 +65,7 @@ export const insertCustomChanges = async (rootDir: string, addedCodeDoc: string)
   customCode = await fs.readJson(addedCodeDoc)
   // const customCodeByFile = customCodeToCodeByFile(customCode)
   // console.log(`customCodeByFile=${JSON.stringify(customCodeByFile)}`)
-  await updateCustomCode(customCode, baseDir)
+  await updateCustomCode(customCode, baseDir, config)
 
   if (Object.keys(customCode).length === 0) {
     // no added code to add

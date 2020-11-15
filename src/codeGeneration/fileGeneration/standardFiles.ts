@@ -5,6 +5,8 @@ import {contextForStandard} from '../handlebars/context/contextForStandard'
 import {loadFileTemplate} from '../../shared/loadFileTemplate'
 import {registerHelpers} from '../handlebars/registerHelpers'
 import {registerPartials} from '../handlebars/registerPartials'
+import {replaceCommentDelimiters} from './replaceCommentDelimiters'
+import {getConfiguration} from '../../shared/getConfiguration'
 
 const fs = require('fs-extra')
 const path = require('path')
@@ -22,6 +24,7 @@ export async function standardFiles(
   stackInfo: Schema,
 ) {
   const standardDir = `${templateDir}/standard`
+  const config = await getConfiguration(templateDir)
 
   try {
     await registerPartials(`${templateDir}/partials`)
@@ -45,6 +48,7 @@ ${error}`)
 
   const paths = walk.sync(standardDir, {return_object: true})
   await Promise.all(Object.keys(paths).map(async pathString => {
+    console.log(`pathString=${pathString}`)
     const stat = paths[pathString]
     const localPath = pathString.replace(standardDir, '')
     if (localPath in standardIgnored) return
@@ -81,10 +85,12 @@ ${error}`)
       nsInfo,
       stackInfo,
       newLocalFileName,
-      codeDir
+      codeDir,
+      config,
     ))
-
-    await fs.outputFile(newFileName, fileText)
+    const finalFileText = replaceCommentDelimiters(pathString, config, fileText)
+    // console.log(`finalFileText for ${pathString}=${finalFileText}`)
+    await fs.outputFile(newFileName, finalFileText)
   }))
   // const emitter = walk(standardDir)
 

@@ -78,7 +78,7 @@ export async function regenerateCode(codeDir: string) {
     await generateCode(codeDir, nsInfo, config)
 
     const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
-    await insertCustomChanges(codeDir, customCodeDoc)
+    await insertCustomChanges(codeDir, customCodeDoc, config)
 
     await updatePackageJson(codeDir, starter)
   } catch (error) {

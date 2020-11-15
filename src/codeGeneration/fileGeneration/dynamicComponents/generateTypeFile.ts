@@ -11,6 +11,7 @@ import {registerHelpers} from '../../handlebars/registerHelpers'
 import {registerPartials} from '../../handlebars/registerPartials'
 import {componentName} from './componentName'
 import {Configuration} from '../../../constants/types/configuration'
+import {replaceCommentDelimiters} from '../replaceCommentDelimiters'
 // import {generic} from '../sections/generic'
 
 const Handlebars = require('handlebars')
@@ -91,7 +92,10 @@ ${error}`)
 
     // await fs.outputFile(`${path}/index.jsx`, specificFileTemplate(tags))
     // console.log(`  path to output=${path}/index.jsx`)
-    await fs.outputFile(`${path}/index.jsx`, genericTemplate(tags))
+    const fileText = await genericTemplate(tags)
+    const finalPath = `${path}/index.jsx`
+    const finalFileText = replaceCommentDelimiters(finalPath, config, fileText)
+    await fs.outputFile(finalPath, finalFileText)
   } catch (error) {
     throw new Error(`error with generateFromBoilerPlate: ${error}`)
   }

@@ -52,8 +52,16 @@ export interface StaticTypesSpecList {
     [staticType: string]: StaticTypeSpec;
 }
 
+interface DelimiterList {
+  [key: string]: string;
+}
+
 export interface FormatSpec {
     customFileFilter: string;
+    defaultOpenComment?: string;
+    defaultCloseComment?: string;
+    openComment?: DelimiterList;
+    closeComment?: DelimiterList;
 }
 
 export interface Configuration {

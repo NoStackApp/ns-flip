@@ -6,6 +6,7 @@ import {registerPartials} from '../handlebars/registerPartials'
 import {Configuration} from '../../constants/types/configuration'
 import {magicStrings} from '../../constants'
 import {contextForStatic} from '../handlebars/context/contextForStatic'
+import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 
 const fs = require('fs-extra')
 
@@ -72,15 +73,24 @@ ${error}`)
       fileTypeList.map(async (fileType: string) => {
         const fileTypeInfo: any = staticTypeInfo[fileType]
         const {name, suffix, directory} = fileTypeInfo
-        const fileTemplate = await loadFileTemplate(`${templateDir}/static/${fileType}.hbs`)
 
-        const {slug, specs} = instanceInfo
-        const fileName = name.replace(magicStrings.SLUG_PLACEHOLDER, slug) + suffix
-        const fullFilePath = `${codeDir}/${directory}/${fileName}`
+        const pathString = `${templateDir}/static/${fileType}.hbs`
 
-        const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config, codeDir)
-        const fileText = await fileTemplate(context)
-        await fs.outputFile(fullFilePath, fileText)
+        try {
+          const fileTemplate = await loadFileTemplate(pathString)
+
+          const {slug, specs} = instanceInfo
+          const fileName = name.replace(magicStrings.SLUG_PLACEHOLDER, slug) + suffix
+          const fullFilePath = `${codeDir}/${directory}/${fileName}`
+
+          const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config, codeDir)
+          const fileText = await fileTemplate(context)
+          const finalFileText = replaceCommentDelimiters(pathString, config, fileText)
+
+          await fs.outputFile(fullFilePath, finalFileText)
+        } catch (error) {
+          throw new Error(`with pathString ${pathString}, could not generate static file: ${error}`)
+        }
       })
     })
   }))

@@ -1,5 +1,4 @@
 import {FileCustomCode} from '../../constants/types/custom'
-import {customLocationRegExString} from '../../constants/Regex/regExCustomLocation'
 import {
   regExReplacedCodeSectionGenerated,
   regExReplacedCodeSectionTagged,
@@ -7,10 +6,18 @@ import {
 import {customLocationNewRegExString} from '../../constants/Regex/regExNewCustomLocation'
 import {regExCleanupText} from '../../constants/Regex/regExCleanupText'
 import {customCleanupRegExText} from '../../constants/Regex/regExCustomCleanup'
+import {commentDelimiters} from '../../shared/commentDelimiters'
+import {Configuration} from '../../constants/types/configuration'
+import {regExFileText} from '../../constants/Regex/regExFileInfo'
 
 export const fs = require('fs-extra')
+const path = require('path')
 
-export async function updateCustomCodeForFile(filePath: string, fileCustomCode: FileCustomCode) {
+export async function updateCustomCodeForFile(
+  filePath: string,
+  fileCustomCode: FileCustomCode,
+  config: Configuration
+) {
   let fileText: string
 
   try {
@@ -21,76 +28,52 @@ export async function updateCustomCodeForFile(filePath: string, fileCustomCode: 
 
   const {addedCode, replacedCode} = fileCustomCode
 
-  /*
+  const ext = path.extname(filePath)
+  const delimiters = commentDelimiters(ext, config)
 
-OLD:
-    const unit: string = match[2]
-    const component: string = match[3]
-    const location: string = match[4]
-
-    // const firstLineEnding = match[5]
-    let contents = match[6]
-
-NEW:
-      const {unit, component} = fileInfo
-    const location: string = match[2]
-
-    // const firstLineEnding = match[5]
-    let contents = match[4]
-
-   */
-  const regExNewCustomLocation = new RegExp(customLocationNewRegExString, 'g')
+  const regExNewCustomLocation = new RegExp(customLocationNewRegExString(delimiters), 'g')
 
   fileText = fileText.replace(regExNewCustomLocation, function (
     match: string,
-    commentOpen: string,
+    // commentOpen: string,
     location: string,
-    commentClose: string,
+    // commentClose: string,
   ) {
     if (!addedCode[location]) return match // this shouldn't happen
 
-    // console.log(`match: ${JSON.stringify({
-    //   match,
-    //   commentOpen,
-    //   unit,
-    //   comp,
-    //   location,
-    //   commentClose,
-    // })}`)
-
-    return commentOpen + ' ns__custom_start ' + location + ' ' + commentClose +
+    return delimiters.open + ' ns__custom_start ' + location + ' ' + delimiters.close +
       addedCode[location] +
-      commentOpen + ' ns__custom_end ' + location + ' ' + commentClose
+      delimiters.open + ' ns__custom_end ' + location + ' ' + delimiters.close
     // const lines = match.split('\n')
     // return lines[0] + '\n' + addedCode[location] + lines[lines.length - 1].trimLeft()
   })
 
-  const regExCustomLocation = new RegExp(customLocationRegExString, 'g')
-  fileText = fileText.replace(regExCustomLocation, function (
-    match: string,
-    commentOpen: string,
-    unit: string,
-    comp: string,
-    location: string,
-    commentClose: string
-  ) {
-    if (!addedCode[location]) return match // this shouldn't happen
-
-    // console.log(`match: ${JSON.stringify({
-    //   match,
-    //   commentOpen,
-    //   unit,
-    //   comp,
-    //   location,
-    //   commentClose,
-    // })}`)
-
-    return commentOpen + ' ns__custom_start ' + location + ' ' + commentClose +
-            addedCode[location] +
-            commentOpen + ' ns__custom_end ' + location + ' ' + commentClose
-    // const lines = match.split('\n')
-    // return lines[0] + '\n' + addedCode[location] + lines[lines.length - 1].trimLeft()
-  })
+  // const regExCustomLocation = new RegExp(customLocationRegExString(delimiters), 'g')
+  // fileText = fileText.replace(regExCustomLocation, function (
+  //   match: string,
+  //   commentOpen: string,
+  //   unit: string,
+  //   comp: string,
+  //   location: string,
+  //   commentClose: string
+  // ) {
+  //   if (!addedCode[location]) return match // this shouldn't happen
+  //
+  //   // console.log(`match: ${JSON.stringify({
+  //   //   match,
+  //   //   commentOpen,
+  //   //   unit,
+  //   //   comp,
+  //   //   location,
+  //   //   commentClose,
+  //   // })}`)
+  //
+  //   return commentOpen + ' ns__custom_start ' + location + ' ' + commentClose +
+  //           addedCode[location] +
+  //           commentOpen + ' ns__custom_end ' + location + ' ' + commentClose
+  //   // const lines = match.split('\n')
+  //   // return lines[0] + '\n' + addedCode[location] + lines[lines.length - 1].trimLeft()
+  // })
 
   /*
           REPLACED CODE:
@@ -114,43 +97,51 @@ NEW:
        */
   //
 
-  fileText = fileText.replace(regExReplacedCodeSectionGenerated, function (
+  console.log(`regExReplacedCodeSectionGenerated(delimiters): ${regExReplacedCodeSectionGenerated(delimiters)}`)
+  fileText = fileText.replace(regExReplacedCodeSectionGenerated(delimiters), function (
     match: string,
-    firstCommentOpen: string,
+    // firstCommentOpen: string,
     location: string,
   ) {
+    console.log(`location of match: ${location}`)
+    console.log(`replacedCode: ${JSON.stringify(replacedCode)}`)
+
     if (!replacedCode[location]) return match
+    console.log(`match: ${JSON.stringify({
+      match, location})}.  replacedCode[location]=${replacedCode[location]}`)
 
     return match.replace('ns__start_section', 'ns__start_replacement')
   })
 
-  fileText = fileText.replace(regExReplacedCodeSectionTagged, function (
+  // console.log(`contents of file: ${fileText}`)
+  console.log(`TAGGED### regExReplacedCodeSectionTagged(delimiters): ${regExReplacedCodeSectionTagged(delimiters)}`)
+  fileText = fileText.replace(regExReplacedCodeSectionTagged(delimiters), function (
     match: string,
-    firstCommentOpen: string,
+    // firstCommentOpen: string,
     location: string,
-    endOfLine: string,
     content: string,
-    p7: string,
-    commentOpen: string,
-    finalEndOfLine: string,
   ) {
-    if (!replacedCode[location]) return match
-    const lines = match.split('\n')
+    console.log(`match: ${JSON.stringify({
+      match,
+      location,
+      content,
+    })}.  replacedCode[location]=${replacedCode[location]}`)
 
-    const fullReplacement = lines[0] +
-            '\n' + replacedCode[location] +
-            commentOpen +
-            ` ns__end_replacement ${location} ` +
-            finalEndOfLine
+    if (!replacedCode[location]) return match
+
+    const fullReplacement =
+      delimiters.open + ' ns__start_replacement ' + location + delimiters.close +
+      replacedCode[location] +
+      delimiters.open + ` ns__end_replacement ${location} ` + delimiters.close
     return fullReplacement
   })
 
   // clean up
-  const regExCleanUp = new RegExp(regExCleanupText, 'g')
+  const regExCleanUp = new RegExp(regExCleanupText(delimiters), 'g')
 
   fileText = fileText.replace(regExCleanUp, function (
     match: string,
-    opening: string,
+    // opening: string,
     prefix: string,
     type: string,
     p3: string,
@@ -158,21 +149,21 @@ NEW:
     location: string,
     endOfLine: string,
   ) {
-    return `${opening} ns__${prefix}_${type} ${location}${endOfLine}`
+    return `${delimiters.open} ns__${prefix}_${type} ${location}${endOfLine}`
   })
 
   const regExCustomCleanUp = new RegExp(customCleanupRegExText, 'g')
 
   fileText = fileText.replace(regExCustomCleanUp, function (
     match: string,
-    opening: string,
+    // opening: string,
     prefix: string,
     p3: string,
     p4: string,
     location: string,
     endOfLine: string,
   ) {
-    return `${opening} ns__custom_${prefix} ${location}${endOfLine}`
+    return `${delimiters.open} ns__custom_${prefix} ${location}${endOfLine}`
   })
 
   try {

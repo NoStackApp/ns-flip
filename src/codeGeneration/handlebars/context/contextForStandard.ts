@@ -8,6 +8,7 @@ import {
   singularName,
 } from '../../../shared/inflections'
 import {createGeneralInfo} from './createGeneralInfo'
+import {Configuration} from '../../../constants/types/configuration'
 
 const Handlebars = require('handlebars')
 
@@ -18,6 +19,7 @@ export const contextForStandard = async (
   stackInfo: Schema,
   component: string,
   codeDir: string,
+  config: Configuration,
 ) => {
   // stack data
   const unit = magicStrings.STANDARD_UNIT
@@ -78,5 +80,6 @@ export const contextForStandard = async (
     stackInfo,
     nsInfo,
     general,
+    config,
   }
 }

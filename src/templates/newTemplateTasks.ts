@@ -16,6 +16,7 @@ const path = require('path')
 import {dirOptions} from '../shared/dirOptions'
 // import {help} from '@oclif/command/lib/flags'
 import {loadFileTemplate} from '../shared/loadFileTemplate'
+import {replaceCommentDelimiters} from '../codeGeneration/fileGeneration/replaceCommentDelimiters'
 
 export async function newTemplateTasks(requirements: TemplateRequirements) {
   const {
@@ -90,7 +91,7 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
         const generic = `${fileTemplatesDir}/${magicStrings.GENERIC_FILE}`
 
         const startOfFile = `${fileTemplatesDir}/${magicStrings.START_OF_FILE_FILE}.hbs`
-        const config = `${fileTemplatesDir}/${magicStrings.CONFIG_FILE}.hbs`
+        const configPath = `${fileTemplatesDir}/${magicStrings.CONFIG_FILE}.hbs`
         const sampleNs = `${fileTemplatesDir}/${magicStrings.SAMPLE_NS_FILE}.hbs`
         const readme = `${fileTemplatesDir}/${magicStrings.README_FILE}.hbs`
 
@@ -107,7 +108,7 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
 
           const readmeTemplate = await loadFileTemplate(readme)
           await fs.outputFile(`${template}/${magicStrings.README_FILE}`, readmeTemplate(context))
-          const configTemplate = await loadFileTemplate(config)
+          const configTemplate = await loadFileTemplate(configPath)
           await fs.outputFile(`${template}/${magicStrings.CONFIG_FILE}`, configTemplate(context))
           const sampleNsFileTemplate = await loadFileTemplate(sampleNs)
           await fs.outputFile(`${template}/${magicStrings.SAMPLE_NS_FILE}`, sampleNsFileTemplate(context))
