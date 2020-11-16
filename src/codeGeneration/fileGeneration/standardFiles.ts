@@ -11,7 +11,6 @@ import {getConfiguration} from '../../shared/getConfiguration'
 const fs = require('fs-extra')
 const path = require('path')
 const walk = require('walkdir')
-// const yaml = require('js-yaml')
 
 const options = {
   mode: 0o2775,
@@ -38,17 +37,8 @@ correctly specified:
 ${error}`)
   }
 
-  // const emitter = walk.sync(standardDir, async function (path: any, stat: any) {
-  //   console.log('found sync:', path)
-  // })
-  //
-  // throw new Error('done')
-
-  // let result = await walk.async('../',{return_object:true})
-
   const paths = walk.sync(standardDir, {return_object: true})
   await Promise.all(Object.keys(paths).map(async pathString => {
-    console.log(`pathString=${pathString}`)
     const stat = paths[pathString]
     const localPath = pathString.replace(standardDir, '')
     if (localPath in standardIgnored) return

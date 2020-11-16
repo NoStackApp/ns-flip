@@ -8,15 +8,9 @@ const fs = require('fs-extra')
 const Listr = require('listr')
 const path = require('path')
 
-// const config = require('../templates/fileTemplates/config.file.hbs')
-// touch generic.hbs
-// touch sample.ns.yml
-// touch README.md
-
 import {dirOptions} from '../shared/dirOptions'
 // import {help} from '@oclif/command/lib/flags'
 import {loadFileTemplate} from '../shared/loadFileTemplate'
-import {replaceCommentDelimiters} from '../codeGeneration/fileGeneration/replaceCommentDelimiters'
 
 export async function newTemplateTasks(requirements: TemplateRequirements) {
   const {

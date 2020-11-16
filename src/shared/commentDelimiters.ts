@@ -8,8 +8,15 @@ export function commentDelimiters(ext: string, config: Configuration) {
   const defaultOpen = format.defaultOpenComment || globalDefaultOpen
   const defaultClose = format.defaultCloseComment || globalDefaultClose
 
-  const open = format.openComment[ext] || defaultOpen
-  const close = format.closeComment[ext] || defaultClose
+  let open = defaultOpen
+  let close = defaultClose
+
+  if (format.openComment && format.openComment[ext]) {
+    open = format.openComment[ext]
+  }
+  if (format.closeComment && format.closeComment[ext]) {
+    close = format.closeComment[ext]
+  }
 
   return {
     open,
