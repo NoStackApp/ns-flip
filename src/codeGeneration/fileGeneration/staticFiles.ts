@@ -1,6 +1,6 @@
 import {NsInfo} from '../../constants/types/nsInfo'
 import {Schema} from '../../constants/types/schema'
-import {loadFileTemplate} from '../../shared/loadFileTemplate'
+import {loadFileTemplate} from '../../templates/loadFileTemplate'
 import {registerHelpers} from '../handlebars/registerHelpers'
 import {registerPartials} from '../handlebars/registerPartials'
 import {Configuration} from '../../constants/types/configuration'

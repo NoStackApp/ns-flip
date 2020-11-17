@@ -6,7 +6,7 @@ import {
 import {customLocationNewRegExString} from '../../constants/Regex/regExNewCustomLocation'
 import {regExCleanupText} from '../../constants/Regex/regExCleanupText'
 import {customCleanupRegExText} from '../../constants/Regex/regExCustomCleanup'
-import {commentDelimiters} from '../../shared/commentDelimiters'
+import {commentDelimiters} from '../../templates/commentDelimiters'
 import {Configuration} from '../../constants/types/configuration'
 
 export const fs = require('fs-extra')

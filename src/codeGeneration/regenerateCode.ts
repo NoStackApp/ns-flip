@@ -33,8 +33,7 @@ export async function regenerateCode(codeDir: string) {
   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
   const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
   const nsInfo = await getCodeInfo(nsYml)
-
-  const {starter} = nsInfo
+  const starter = `${codeDir}${suffixes.STARTUP_DIR}`
 
   // WARNING: breaking change from 1.6.8!!
   // const config = await getConfiguration(template.dir)
@@ -49,15 +48,6 @@ export async function regenerateCode(codeDir: string) {
   try {
     checkForUpdates()
 
-    // // for now, this is removed.
-    // const problemsFound = await failsTests(codeDir)
-    // if (problemsFound)
-    //   throw new Error('generation is not possible right now, because at least one test ' +
-    //     'of the code base is failing.  That means that generating will remove custom' +
-    //     'changes.  Please run \'test\' for more information.  If you want to regenerate' +
-    //     'even though changes will be lost, you may run \'regenerate\' with the \'--force\'' +
-    //     'flag.  (Usually not recommended)')
-
     // store added code before generating new code.
     await storeAddedCode(codeDir, config)
 
@@ -65,23 +55,50 @@ export async function regenerateCode(codeDir: string) {
     await fs.remove(backupDir)
     await copyCodeBaseToNewDir(codeDir, backupDir)
     await fs.remove(codeDir)
+    console.log('replaced the backup...\n')
+  } catch (error) {
+    console.error(JSON.stringify(error))
+    throw new Error(`could not replace the backup: ${error}`)
+  }
 
-    // regenerate the code
+  // regenerate the code
+  try {
     await copyCodeBaseToNewDir(starter, codeDir)
-    await restoreMetaDir(codeDir)
-    // await ensureIgnoredExist(codeDir)
-    // const mergedJson: object = await mergePackageJsons(starter, codeDir)
-    // // @ts-ignore
-    // await writePackage(`${codeDir}/package.json`, mergedJson)
+  } catch (error) {
+    console.error(JSON.stringify(error))
+    throw new Error(`could not copy code base: ${error}`)
+  }
 
+  // try {
+  //   await restoreMetaDir(codeDir)
+  // } catch (error) {
+  //   console.error(JSON.stringify(error))
+  //   throw new Error(`could not restore meta dir: ${error}`)
+  // }
+
+  try {
     await moveOverIgnored(backupDir, codeDir, config)
-    await generateCode(codeDir, nsInfo, config)
+  } catch (error) {
+    console.error(JSON.stringify(error))
+    throw new Error(`could not move over ignored: ${error}`)
+  }
 
+  try {
+    console.log('about to generate. ') // ${JSON.stringify({codeDir, nsInfo, config}, null, 2)}\n`)
+    await generateCode(codeDir, nsInfo, config)
+    console.log('generated the code\n')
+  } catch (error) {
+    console.error(JSON.stringify(error))
+    throw new Error(`could not regenerate the code: ${error}`)
+  }
+
+  try {
     const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
     await insertCustomChanges(codeDir, customCodeDoc, config)
 
     await updatePackageJson(codeDir, starter)
   } catch (error) {
-    throw new Error(`could not regenerate the code: ${error}`)
+    console.error(JSON.stringify(error))
+    throw new Error(`could not insert custom changes: ${error}`)
   }
 }

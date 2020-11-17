@@ -1,5 +1,5 @@
 import {Configuration} from '../../constants/types/configuration'
-import {commentDelimiters} from '../../shared/commentDelimiters'
+import {commentDelimiters} from '../../templates/commentDelimiters'
 import {magicStrings} from '../../constants'
 
 const path = require('path')

@@ -67,6 +67,12 @@ export const contextForStandard = async (
 
   const general = await createGeneralInfo(nsInfo, codeDir)
 
+  const actionTypes = stackInfo.actions
+
+  if (component === 'src/config/index.js') {
+    console.log(`for ${component}, actionTypes=${JSON.stringify(actionTypes, null, 2)}`)
+  }
+
   return {
     nodeTypes,
     dataTypes,
@@ -77,6 +83,7 @@ export const contextForStandard = async (
     appName: nsInfo.codeName,
     sources: sourceList,
     types: typesText,
+    actionTypes: stackInfo.context?.actionTypes,
     stackInfo,
     nsInfo,
     general,

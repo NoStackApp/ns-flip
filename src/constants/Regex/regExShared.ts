@@ -7,17 +7,22 @@ export const content = '((.|\n)*?)'
 export const space = '[ \\t]+'
 export const possibleSpace = '[ \\t]*'
 
-// export const opening = commentOpen + possibleSpace
-// export const closing = possibleSpace + commentClose
-
+// from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 function escapeRegExp(string: string) {
   return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
 
+export function convertDelimitersForRegEx(commentDelimiter: string) {
+  if (commentDelimiter === '\\n[//]: # (')
+    console.log(`commentDelimiter=${commentDelimiter}. escapeRegExp(commentDelimiter)=${escapeRegExp(commentDelimiter)}. Fixed=${escapeRegExp(commentDelimiter).replace('\\\\n', '\\n')}`)
+  return escapeRegExp(commentDelimiter).replace('\\\\n', '\\n')
+  // return commentDelimiter
+}
+
 export const openingForDelimiters = (delimiters: Delimiters) =>
-  `${escapeRegExp(delimiters.open)}${possibleSpace}`
+  `${convertDelimitersForRegEx(delimiters.open)}${possibleSpace}`
 export const closingForDelimiters = (delimiters: Delimiters) =>
-  `${possibleSpace}${escapeRegExp(delimiters.close)}`
+  `${possibleSpace}${convertDelimitersForRegEx(delimiters.close)}`
 
 export const specString = space + '(\\S*)'
 

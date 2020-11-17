@@ -3,7 +3,7 @@ import {customLocationNewRegExString} from '../../constants/Regex/regExNewCustom
 import {replacedRexExText} from '../../constants/Regex/regExReplacedCodeSection'
 import {getFileInfo} from './getFileInfo'
 import {Configuration} from '../../constants/types/configuration'
-import {commentDelimiters} from '../../shared/commentDelimiters'
+import {commentDelimiters} from '../../templates/commentDelimiters'
 
 const fs = require('fs-extra')
 const path = require('path')

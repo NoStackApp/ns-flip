@@ -1,4 +1,4 @@
-import {expandNsAbbreviations} from '../../shared/expandNsbbreviations'
+import {expandNsAbbreviations} from '../../templates/expandNsbbreviations'
 
 const path = require('path')
 const Handlebars = require('handlebars')

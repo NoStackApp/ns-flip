@@ -10,7 +10,7 @@ const path = require('path')
 
 import {dirOptions} from '../shared/dirOptions'
 // import {help} from '@oclif/command/lib/flags'
-import {loadFileTemplate} from '../shared/loadFileTemplate'
+import {loadFileTemplate} from './loadFileTemplate'
 
 export async function newTemplateTasks(requirements: TemplateRequirements) {
   const {

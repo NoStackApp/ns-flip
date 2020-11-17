@@ -39,6 +39,8 @@ export async function generateCode(
     throw new Error(`error in creating standard files: ${error}`)
   }
 
+  console.log('&& DONE with standard files')
+
   // console.log(`units is: ${JSON.stringify(Object.keys(units), null, 2)}`)
   try {
     if (units) {

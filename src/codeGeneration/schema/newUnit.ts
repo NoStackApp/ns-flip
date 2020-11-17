@@ -43,8 +43,12 @@ export const newUnit = (
     )
   }
 
+  let unitId = ''
+  if (stack.backend) unitId = stack.backend.ids.units[unitName]
+
   stack.sources[unitName] = {
     const: `SOURCE_${allCaps(unitName)}_ID`,
+    id: unitId,
     unitType,
     props: {
       queryBody: '',

@@ -75,7 +75,7 @@ export const newType = (
   let sourceUnit
   // if (assnType === associationTypes.SELECTABLE ||
   //       assnType === associationTypes.VIEWABLE) {
-  if (dataFunctionTypes[assnType].requiresSource) {
+  if (dataFunctionTypes && dataFunctionTypes[assnType].requiresSource) {
     sourceUnit = typeInfo.detail
 
     // if (stack.sources[sourceUnit] == null) {
