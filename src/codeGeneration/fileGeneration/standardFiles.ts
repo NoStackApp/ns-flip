@@ -2,14 +2,15 @@ import {standardIgnored} from '../../constants'
 import {NsInfo} from '../../constants/types/nsInfo'
 import {Schema} from '../../constants/types/schema'
 import {contextForStandard} from '../handlebars/context/contextForStandard'
-import {loadFileTemplate} from '../../shared/loadFileTemplate'
+import {loadFileTemplate} from '../../templates/loadFileTemplate'
 import {registerHelpers} from '../handlebars/registerHelpers'
 import {registerPartials} from '../handlebars/registerPartials'
+import {replaceCommentDelimiters} from './replaceCommentDelimiters'
+import {getConfiguration} from '../../shared/getConfiguration'
 
 const fs = require('fs-extra')
 const path = require('path')
 const walk = require('walkdir')
-// const yaml = require('js-yaml')
 
 const options = {
   mode: 0o2775,
@@ -22,6 +23,7 @@ export async function standardFiles(
   stackInfo: Schema,
 ) {
   const standardDir = `${templateDir}/standard`
+  const config = await getConfiguration(templateDir)
 
   try {
     await registerPartials(`${templateDir}/partials`)
@@ -34,14 +36,6 @@ It may be that the template location is faulty, or that the template is not
 correctly specified:
 ${error}`)
   }
-
-  // const emitter = walk.sync(standardDir, async function (path: any, stat: any) {
-  //   console.log('found sync:', path)
-  // })
-  //
-  // throw new Error('done')
-
-  // let result = await walk.async('../',{return_object:true})
 
   const paths = walk.sync(standardDir, {return_object: true})
   await Promise.all(Object.keys(paths).map(async pathString => {
@@ -81,10 +75,12 @@ ${error}`)
       nsInfo,
       stackInfo,
       newLocalFileName,
-      codeDir
+      codeDir,
+      config,
     ))
-
-    await fs.outputFile(newFileName, fileText)
+    const finalFileText = replaceCommentDelimiters(pathString, config, fileText)
+    // console.log(`finalFileText for ${pathString}=${finalFileText}`)
+    await fs.outputFile(newFileName, finalFileText)
   }))
   // const emitter = walk(standardDir)
 

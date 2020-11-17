@@ -155,6 +155,37 @@ export interface ActionsByActionType {
   [actionType: string]: Actions;
 }
 
+// interface ActionTypeInfo {
+//
+// }
+//
+// interface ActionTypes {
+//   [key: number]: ActionTypeInfo;
+// }
+//
+
+interface ActionContextInfo {
+  actionId: string;
+  actionConst: string;
+}
+
+interface ActionContextList {
+  [actionId: string]: ActionContextInfo;
+}
+
+interface ActionTypeContextInfo {
+  actionType: string;
+  actions: ActionContextList;
+}
+
+export interface ActionTypesContextInfo {
+  [actionType: string]: ActionTypeContextInfo;
+}
+
+export interface ContextSupport {
+  actionTypes: ActionTypesContextInfo;
+}
+
 export interface Schema {
   topSource: string;
   userClasses: UserClasses;
@@ -162,6 +193,7 @@ export interface Schema {
   types: Types;
   actions: ActionsByActionType;
   backend?: BackendData;
+  context?: ContextSupport;
 }
 
 // export interface Inputs {

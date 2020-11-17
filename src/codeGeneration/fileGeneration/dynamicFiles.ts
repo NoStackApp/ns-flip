@@ -4,10 +4,11 @@ const fs = require('fs-extra')
 
 import {NsInfo} from '../../constants/types/nsInfo'
 import {allCaps} from '../../shared/inflections'
-import {loadFileTemplate} from '../../shared/loadFileTemplate'
+import {loadFileTemplate} from '../../templates/loadFileTemplate'
 import {parseSpecName} from '../../constants/parseSpecName'
 import {unitNameFromSpec} from './unitNameFromSpec'
 import {magicStrings} from '../../constants'
+import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 
 export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDir: string) {
   if (!nsInfo.backend ||
@@ -44,9 +45,11 @@ export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDi
         typeRelationships: unitQueryInfo.relationships,
       })
 
-      const queryFile = `${queriesDir}/${unit}.js`
+      const pathString = `${queriesDir}/${unit}.js`
       try {
-        await fs.outputFile(queryFile, queryFileText)
+        const finalFileText = replaceCommentDelimiters(pathString, config, queryFileText)
+        // console.log(`finalFileText for ${pathString}=${finalFileText}`)
+        await fs.outputFile(pathString, finalFileText)
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error)

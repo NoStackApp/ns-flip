@@ -2,7 +2,7 @@ import {expect, test} from '@oclif/test'
 describe('generate', () => {
   test
   .stderr()
-  .command(['generate', '-t', 'nonExistentTemplate'])
+  .command(['generate', '-t', 'nonExistentTemplate', '--noSetup'])
   .catch(error => {
     expect(error.message).to.contain('Missing 1 required arg')
   })

@@ -3,7 +3,9 @@ import {magicStrings} from '../../constants'
 // import {regExFileInfo} from '../constants/Regex/regExFileInfo'
 import {CustomCodeRepository} from '../../constants/types/custom'
 import {Configuration} from '../../constants/types/configuration'
-import {fs, storeCustomCodeForFile} from './storeCustomCodeForFile'
+import {storeCustomCodeForFile} from './storeCustomCodeForFile'
+
+const fs = require('fs-extra')
 
 const globby = require('globby')
 // const readdir = require('@mrmlnc/readdir-enhanced')
@@ -30,7 +32,7 @@ async function storeCustomCodeRegions(
   for (i = 0; i < files.length; i++) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      customCode = await storeCustomCodeForFile(files[i], customCode, rootDir)
+      customCode = await storeCustomCodeForFile(files[i], customCode, rootDir, config)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)

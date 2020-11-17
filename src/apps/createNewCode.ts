@@ -1,7 +1,7 @@
 import {getCodeDir} from '../inputs/getCodeDir'
 import {errorMessage} from '../shared/errorMessage'
-import {magicStrings} from '../constants'
-import {copyTemplateToMeta} from './copyTemplateToMeta'
+// import {magicStrings} from '../constants'
+// import {copyTemplateToMeta} from './copyTemplateToMeta'
 
 const chalk = require('chalk')
 const execa = require('execa')
@@ -11,7 +11,7 @@ const Listr = require('listr')
 export async function createNewCode(
   codeDir: string,
   starterDir: string,
-  templateDir: string,
+  // templateDir: string,
 ) {
   const tasksCopyFromBaseApp = new Listr([
     {
@@ -39,14 +39,14 @@ export async function createNewCode(
         )
       },
     },
-    {
-      title: 'Copy template to dir',
-      task: async () => {
-        const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
-        const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
-        await copyTemplateToMeta(codeTemplateDir, templateDir)
-      },
-    },
+    // {
+    //   title: 'Copy template to dir',
+    //   task: async () => {
+    //     const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
+    //     const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
+    //     await copyTemplateToMeta(codeTemplateDir, templateDir)
+    //   },
+    // },
   ])
   return tasksCopyFromBaseApp
 }

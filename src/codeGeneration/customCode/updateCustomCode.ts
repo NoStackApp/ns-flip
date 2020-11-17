@@ -1,5 +1,6 @@
 import {CustomCodeByFile, CustomCodeCollection, CustomCodeRepository} from '../../constants/types/custom'
 import {fs, updateCustomCodeForFile} from './updateCustomCodeForFile'
+import {Configuration} from '../../constants/types/configuration'
 
 function moveOverCodeSections(
   customCodeCollection: CustomCodeCollection,
@@ -42,7 +43,11 @@ function customCodeToCodeByFile(customCodeRepository: CustomCodeRepository) {
   return customCodeByFile
 }
 
-export async function updateCustomCode(customCode: CustomCodeRepository, rootDir: string) {
+export async function updateCustomCode(
+  customCode: CustomCodeRepository,
+  rootDir: string,
+  config: Configuration,
+) {
   const customCodeByFile = customCodeToCodeByFile(customCode)
   try {
     await fs.outputJson(`${rootDir}/meta/custom.json`, customCodeByFile)
@@ -55,7 +60,7 @@ export async function updateCustomCode(customCode: CustomCodeRepository, rootDir
     const filePath = `${rootDir}/${relativePath}`
     try {
       if (await fs.pathExists(filePath)) {
-        await updateCustomCodeForFile(filePath, customCodeByFile[relativePath])
+        await updateCustomCodeForFile(filePath, customCodeByFile[relativePath], config)
       } else {
         // eslint-disable-next-line no-console
         console.log(`***WARNING*** the file ${relativePath} does not exist ` +
@@ -63,7 +68,6 @@ export async function updateCustomCode(customCode: CustomCodeRepository, rootDir
                     'that the file is in the wrong location.')
       }
     } catch (error) {
-      // console.error(error)
       throw new Error(`couldn't update ${filePath}. rootDir=${rootDir}.`)
     }
   }))

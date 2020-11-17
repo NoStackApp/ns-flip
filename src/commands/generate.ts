@@ -1,7 +1,7 @@
 import {Command, flags} from '@oclif/command'
 
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {magicStrings, suffixes} from '../constants'
+import {magicStrings} from '../constants'
 import {createCodeBase} from '../apps/createCodeBase'
 
 export default class Generate extends Command {
@@ -44,14 +44,17 @@ export default class Generate extends Command {
     // const force = flags.force
     const templateDir = flags.templateDir
     const noSetup = flags.noSetup
-    const starterDir = codeDir + suffixes.STARTUP_DIR
+    // const starterDir = codeDir + suffixes.STARTUP_DIR
 
     try {
-      const newAppTasks = await createCodeBase(starterDir, templateDir, codeDir, noSetup)
-      await newAppTasks.run().catch((error: any) => {
-        this.error(error)
-      })
+      await createCodeBase(templateDir, codeDir, noSetup)
+
+      // const newAppTasks = await createCodeBase(starterDir, templateDir, codeDir, noSetup)
+      // await newAppTasks.run().catch((error: any) => {
+      //   this.error(error)
+      // })
     } catch (error) {
+      this.log(error)
       throw new Error(`problem generating code: ${error}`)
     }
 

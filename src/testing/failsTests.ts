@@ -48,7 +48,7 @@ export async function failsTests(codeDir: string) {
     await generateCode(testDir, nsInfo, config)
 
     const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
-    await insertCustomChanges(testDir, customCodeDoc)
+    await insertCustomChanges(testDir, customCodeDoc, config)
   } catch (error) {
     throw error
   }

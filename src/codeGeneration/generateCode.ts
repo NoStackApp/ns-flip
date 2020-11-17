@@ -39,7 +39,6 @@ export async function generateCode(
     throw new Error(`error in creating standard files: ${error}`)
   }
 
-  // console.log(`units is: ${JSON.stringify(Object.keys(units), null, 2)}`)
   try {
     if (units) {
       await configuredDirs(config, codeDir, Object.keys(units))

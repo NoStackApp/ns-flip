@@ -113,6 +113,8 @@ export const magicStrings = {
   COMP_DIR: 'components',
   CUSTOM_CODE_FILE: 'customCode.json',
   SLUG_PLACEHOLDER: '__slug__',
+  OPEN_COMMENT_PLACEHOLDER: '__NS_OPEN__',
+  CLOSE_COMMENT_PLACEHOLDER: '__NS_CLOSE__',
   STANDARD_UNIT: 'standard',
   START_OF_FILE_FILE: 'START_OF_FILE.hbs',
   FILE_TEMPLATES: 'fileTemplates',
@@ -158,3 +160,8 @@ export const standardIgnored = [
   'package-lock.json',
   'meta',
 ]
+
+export interface Delimiters {
+    open: string;
+    close: string;
+}

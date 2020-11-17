@@ -4,9 +4,12 @@ import {
   locationRepetition,
   locationSpec,
   space,
-  opening,
-  closing,
+  openingForDelimiters,
+  closingForDelimiters,
 } from './regExShared'
+import {Delimiters} from '..'
 
-const firstLineBody = `${opening}ns__custom_start${space}unit:${space}${locationSpec}${closing}`
-export const customLocationRegExString = `${firstLineBody}${content}${opening}ns__custom_end${space}unit:${space}${locationRepetition}${closing}`
+const firstLineBody = (delimiters: Delimiters) =>
+  `${openingForDelimiters(delimiters)}ns__custom_start${space}unit:${space}${locationSpec}${closingForDelimiters(delimiters)}`
+export const customLocationRegExString = (delimiters: Delimiters) =>
+  `${firstLineBody(delimiters)}${content}${openingForDelimiters(delimiters)}ns__custom_end${space}unit:${space}${locationRepetition}${closingForDelimiters(delimiters)}`
