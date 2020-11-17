@@ -1,4 +1,3 @@
-import execa = require('execa');
 import {magicStrings, suffixes} from '../constants'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
@@ -13,21 +12,21 @@ import {updatePackageJson} from './updatePackageJson'
 
 const fs = require('fs-extra')
 
-async function restoreMetaDir(codeDir: string) {
-  const backupDir = `${codeDir}${suffixes.BACKUP_DIR}`
-  const backupMetaDir = `${backupDir}/${magicStrings.META_DIR}`
-  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
-  await fs.remove(metaDir)
-
-  await execa(
-    'cp',
-    ['-r', backupMetaDir, metaDir],
-  ).catch(
-    (error: any) => {
-      throw new Error(`error restoring ${magicStrings.META_DIR} from ${backupMetaDir}: ${error}`)
-    },
-  )
-}
+// async function restoreMetaDir(codeDir: string) {
+//   const backupDir = `${codeDir}${suffixes.BACKUP_DIR}`
+//   const backupMetaDir = `${backupDir}/${magicStrings.META_DIR}`
+//   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
+//   await fs.remove(metaDir)
+//
+//   await execa(
+//     'cp',
+//     ['-r', backupMetaDir, metaDir],
+//   ).catch(
+//     (error: any) => {
+//       throw new Error(`error restoring ${magicStrings.META_DIR} from ${backupMetaDir}: ${error}`)
+//     },
+//   )
+// }
 
 export async function regenerateCode(codeDir: string) {
   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
@@ -55,9 +54,7 @@ export async function regenerateCode(codeDir: string) {
     await fs.remove(backupDir)
     await copyCodeBaseToNewDir(codeDir, backupDir)
     await fs.remove(codeDir)
-    console.log('replaced the backup...\n')
   } catch (error) {
-    console.error(JSON.stringify(error))
     throw new Error(`could not replace the backup: ${error}`)
   }
 
@@ -65,7 +62,6 @@ export async function regenerateCode(codeDir: string) {
   try {
     await copyCodeBaseToNewDir(starter, codeDir)
   } catch (error) {
-    console.error(JSON.stringify(error))
     throw new Error(`could not copy code base: ${error}`)
   }
 
@@ -79,16 +75,12 @@ export async function regenerateCode(codeDir: string) {
   try {
     await moveOverIgnored(backupDir, codeDir, config)
   } catch (error) {
-    console.error(JSON.stringify(error))
     throw new Error(`could not move over ignored: ${error}`)
   }
 
   try {
-    console.log('about to generate. ') // ${JSON.stringify({codeDir, nsInfo, config}, null, 2)}\n`)
     await generateCode(codeDir, nsInfo, config)
-    console.log('generated the code\n')
   } catch (error) {
-    console.error(JSON.stringify(error))
     throw new Error(`could not regenerate the code: ${error}`)
   }
 
@@ -98,7 +90,6 @@ export async function regenerateCode(codeDir: string) {
 
     await updatePackageJson(codeDir, starter)
   } catch (error) {
-    console.error(JSON.stringify(error))
     throw new Error(`could not insert custom changes: ${error}`)
   }
 }

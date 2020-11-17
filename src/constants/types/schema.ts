@@ -178,7 +178,7 @@ interface ActionTypeContextInfo {
   actions: ActionContextList;
 }
 
-interface ActionTypesContextInfo {
+export interface ActionTypesContextInfo {
   [actionType: string]: ActionTypeContextInfo;
 }
 

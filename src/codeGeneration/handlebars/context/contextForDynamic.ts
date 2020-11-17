@@ -141,7 +141,6 @@ export const contextForDynamic = async (
     }),
    */
 
-  console.log(`boilerPlateInfo = ${JSON.stringify(boilerPlateInfo)}`)
   const childrenInfo = {
     all: childrenInfoAll,
     connected: connectedChildrenInfo,

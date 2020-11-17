@@ -52,7 +52,6 @@ export const buildSchema = async (nsInfo: NsInfo, config: Configuration) => {
   }
 
   schema.context = {actionTypes: actionsByType}
-  console.log(`actionsByType=${JSON.stringify(actionsByType, null, 2)}`)
 
   const {units, userClass, joins} = nsInfo
   schema = addUserClass(schema, userClass)

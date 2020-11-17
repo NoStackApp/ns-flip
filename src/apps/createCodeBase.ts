@@ -69,7 +69,6 @@ async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string)
 }
 
 async function createCodeBaseFromScratch(templateDir: string, codeDir: string) {
-  console.log(`templateDir=${templateDir}`)
   const starterDir = codeDir + suffixes.STARTUP_DIR
   const config: Configuration = await getConfiguration(templateDir)
   const {setupSequence} = config

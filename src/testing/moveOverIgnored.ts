@@ -1,6 +1,6 @@
 import {standardIgnored} from '../constants'
 import {Configuration} from '../constants/types/configuration'
-import execa = require('execa');
+// import execa = require('execa');
 const fs = require('fs-extra')
 
 export async function moveOverIgnored(sourceDir: string, updatedDir: string, config: Configuration) {
@@ -13,7 +13,6 @@ export async function moveOverIgnored(sourceDir: string, updatedDir: string, con
   await Promise.all(allIgnored.map(async fileOrFolder => {
     try {
       if (await fs.pathExists(`${sourceDir}/${fileOrFolder}`)) {
-        console.log(`copy ${sourceDir}/${fileOrFolder} to ${updatedDir}/${fileOrFolder}`)
         // await execa(
         //   'cp',
         //   ['-r', `${sourceDir}/${fileOrFolder}`, `${updatedDir}/${fileOrFolder}`],
@@ -21,7 +20,7 @@ export async function moveOverIgnored(sourceDir: string, updatedDir: string, con
         await fs.copy(`${sourceDir}/${fileOrFolder}`, `${updatedDir}/${fileOrFolder}`)
       }
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       throw new Error(`couldn't copy over ${fileOrFolder} from ${sourceDir} to ${updatedDir}: ${error}`)
     }
   }))

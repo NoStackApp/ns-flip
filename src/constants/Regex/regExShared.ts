@@ -13,8 +13,6 @@ function escapeRegExp(string: string) {
 }
 
 export function convertDelimitersForRegEx(commentDelimiter: string) {
-  if (commentDelimiter === '\\n[//]: # (')
-    console.log(`commentDelimiter=${commentDelimiter}. escapeRegExp(commentDelimiter)=${escapeRegExp(commentDelimiter)}. Fixed=${escapeRegExp(commentDelimiter).replace('\\\\n', '\\n')}`)
   return escapeRegExp(commentDelimiter).replace('\\\\n', '\\n')
   // return commentDelimiter
 }

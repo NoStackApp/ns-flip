@@ -68,7 +68,6 @@ export async function updateCustomCode(
                     'that the file is in the wrong location.')
       }
     } catch (error) {
-      console.error(error)
       throw new Error(`couldn't update ${filePath}. rootDir=${rootDir}.`)
     }
   }))
