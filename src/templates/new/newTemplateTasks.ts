@@ -1,5 +1,5 @@
-import {magicStrings} from '../constants'
-import {TemplateRequirements} from './TemplateRequirements'
+import {magicStrings} from '../../constants'
+import {TemplateRequirements} from '../TemplateRequirements'
 
 const chalk = require('chalk')
 // const execa = require('execa')
@@ -8,9 +8,9 @@ const fs = require('fs-extra')
 const Listr = require('listr')
 const path = require('path')
 
-import {dirOptions} from '../shared/dirOptions'
+import {dirOptions} from '../../shared/dirOptions'
 // import {help} from '@oclif/command/lib/flags'
-import {loadFileTemplate} from './loadFileTemplate'
+import {loadFileTemplate} from '../loadFileTemplate'
 
 export async function newTemplateTasks(requirements: TemplateRequirements) {
   const {

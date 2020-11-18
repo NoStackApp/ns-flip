@@ -1,9 +1,10 @@
 import {Command, flags} from '@oclif/command'
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {newTemplateQuestions} from '../templates/newTemplateQuestions'
+import {newTemplateQuestions} from '../templates/new/newTemplateQuestions'
 import {TemplateRequirements} from '../templates/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/generateTemplateFiles'
 import {magicStrings} from '../constants'
+import {setupCreation} from '../templates/new/setupCreation'
 
 const expandTilde = require('expand-tilde')
 const path = require('path')
@@ -57,6 +58,7 @@ export default class Newtemplate extends Command {
     // const {flags} = this.parse(Newtemplate)
 
     try {
+      await setupCreation()
       const responses: TemplateRequirements = await newTemplateQuestions()
       await generateTemplateFiles(responses)
       this.log(printInstructionsForNewTemplate(responses))
