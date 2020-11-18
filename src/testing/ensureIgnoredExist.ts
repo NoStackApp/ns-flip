@@ -1,4 +1,4 @@
-import {standardIgnored, suffixes} from '../constants'
+import {standardIgnored, suffixes} from '../shared/constants'
 const fs = require('fs-extra')
 
 export async function ensureIgnoredExist(codeDir: string) {

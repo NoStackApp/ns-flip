@@ -1,6 +1,6 @@
-import {associationTypes, BoilerPlateInfoType, dataTypes, nodeTypes} from '../../../constants'
-import {NsInfo} from '../../../constants/types/nsInfo'
-import {Schema, TreeTypeChildrenList} from '../../../constants/types/schema'
+import {associationTypes, BoilerPlateInfoType, dataTypes, nodeTypes} from '../../../shared/constants'
+import {NsInfo} from '../../../shared/constants/types/nsInfo'
+import {Schema, TreeTypeChildrenList} from '../../../shared/constants/types/schema'
 import {
   allCaps,
   pluralLowercaseName,
@@ -10,7 +10,7 @@ import {
   singularName,
 } from '../../../shared/inflections'
 import {componentName} from '../../fileGeneration/dynamicComponents/componentName'
-import {Configuration} from '../../../constants/types/configuration'
+import {Configuration} from '../../../shared/constants/types/configuration'
 
 const Handlebars = require('handlebars')
 

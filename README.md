@@ -11,6 +11,7 @@ A tool for creating and using *updatable* code templates.  Supports regeneration
 [![Downloads/week](https://img.shields.io/npm/dw/ns-flip.svg)](https://npmjs.org/package/ns-flip)
 [![License](https://img.shields.io/npm/l/ns-flip.svg)](https://github.com/NoStackApp/ns-flip/blob/master/package.json)
 
+![](images/distributed-maintenance-2.x.png)
 
 
 <!-- toc -->
@@ -27,7 +28,6 @@ After you generate code with a template or tool, you make changes to the code.  
 
 # What
 ns-flip is a CLI to support code templates that can be exchanged as easily as WordPress themes.
-![](images/distributed-maintenance-2.x.png)
 
 A template can generate three types of files:
 
@@ -64,7 +64,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/2.0.2 linux-x64 node-v14.9.0
+ns-flip/2.1.0 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -75,6 +75,7 @@ USAGE
 # Commands
 <!-- commands -->
 * [`ns check CODEDIR`](#ns-check-codedir)
+* [`ns contact [MESSAGE]`](#ns-contact-message)
 * [`ns generate CODEDIR`](#ns-generate-codedir)
 * [`ns help [COMMAND]`](#ns-help-command)
 * [`ns newtemplate`](#ns-newtemplate)
@@ -97,7 +98,29 @@ EXAMPLE
   $ ns check ~/projects/myapp
 ```
 
-_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.0.2/lib/commands/check.js)_
+_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.0/lib/commands/check.js)_
+
+## `ns contact [MESSAGE]`
+
+send feedback or request to ns-flip.  Optionally provide email and other fields.
+
+```
+USAGE
+  $ ns contact [MESSAGE]
+
+ARGUMENTS
+  MESSAGE  the message to send
+
+OPTIONS
+  -e, --email=email  email of sender
+  -h, --help         show CLI help
+
+EXAMPLES
+  $ ns contact "how do I set up comment delimiters with escape chars?" -e pauljones123@gmail.com
+  $ ns contact "generate is breaking when I add handlers."
+```
+
+_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.0/lib/commands/contact.js)_
 
 ## `ns generate CODEDIR`
 
@@ -125,7 +148,7 @@ EXAMPLES
   $ ns generate $CODE
 ```
 
-_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.0.2/lib/commands/generate.js)_
+_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.0/lib/commands/generate.js)_
 
 ## `ns help [COMMAND]`
 
@@ -159,5 +182,5 @@ EXAMPLE
   $ ns newtemplate
 ```
 
-_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.0.2/lib/commands/newtemplate.js)_
+_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.0/lib/commands/newtemplate.js)_
 <!-- commandsstop -->

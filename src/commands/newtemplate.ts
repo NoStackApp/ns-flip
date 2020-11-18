@@ -3,7 +3,7 @@ import {checkForUpdates} from '../shared/checkForUpdates'
 import {newTemplateQuestions} from '../templates/new/newTemplateQuestions'
 import {TemplateRequirements} from '../templates/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/generateTemplateFiles'
-import {magicStrings} from '../constants'
+import {magicStrings} from '../shared/constants'
 import {setupCreation} from '../templates/new/setupCreation'
 import {getConfiguration} from '../shared/getConfiguration'
 

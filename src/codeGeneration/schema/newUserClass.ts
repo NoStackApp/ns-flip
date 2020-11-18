@@ -1,4 +1,4 @@
-import {Schema} from '../../constants/types/schema'
+import {Schema} from '../../shared/constants/types/schema'
 
 export const addUserClass = (schema: Schema, userClassName: string) => {
   schema.userClasses[userClassName] = {

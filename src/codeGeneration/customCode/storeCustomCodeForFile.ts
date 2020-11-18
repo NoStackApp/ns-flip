@@ -1,8 +1,8 @@
-import {CustomCodeRepository} from '../../constants/types/custom'
-import {customLocationNewRegExString} from '../../constants/Regex/regExNewCustomLocation'
-import {replacedRexExText} from '../../constants/Regex/regExReplacedCodeSection'
+import {CustomCodeRepository} from '../../shared/constants/types/custom'
+import {customLocationNewRegExString} from '../../shared/constants/Regex/regExNewCustomLocation'
+import {replacedRexExText} from '../../shared/constants/Regex/regExReplacedCodeSection'
 import {getFileInfo} from './getFileInfo'
-import {Configuration} from '../../constants/types/configuration'
+import {Configuration} from '../../shared/constants/types/configuration'
 import {commentDelimiters} from '../../templates/commentDelimiters'
 
 const fs = require('fs-extra')

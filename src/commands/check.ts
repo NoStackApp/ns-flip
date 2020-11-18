@@ -1,5 +1,5 @@
 import {Command, flags} from '@oclif/command'
-import {links, magicStrings, suffixes} from '../constants'
+import {links, magicStrings, suffixes} from '../shared/constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'

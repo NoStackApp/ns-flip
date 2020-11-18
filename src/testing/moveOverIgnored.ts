@@ -1,5 +1,5 @@
-import {standardIgnored} from '../constants'
-import {Configuration} from '../constants/types/configuration'
+import {standardIgnored} from '../shared/constants'
+import {Configuration} from '../shared/constants/types/configuration'
 // import execa = require('execa');
 const fs = require('fs-extra')
 

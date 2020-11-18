@@ -1,13 +1,13 @@
-import {FileCustomCode} from '../../constants/types/custom'
+import {FileCustomCode} from '../../shared/constants/types/custom'
 import {
   regExReplacedCodeSectionGenerated,
   regExReplacedCodeSectionTagged,
-} from '../../constants/Regex/regExReplacedCodeSection'
-import {customLocationNewRegExString} from '../../constants/Regex/regExNewCustomLocation'
-import {regExCleanupText} from '../../constants/Regex/regExCleanupText'
-import {customCleanupRegExText} from '../../constants/Regex/regExCustomCleanup'
+} from '../../shared/constants/Regex/regExReplacedCodeSection'
+import {customLocationNewRegExString} from '../../shared/constants/Regex/regExNewCustomLocation'
+import {regExCleanupText} from '../../shared/constants/Regex/regExCleanupText'
+import {customCleanupRegExText} from '../../shared/constants/Regex/regExCustomCleanup'
 import {commentDelimiters} from '../../templates/commentDelimiters'
-import {Configuration} from '../../constants/types/configuration'
+import {Configuration} from '../../shared/constants/types/configuration'
 
 export const fs = require('fs-extra')
 const path = require('path')

@@ -1,13 +1,13 @@
-import {Configuration} from '../../constants/types/configuration'
+import {Configuration} from '../../shared/constants/types/configuration'
 
 const fs = require('fs-extra')
 
-import {NsInfo} from '../../constants/types/nsInfo'
+import {NsInfo} from '../../shared/constants/types/nsInfo'
 import {allCaps} from '../../shared/inflections'
 import {loadFileTemplate} from '../../templates/loadFileTemplate'
-import {parseSpecName} from '../../constants/parseSpecName'
+import {parseSpecName} from '../../shared/constants/parseSpecName'
 import {unitNameFromSpec} from './unitNameFromSpec'
-import {magicStrings} from '../../constants'
+import {magicStrings} from '../../shared/constants'
 import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 
 export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDir: string) {

@@ -2,7 +2,7 @@ import {copyCodeBaseToNewDir} from '../codeGeneration/customCode/copyCodeBaseToN
 import {generateCode} from '../codeGeneration/generateCode'
 import {insertCustomChanges} from '../codeGeneration/customCode/insertCustomChanges'
 import {storeAddedCode} from '../codeGeneration/customCode/storeAddedCode'
-import {magicStrings, suffixes} from '../constants'
+import {magicStrings, suffixes} from '../shared/constants'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
 import {checkDirForDiscrepancies} from './checkDirForDiscrepancies'

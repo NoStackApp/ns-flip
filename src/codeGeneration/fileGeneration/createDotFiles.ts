@@ -1,4 +1,4 @@
-import {boilerplateDir} from '../../constants'
+import {boilerplateDir} from '../../shared/constants'
 
 const fs = require('fs-extra')
 const jsonfile = require('jsonfile')

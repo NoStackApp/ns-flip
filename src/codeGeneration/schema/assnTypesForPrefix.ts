@@ -1,4 +1,4 @@
-import {associationTypes, typePrefixes} from '../../constants'
+import {associationTypes, typePrefixes} from '../../shared/constants'
 
 export const assnTypesForPrefix = {
   [typePrefixes.CREATE]: associationTypes.MULTIPLE,

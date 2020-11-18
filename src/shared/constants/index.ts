@@ -125,6 +125,16 @@ export const magicStrings = {
   DOCUMENTATION: 'https://ns-flip.nostack.net/',
 }
 
+export const feedbackForm = {
+  URL: 'https://docs.google.com/forms/d/1DooR4toIL-15Ozk6cxB1A8gMJR5e3dntalYAr60PM9Q/formResponse',
+  fields: {
+    MESSAGE_TYPE: 'entry.2118049504',
+    SUBJECT: 'entry.1563192314',
+    MESSAGE: 'entry.7330959',
+    EMAIL: 'entry.1551316295',
+  },
+}
+
 export const suffixes = {
   BACKUP_DIR: '.backup',
   TEST_DIR: '.test',
@@ -162,6 +172,6 @@ export const standardIgnored = [
 ]
 
 export interface Delimiters {
-    open: string;
-    close: string;
+  open: string;
+  close: string;
 }

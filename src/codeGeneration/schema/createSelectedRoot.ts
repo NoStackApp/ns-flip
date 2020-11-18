@@ -1,4 +1,4 @@
-import {SourceInfo} from '../../constants/types/schema'
+import {SourceInfo} from '../../shared/constants/types/schema'
 
 export function createSelectedRoot(unitInfo: SourceInfo) {
   const highestLevel = 'highestLevel'

@@ -1,5 +1,5 @@
-import {magicStrings} from '../../constants'
-import {TemplateRequirements} from '../TemplateRequirements'
+import {magicStrings} from '../shared/constants'
+import {TemplateRequirements} from './TemplateRequirements'
 
 const chalk = require('chalk')
 // const execa = require('execa')

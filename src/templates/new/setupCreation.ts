@@ -75,11 +75,15 @@ export async function setupCreation(sampleDir: string, config: Configuration) {
     )
 
     // console.log(`dependencyChoices=${JSON.stringify(dependencyChoices, null, 2)}`)
-    inquirer
-    .prompt(questions)
-    .then((answers: any) => {
+    try {
+      const answers = await inquirer.prompt(questions)
       console.log(JSON.stringify(answers, null, '  '))
+
+      if (answers.useVersions) {
+        if (answers.useVersions=)
+      }
+    } catch (error) {
+      throw new Error(`problem getting answers from user about setup creation: ${error}`)
     }
-    )
   }
 }
