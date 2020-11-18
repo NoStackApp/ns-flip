@@ -1,13 +1,13 @@
-import {magicStrings} from '../constants'
-import {NsInfo} from '../constants/types/nsInfo'
-import {Schema} from '../constants/types/schema'
+import {magicStrings} from '../shared/constants'
+import {NsInfo} from '../shared/constants/types/nsInfo'
+import {Schema} from '../shared/constants/types/schema'
 import {configuredDirs} from './fileGeneration/configuredDirs'
 import {dynamicFiles} from './fileGeneration/dynamicFiles'
 import {buildSchema} from './schema/buildSchema'
 import {standardFiles} from './fileGeneration/standardFiles'
 import {staticFiles} from './fileGeneration/staticFiles'
 import {generateAppTypeFiles} from './fileGeneration/dynamicComponents/generateAppTypeFiles'
-import {Configuration} from '../constants/types/configuration'
+import {Configuration} from '../shared/constants/types/configuration'
 
 // const fs = require('fs-extra')
 

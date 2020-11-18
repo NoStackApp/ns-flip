@@ -1,8 +1,8 @@
-import {NsJoinInfo} from '../../constants/types/nsInfo'
-import {Schema} from '../../constants/types/schema'
+import {NsJoinInfo} from '../../shared/constants/types/nsInfo'
+import {Schema} from '../../shared/constants/types/schema'
 
 // import {associationTypes} from '../../constants'
-import {parseSpecName} from '../../constants/parseSpecName'
+import {parseSpecName} from '../../shared/constants/parseSpecName'
 // import {createActionsForType} from './createActionsForType'
 // import {assnTypesForPrefix} from './assnTypesForPrefix'
 // const newType = require('newType');

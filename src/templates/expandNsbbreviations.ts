@@ -1,5 +1,5 @@
-import {regExTemplateAbbreviation} from '../constants/Regex/regExTemplateAbbreviation'
-import {magicStrings} from '../constants'
+import {regExTemplateAbbreviation} from '../shared/constants/Regex/regExTemplateAbbreviation'
+import {magicStrings} from '../shared/constants'
 
 export function expandNsAbbreviations(template: string) {
   return template

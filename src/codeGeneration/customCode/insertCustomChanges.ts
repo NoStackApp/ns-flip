@@ -1,13 +1,13 @@
 import {updateCustomCode} from './updateCustomCode'
 import * as path from 'path'
-import {CustomCodeRepository} from '../../constants/types/custom'
+import {CustomCodeRepository} from '../../shared/constants/types/custom'
 import {singularName} from '../../shared/inflections'
 
 const chalk = require('chalk')
 
 import execa = require('execa');
 import {fs} from './updateCustomCodeForFile'
-import {Configuration} from '../../constants/types/configuration'
+import {Configuration} from '../../shared/constants/types/configuration'
 
 async function updateCode(
   fileName: string,

@@ -1,4 +1,4 @@
-import {Schema} from '../../constants/types/schema'
+import {Schema} from '../../shared/constants/types/schema'
 
 const highestLevel = 'highestLevel'
 import {buildSelectionTree} from './buildSelectionTree'

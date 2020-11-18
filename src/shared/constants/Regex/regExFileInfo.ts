@@ -1,5 +1,5 @@
 import {closingForDelimiters, openingForDelimiters, space, specString} from './regExShared'
-import {Delimiters, markupTags} from '../index'
+import {Delimiters, markupTags} from '..'
 
 export const regExFileText = (delimiters: Delimiters) =>
   openingForDelimiters(delimiters) + markupTags.FILE_INFO +

@@ -3,7 +3,7 @@ import {checkForUpdates} from '../shared/checkForUpdates'
 import {newTemplateQuestions} from '../templates/newTemplateQuestions'
 import {TemplateRequirements} from '../templates/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/generateTemplateFiles'
-import {magicStrings} from '../constants'
+import {magicStrings} from '../shared/constants'
 
 const expandTilde = require('expand-tilde')
 const path = require('path')

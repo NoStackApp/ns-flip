@@ -1,4 +1,4 @@
-import {magicStrings, suffixes} from '../constants'
+import {magicStrings, suffixes} from '../shared/constants'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
 import {checkForUpdates} from '../shared/checkForUpdates'
