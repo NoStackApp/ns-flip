@@ -6,7 +6,7 @@ const fs = require('fs-extra')
 export async function copyTemplateToMeta(codeTemplateDir: string, templateDir: string) {
   if (codeTemplateDir === templateDir) return
   try {
-    await fs.ensureDir(codeTemplateDir)
+    await fs.emptyDir(codeTemplateDir)
     // copyProjectDirectory(templateDir, codeTemplateDir)
     await fs.copy(templateDir, codeTemplateDir)
     // , {
@@ -21,7 +21,7 @@ export async function copyTemplateToMeta(codeTemplateDir: string, templateDir: s
     //   )
     // }
   } catch (error) {
-    throw new Error(chalk.red(`error copying the template over from ${templateDir}.`) +
+    throw new Error(chalk.red(`error copying the template over from ${templateDir} to ${codeTemplateDir}.`) +
             `Here is the error reported:\n${error}`)
   }
 }
