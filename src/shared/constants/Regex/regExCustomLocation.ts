@@ -7,7 +7,7 @@ import {
   openingForDelimiters,
   closingForDelimiters,
 } from './regExShared'
-import {Delimiters} from '..'
+import {Delimiters} from '../index'
 
 const firstLineBody = (delimiters: Delimiters) =>
   `${openingForDelimiters(delimiters)}ns__custom_start${space}unit:${space}${locationSpec}${closingForDelimiters(delimiters)}`

@@ -1,4 +1,4 @@
-import {Delimiters} from '..'
+import {Delimiters} from '../index'
 
 export const commentOpen = '(\\/\\/|\\/\\*)'
 export const commentClose = '(\\n|\\*\\/)'
