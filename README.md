@@ -179,7 +179,7 @@ OPTIONS
   -h, --help  show CLI help
 
 EXAMPLE
-  $ ns newtemplat712158712158e
+  $ ns newtemplate
 ```
 
 _See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.0/lib/commands/newtemplate.js)_
