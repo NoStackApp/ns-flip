@@ -11,6 +11,7 @@ A tool for creating and using *updatable* code templates.  Supports regeneration
 [![Downloads/week](https://img.shields.io/npm/dw/ns-flip.svg)](https://npmjs.org/package/ns-flip)
 [![License](https://img.shields.io/npm/l/ns-flip.svg)](https://github.com/NoStackApp/ns-flip/blob/master/package.json)
 
+![](images/distributed-maintenance-2.x.png)
 
 
 <!-- toc -->
@@ -27,7 +28,6 @@ After you generate code with a template or tool, you make changes to the code.  
 
 # What
 ns-flip is a CLI to support code templates that can be exchanged as easily as WordPress themes.
-![](images/distributed-maintenance-2.x.png)
 
 A template can generate three types of files:
 
