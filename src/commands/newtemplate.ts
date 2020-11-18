@@ -5,6 +5,7 @@ import {TemplateRequirements} from '../templates/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/generateTemplateFiles'
 import {magicStrings} from '../constants'
 import {setupCreation} from '../templates/new/setupCreation'
+import {getConfiguration} from '../shared/getConfiguration'
 
 const expandTilde = require('expand-tilde')
 const path = require('path')
@@ -58,14 +59,15 @@ export default class Newtemplate extends Command {
     // const {flags} = this.parse(Newtemplate)
 
     try {
+      const config = await getConfiguration('/home/yisroel/ns/templates/ns-template-oclif-multi-travis')
       const sampleDir = '/home/yisroel/temp/clis/projectory'
-      await setupCreation(sampleDir)
+      await setupCreation(sampleDir, config)
       return
       const responses: TemplateRequirements = await newTemplateQuestions()
       await generateTemplateFiles(responses)
       this.log(printInstructionsForNewTemplate(responses))
     } catch (error) {
-      throw new Error(`Problem creating starter: ${error}`)
+      throw new Error(`Problem creating template: ${error}`)
     }
   }
 }
