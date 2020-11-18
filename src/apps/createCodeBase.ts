@@ -1,10 +1,10 @@
-import {docPages, magicStrings, suffixes} from '../constants'
+import {docPages, magicStrings, suffixes} from '../shared/constants'
 import {dirOptions} from '../shared/dirOptions'
 import {getCodeInfo} from '../shared/getCodeInfo'
 import {getConfiguration} from '../shared/getConfiguration'
-import {CustomCodeRepository} from '../constants/types/custom'
+import {CustomCodeRepository} from '../shared/constants/types/custom'
 
-import {CommandSpec, Configuration} from '../constants/types/configuration'
+import {CommandSpec, Configuration} from '../shared/constants/types/configuration'
 
 import {regenerateCode} from '../codeGeneration/regenerateCode'
 import {createNewCode} from './createNewCode'

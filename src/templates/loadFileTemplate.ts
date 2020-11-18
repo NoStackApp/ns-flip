@@ -1,5 +1,5 @@
 import {expandNsAbbreviations} from './expandNsbbreviations'
-import {magicStrings} from '../constants'
+import {magicStrings} from '../shared/constants'
 
 const fs = require('fs-extra')
 const Handlebars = require('handlebars')

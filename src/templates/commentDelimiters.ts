@@ -1,4 +1,4 @@
-import {Configuration} from '../constants/types/configuration'
+import {Configuration} from '../shared/constants/types/configuration'
 
 const globalDefaultOpen = '/*'
 const globalDefaultClose = '*/'

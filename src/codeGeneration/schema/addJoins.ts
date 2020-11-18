@@ -1,5 +1,5 @@
-import {JoinsData} from '../../constants/types/nsInfo'
-import {Schema} from '../../constants/types/schema'
+import {JoinsData} from '../../shared/constants/types/nsInfo'
+import {Schema} from '../../shared/constants/types/schema'
 
 import {newJoin} from './newJoin'
 

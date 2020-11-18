@@ -1,7 +1,7 @@
-import {NsInfo} from '../../../constants/types/nsInfo'
-import {Schema} from '../../../constants/types/schema'
+import {NsInfo} from '../../../shared/constants/types/nsInfo'
+import {Schema} from '../../../shared/constants/types/schema'
 import {generateUnitTypeFiles} from './generateUnitTypeFiles'
-import {Configuration} from '../../../constants/types/configuration'
+import {Configuration} from '../../../shared/constants/types/configuration'
 
 export async function generateAppTypeFiles(
   userClass: string,

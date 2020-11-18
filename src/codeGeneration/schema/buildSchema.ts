@@ -1,13 +1,13 @@
 'use strict'
 
-import {NsInfo} from '../../constants/types/nsInfo'
-import {Schema} from '../../constants/types/schema'
+import {NsInfo} from '../../shared/constants/types/nsInfo'
+import {Schema} from '../../shared/constants/types/schema'
 import {addUserClass} from './newUserClass'
 
 import {addUnits} from './addUnits'
 import {addJoins} from './addJoins'
 import {setSelectionRoots} from './setSelectionRoots'
-import {Configuration} from '../../constants/types/configuration'
+import {Configuration} from '../../shared/constants/types/configuration'
 import {allCaps} from '../../shared/inflections'
 const emptySchema: Schema = {
   userClasses: {},

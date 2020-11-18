@@ -1,5 +1,5 @@
-import {Configuration} from '../../../constants/types/configuration'
-import {NsInfo} from '../../../constants/types/nsInfo'
+import {Configuration} from '../../../shared/constants/types/configuration'
+import {NsInfo} from '../../../shared/constants/types/nsInfo'
 import {pluralLowercaseName, pluralName, singularName} from '../../../shared/inflections'
 import {createGeneralInfo} from './createGeneralInfo'
 

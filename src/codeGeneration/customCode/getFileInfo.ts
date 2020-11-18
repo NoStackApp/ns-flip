@@ -1,5 +1,5 @@
-import {regExFileText} from '../../constants/Regex/regExFileInfo'
-import {Delimiters} from '../../constants'
+import {regExFileText} from '../../shared/constants/Regex/regExFileInfo'
+import {Delimiters} from '../../shared/constants'
 
 export function getFileInfo(fileText: string, delimiters: Delimiters) {
   let unit = ''

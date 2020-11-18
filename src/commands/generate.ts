@@ -1,7 +1,7 @@
 import {Command, flags} from '@oclif/command'
 
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {magicStrings} from '../constants'
+import {magicStrings} from '../shared/constants'
 import {createCodeBase} from '../apps/createCodeBase'
 
 export default class Generate extends Command {

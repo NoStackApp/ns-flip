@@ -1,4 +1,4 @@
-import {NsInfo} from '../../../constants/types/nsInfo'
+import {NsInfo} from '../../../shared/constants/types/nsInfo'
 
 const fs = require('fs-extra')
 
