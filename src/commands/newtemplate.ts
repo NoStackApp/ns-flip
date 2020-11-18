@@ -58,7 +58,9 @@ export default class Newtemplate extends Command {
     // const {flags} = this.parse(Newtemplate)
 
     try {
-      await setupCreation()
+      const sampleDir = '/home/yisroel/temp/clis/projectory'
+      await setupCreation(sampleDir)
+      return
       const responses: TemplateRequirements = await newTemplateQuestions()
       await generateTemplateFiles(responses)
       this.log(printInstructionsForNewTemplate(responses))

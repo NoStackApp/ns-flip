@@ -1,9 +1,7 @@
+import {removeNpmDependencyPrefix} from '../shared/removeNpmDependencyPrefix'
+
 const fs = require('fs-extra')
 const semverGt = require('semver/functions/gt')
-
-function removeNpmDependencyPrefix(dependency: string) {
-  return dependency.replace('^', '').replace('~', '')
-}
 
 export async function updatePackageJson(codeDir: string, starter: string) {
   const codePackageJsonPath = `${codeDir}/package.json`
