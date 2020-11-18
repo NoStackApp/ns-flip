@@ -14,6 +14,7 @@ export async function copyCodeBaseToNewDir(codeDir: string, newDir: string) {
   //   throw new Error(`could not copy ${codeDir} to ${newDir}`)
   // }
   try {
+    await fs.emptyDir(newDir)
     await fs.copy(codeDir, newDir)
   } catch (error) {
     throw new Error(`unable to copy ${codeDir} to ${newDir}: ${error}`)
