@@ -15,7 +15,8 @@ export default class Contact extends Command {
   }
 
   static examples = [
-    '$ ns contact "generate is breaking" -e pauljones123@gmail.com',
+    '$ ns contact "how do I set up comment delimiters with escape chars?" -e pauljones123@gmail.com',
+    '$ ns contact "generate is breaking when I add handlers."',
   ]
 
   static args = [
