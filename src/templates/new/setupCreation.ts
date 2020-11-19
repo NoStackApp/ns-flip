@@ -1,13 +1,27 @@
 'use strict'
-import {getDependencies} from './getDependencies'
+import {DependencyList, getDependencies} from './getDependencies'
 // import {removeNpmDependencyPrefix} from '../../shared/removeNpmDependencyPrefix'
-import {Configuration} from '../../constants/types/configuration'
+import {Configuration} from '../../shared/constants/types/configuration'
 
 const chalk = require('chalk')
 const inquirer = require('inquirer')
 
-function createChoicesFromDepList(codeDependencies: any) {
-  let dependencyChoices: any = []
+interface DependencyChoice {
+  name: string;
+}
+
+interface DependencyChoiceList {
+  [index: number]: DependencyChoice;
+}
+
+interface AnswersForPackages {
+  mainPackages: string[];
+  devPackages: string[];
+  useVersions: string;
+}
+
+function createChoicesFromDepList(codeDependencies: DependencyList) {
+  let dependencyChoices: DependencyChoiceList = []
   if (codeDependencies) {
     const packages = Object.keys(codeDependencies)
     dependencyChoices = packages.map((packageName: string) => {
@@ -17,6 +31,18 @@ function createChoicesFromDepList(codeDependencies: any) {
     })
   }
   return dependencyChoices
+}
+
+function createSetupDependencyList(
+  codeDependencies: DependencyList,
+  answersPackageList: any,
+  installationList: string[],
+) {
+  const packagesToInstall = Object.keys(codeDependencies).filter((n: string) =>
+    !answersPackageList.includes(n))
+  return packagesToInstall.map((packageName: string) => {
+    installationList.push(packageName + '@' + codeDependencies[packageName])
+  })
 }
 
 export async function setupCreation(sampleDir: string, config: Configuration) {
@@ -69,25 +95,39 @@ export async function setupCreation(sampleDir: string, config: Configuration) {
         ' or just get the latest? You can always go into your template config file and ' +
         ' modify them.',
       choices: [versioningOptions.USE, versioningOptions.GET_LATEST],
-      when: function (answers: any) {
+      when: function (answers: AnswersForPackages) {
         const mainDependenciesToAdd =
           answers.mainPackages.length !== dependencyChoices.length
         const devDependenciesToAdd =
           answers.devPackages.length !== devDependencyChoices.length
         return (mainDependenciesToAdd || devDependenciesToAdd)
       },
-    }
-    )
+    })
 
-    // console.log(`dependencyChoices=${JSON.stringify(dependencyChoices, null, 2)}`)
     try {
-      const answers = await inquirer.prompt(questions)
+      const answers: AnswersForPackages = await inquirer.prompt(questions)
       console.log(JSON.stringify(answers, null, '  '))
 
       if (answers.useVersions) {
         const {setupSequence} = config
-        answers.mainPackages.map()
-        if (answers.useVersions===versioningOptions.USE)
+        if (!setupSequence.mainInstallation)
+          setupSequence.mainInstallation = []
+        if (!setupSequence.devInstallation)
+          setupSequence.devInstallation = []
+
+        if (answers.useVersions === versioningOptions.USE) {
+          createSetupDependencyList(
+            codeDependencies,
+            answers.mainPackages,
+            setupSequence.mainInstallation
+          )
+          createSetupDependencyList(
+            codeDevDependencies,
+            answers.devPackages,
+            setupSequence.devInstallation
+          )
+        }
+        console.log(JSON.stringify(setupSequence, null, '  '))
       }
     } catch (error) {
       throw new Error(`problem getting answers from user about setup creation: ${error}`)

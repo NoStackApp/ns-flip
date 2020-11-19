@@ -1,5 +1,5 @@
-import {getCodeDir} from '../inputs/getCodeDir'
-import {errorMessage} from '../shared/errorMessage'
+import {getCodeDir} from '../../inputs/getCodeDir'
+import {errorMessage} from '../../shared/errorMessage'
 
 const chalk = require('chalk')
 const execa = require('execa')

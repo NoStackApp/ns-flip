@@ -1,4 +1,4 @@
-import {magicStrings} from '../shared/constants'
+import {magicStrings} from '../../shared/constants'
 import {TemplateRequirements} from './TemplateRequirements'
 
 const chalk = require('chalk')

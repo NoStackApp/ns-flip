@@ -1,12 +1,9 @@
 import {docPages, magicStrings} from '../../shared/constants'
 
-import {CommandSpec} from '../../shared/constants/types/configuration'
-
 import {regenerateCode} from '../regenerateCode'
 import {copyTemplateToMeta} from './copyTemplateToMeta'
 import {createStarter} from './createStarter'
 
-const execa = require('execa')
 const fs = require('fs-extra')
 
 export async function createCodeBase(

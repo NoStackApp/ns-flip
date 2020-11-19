@@ -1,4 +1,4 @@
-import {TemplateRequirements} from '../TemplateRequirements'
+import {TemplateRequirements} from './TemplateRequirements'
 import {newTemplateTasks} from './newTemplateTasks'
 
 export async function generateTemplateFiles(requirements: TemplateRequirements) {

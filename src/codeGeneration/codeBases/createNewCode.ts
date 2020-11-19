@@ -1,5 +1,5 @@
-import {getCodeDir} from '../inputs/getCodeDir'
-import {errorMessage} from '../shared/errorMessage'
+import {getCodeDir} from '../../inputs/getCodeDir'
+import {errorMessage} from '../../shared/errorMessage'
 // import {magicStrings} from '../constants'
 // import {copyTemplateToMeta} from './copyTemplateToMeta'
 

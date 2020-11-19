@@ -1,11 +1,12 @@
 import {Command, flags} from '@oclif/command'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {newTemplateQuestions} from '../templates/new/newTemplateQuestions'
-import {TemplateRequirements} from '../templates/TemplateRequirements'
-import {generateTemplateFiles} from '../templates/generateTemplateFiles'
-import {magicStrings} from '../shared/constants'
+import {TemplateRequirements} from '../templates/new/TemplateRequirements'
+import {generateTemplateFiles} from '../templates/new/generateTemplateFiles'
+import {magicStrings, suffixes} from '../shared/constants'
 import {setupCreation} from '../templates/new/setupCreation'
 import {getConfiguration} from '../shared/getConfiguration'
+import {setPreCommands} from '../templates/new/setPreCommands'
 
 const expandTilde = require('expand-tilde')
 const path = require('path')
@@ -59,10 +60,16 @@ export default class Newtemplate extends Command {
     // const {flags} = this.parse(Newtemplate)
 
     try {
-      const config = await getConfiguration('/home/yisroel/ns/templates/ns-template-oclif-multi-travis')
+      const config = await getConfiguration('/home/yisroel/ns/samples')
       const sampleDir = '/home/yisroel/temp/clis/projectory'
-      await setupCreation(sampleDir, config)
+      const codeDir = '/home/yisroel/ns/samples/code5'
+
+      const starterDir = codeDir + suffixes.STARTUP_DIR
+      await setPreCommands(config, starterDir)
       return
+
+      await setupCreation(sampleDir, config)
+
       const responses: TemplateRequirements = await newTemplateQuestions()
       await generateTemplateFiles(responses)
       this.log(printInstructionsForNewTemplate(responses))
