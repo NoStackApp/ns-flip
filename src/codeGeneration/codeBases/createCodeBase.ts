@@ -1,206 +1,13 @@
-import {docPages, magicStrings, suffixes} from '../shared/constants'
-import {dirOptions} from '../shared/dirOptions'
-import {getCodeInfo} from '../shared/getCodeInfo'
-import {getConfiguration} from '../shared/getConfiguration'
-import {CustomCodeRepository} from '../shared/constants/types/custom'
+import {docPages, magicStrings} from '../../shared/constants'
 
-import {CommandSpec, Configuration} from '../shared/constants/types/configuration'
+import {CommandSpec} from '../../shared/constants/types/configuration'
 
-import {regenerateCode} from '../codeGeneration/regenerateCode'
-import {createNewCode} from './createNewCode'
+import {regenerateCode} from '../regenerateCode'
 import {copyTemplateToMeta} from './copyTemplateToMeta'
+import {createStarter} from './createStarter'
 
-const chalk = require('chalk')
 const execa = require('execa')
 const fs = require('fs-extra')
-const Listr = require('listr')
-const yaml = require('js-yaml')
-
-function convertCommandArgs(args: string[] | undefined, codeDir: string) {
-  if (!args) return []
-  // const output = args.map((arg: string) => arg.replace('$codeDir', codeDir)).push(`>> ${LOGFILE}`)
-  const output = args.map((arg: string) => arg.replace('$codeDir', codeDir))
-  // output.push(`>> ${LOGFILE}`)
-  return output
-}
-
-async function spawnInteractiveChildProcess(commandSpec: CommandSpec) {
-  await execa(
-    commandSpec.file,
-    commandSpec.arguments,
-    commandSpec.options,
-  ).catch(
-    (error: any) => {
-      throw new Error(`error with executing ${commandSpec.file}: ${error}`)
-    },
-  )
-}
-
-async function checkFolder(starterDir: string) {
-  if (await fs.pathExists(starterDir)) {
-    try {
-      await fs.remove(starterDir)
-    } catch (error) {
-      throw new Error(`cannot remove the starter ${starterDir}: ${error}`)
-    }
-  }
-
-  //
-  // const upperCaseCheck = /(.*[A-Z].*)/
-  // if (upperCaseCheck.test(starterDir)) {
-  //   throw new Error(errorMessage(`The ${starterDir} contains at least one capital, which create-react-app does not permit.`))
-  // }
-}
-
-async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string) {
-  let i
-  for (i = 0; i < commandSpecs.length; i++) {
-    const commandSpec = {...commandSpecs[i]}
-    if (!commandSpec) {
-      continue
-    }
-
-    commandSpec.arguments = convertCommandArgs(commandSpec.arguments, codeDir)
-
-    if (!commandSpec.options) commandSpec.options = {}
-    commandSpec.options.stdio = 'inherit'
-    await spawnInteractiveChildProcess(commandSpec)
-  }
-}
-
-async function createCodeBaseFromScratch(templateDir: string, codeDir: string) {
-  const starterDir = codeDir + suffixes.STARTUP_DIR
-  const config: Configuration = await getConfiguration(templateDir)
-  const {setupSequence} = config
-  if (!setupSequence) throw new Error('\'generate\' cannot run because ' +
-    '\'setupSequence\' is undefined in the config of the template.' +
-    ` See ${magicStrings.DOCUMENTATION}/${docPages.SETUP}.`)
-
-  const {mainInstallation, devInstallation, preCommands, interactive} = setupSequence
-
-  await checkFolder(starterDir)
-  if (interactive) await interactiveSequence(interactive, starterDir)
-
-  const starterCreationTaskList = [
-    {
-      title: 'Execute Pre-Commands',
-      task: async () => {
-        if (!preCommands) return
-        return new Listr(preCommands.map((commandSpec: CommandSpec) => {
-          return {
-            title: commandSpec.title,
-            task: async () => {
-              await execa(
-                commandSpec.file,
-                convertCommandArgs(commandSpec.arguments, starterDir),
-                commandSpec.options,
-              ).catch(
-                (error: any) => {
-                  throw new Error(`${chalk.red(`error with pre-command ${commandSpec.title}.`)}
-Here is the information about the command: ${JSON.stringify(commandSpec, null, 1)}
-You may try contacting the author of your template to see what they suggest.
-Here is the error reported:\n${error}`)
-                },
-              )
-            },
-          }
-        },
-        ))
-      },
-    },
-    {
-      title: 'Install General Packages...',
-      task: async () => {
-        if (!mainInstallation) return
-        return new Listr(mainInstallation.map((item: string) => {
-          return {
-            title: item,
-            task: async () => {
-              await execa(
-                'npm',
-                ['install', '--prefix', starterDir, '--save', item],
-              ).catch(
-                (error: any) => {
-                  throw new Error(`${chalk.red(`error installing ${item}.`)} You may try installing ${item} directly by running 'npm install --save ${item}' directly and see what messages are reported. Here is the error reported:\n${error}`)
-                },
-              )
-            },
-          }
-        },
-        ))
-      },
-    },
-    {
-      title: 'Install Dev Packages...',
-      task: async () => {
-        if (!devInstallation) return
-        return new Listr(devInstallation.map((item: string) => {
-          return {
-            title: item,
-            task: async () => {
-              await execa(
-                'npm',
-                ['install', '--prefix', starterDir, '--save-dev', item],
-              ).catch(
-                (error: any) => {
-                  throw new Error(`${chalk.red(`error installing ${item}.`)} You may try installing ${item} directly by running 'npm install --save ${item}' directly and see what messages are reported. Here is the error reported:\n${error}`)
-                },
-              )
-            },
-          }
-        },
-        ))
-      },
-    },
-    {
-      title: 'Add Meta-Data',
-      task: async () => {
-        const metaDir = `${starterDir}/${magicStrings.META_DIR}`
-        const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
-        const customCode = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
-
-        const appInfo = await getCodeInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
-        if (appInfo) appInfo.starter = starterDir
-
-        // ensure nsYml if possible
-        // let appInfo = await getCodeInfo(nsYml)
-        // if (!appInfo) {
-        //   appInfo = await getCodeInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
-        //   if (appInfo)
-        //     await fs.outputFile(nsYml, yaml.safeDump(appInfo))
-        // }
-
-        const customDir = `${starterDir}/${config.dirs.custom}`
-        const customCodeRepository: CustomCodeRepository = {
-          addedCode: {},
-          replacedCode: {},
-          removedCode: {},
-        }
-
-        try {
-          await fs.ensureDir(metaDir, dirOptions)
-          await fs.ensureDir(customDir, dirOptions)
-          if (appInfo) await fs.outputFile(nsYml, yaml.safeDump(appInfo))
-          await fs.outputJson(customCode, customCodeRepository)
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error(error)
-        }
-      },
-    },
-  ]
-
-  const setup = new Listr(starterCreationTaskList)
-  try {
-    await setup.run()
-    if (!await fs.pathExists(codeDir)) {
-      const newAppTasks = await createNewCode(codeDir, starterDir)// , finalTemplateDir)
-      await newAppTasks.run()
-    }
-  } catch (error) {
-    throw new Error(`cannot create sample app at ${codeDir}: ${error}`)
-  }
-}
 
 export async function createCodeBase(
   // starterDir: string,
@@ -237,7 +44,7 @@ export async function createCodeBase(
   }
 
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {
-    await createCodeBaseFromScratch(templateDir, codeDir)
+    await createStarter(templateDir, codeDir)
   }
 
   if (templateDir) {
