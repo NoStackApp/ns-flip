@@ -57,13 +57,18 @@ export async function setupCreation(sampleDir: string, config: Configuration) {
       choices: devDependencyChoices,
     })
 
+    const versioningOptions = {
+      USE: 'Use versions',
+      GET_LATEST: 'Get latest',
+    }
+
     questions.push({
       type: 'list',
       name: 'useVersions',
       message: 'Do you want to specify the versions used in your sample' +
         ' or just get the latest? You can always go into your template config file and ' +
         ' modify them.',
-      choices: ['Use versions', 'Get latest'],
+      choices: [versioningOptions.USE, versioningOptions.GET_LATEST],
       when: function (answers: any) {
         const mainDependenciesToAdd =
           answers.mainPackages.length !== dependencyChoices.length
@@ -80,7 +85,9 @@ export async function setupCreation(sampleDir: string, config: Configuration) {
       console.log(JSON.stringify(answers, null, '  '))
 
       if (answers.useVersions) {
-        if (answers.useVersions=)
+        const {setupSequence} = config
+        answers.mainPackages.map()
+        if (answers.useVersions===versioningOptions.USE)
       }
     } catch (error) {
       throw new Error(`problem getting answers from user about setup creation: ${error}`)
