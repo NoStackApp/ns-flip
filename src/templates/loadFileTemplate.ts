@@ -54,12 +54,14 @@ Handlebars.registerHelper('customEnd', function (locationName: string) {
   )
 })
 
-export async function loadFileTemplate(pathString: string) {
+export async function loadFileTemplate(pathString: string, noFileInfo = false) {
   let template = ''
 
   try {
     template = await fs.readFile(pathString, 'utf-8')
-    template = '{{nsFile}}\n' + template // add file info automatically.
+    if (!noFileInfo) {
+      template = '{{nsFile}}\n' + template // add file info automatically.
+    }
 
     template = expandNsAbbreviations(template)
   } catch (error) {

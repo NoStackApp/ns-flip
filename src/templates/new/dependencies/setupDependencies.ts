@@ -1,8 +1,6 @@
 'use strict'
-import {getDependencies} from './getDependencies'
-// import {removeNpmDependencyPrefix} from '../../shared/removeNpmDependencyPrefix'
 import {Configuration} from '../../../shared/constants/types/configuration'
-import {AnswersForPackages, DependencyChoiceList, DependencyList} from "./dependencyTypes";
+import {AnswersForPackages, DependencyChoiceList, DependencyList, DependencySet} from './dependencyTypes'
 
 const chalk = require('chalk')
 const inquirer = require('inquirer')
@@ -27,13 +25,16 @@ function createSetupDependencyList(
 ) {
   const packagesToInstall = Object.keys(codeDependencies).filter((n: string) =>
     !answersPackageList.includes(n))
-  return packagesToInstall.map((packageName: string) => {
-    installationList.push(packageName + '@' + codeDependencies[packageName])
+  packagesToInstall.map((packageName: string) => {
+    const fullPackageName = packageName + '@' + codeDependencies[packageName]
+    if (!installationList.includes(fullPackageName))
+      installationList.push(fullPackageName)
   })
+  return installationList
 }
 
-export async function setupDependencies(sampleDir: string, config: Configuration) {
-  const {codeDependencies, codeDevDependencies} = await getDependencies(sampleDir)
+export async function setupDependencies(suggestedDependencies: DependencySet, config: Configuration) {
+  const {codeDependencies, codeDevDependencies} = suggestedDependencies
   const dependencyChoices: any = createChoicesFromDepList(codeDependencies)
   const devDependencyChoices: any = createChoicesFromDepList(codeDevDependencies)
 
@@ -93,7 +94,6 @@ export async function setupDependencies(sampleDir: string, config: Configuration
 
     try {
       const answers: AnswersForPackages = await inquirer.prompt(questions)
-      console.log(JSON.stringify(answers, null, '  '))
 
       if (answers.useVersions) {
         const {setupSequence} = config
@@ -114,7 +114,7 @@ export async function setupDependencies(sampleDir: string, config: Configuration
             setupSequence.devInstallation
           )
         }
-        console.log(JSON.stringify(setupSequence, null, '  '))
+        config.setupSequence = setupSequence
       }
     } catch (error) {
       throw new Error(`problem getting answers from user about setup creation: ${error}`)

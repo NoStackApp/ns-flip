@@ -8,7 +8,7 @@ import {dirOptions} from '../../shared/dirOptions'
 import {createNewCode} from './createNewCode'
 import {installMainPackagesTaskList} from './setup/installMainPackagesTaskList'
 import {preCommandsTaskList} from './setup/preCommandsTaskList'
-import {interactiveSequence} from "./setup/interactiveSequence";
+import {interactiveSequence} from './setup/interactiveSequence'
 
 const fs = require('fs-extra')
 const Listr = require('listr')
