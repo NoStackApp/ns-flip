@@ -1,5 +1,6 @@
 import {CommandSpec, Configuration} from '../../shared/constants/types/configuration'
 import {preCommandsTaskList} from '../../codeGeneration/codeBases/setup/preCommandsTaskList'
+import {interactiveSequence} from "../../codeGeneration/codeBases/setup/interactiveSequence";
 
 const inquirer = require('inquirer')
 const Listr = require('listr')
@@ -64,14 +65,16 @@ async function getPreCommands(config: Configuration) {
 
     if (!answers.interactive) return
     const commandContents = answers.command.split(' ')
+    const file = commandContents.shift()
+    if (!file) return
     console.log(`commandContents=${JSON.stringify(commandContents)}`)
     const commandSpec: CommandSpec = {
-      title: `run ${commandContents[0]}`,
-      file: commandContents[0],
-      arguments: commandContents.shift(),
+      title: `run ${file}`,
+      file,
+      arguments: commandContents,
     }
 
-    console.log(`arguments=${JSON.stringify(arguments)}`)
+    console.log(`arguments=${JSON.stringify(commandSpec.arguments)}`)
 
     if (answers.interactive === isInteractive.NO) {
       if (config.setupSequence.preCommands)
@@ -102,6 +105,8 @@ export async function setPreCommands(config: Configuration, starterDir: string) 
   await getPreCommands(config)
 
   try {
+    if (config.setupSequence.interactive)
+      await interactiveSequence(config.setupSequence.interactive, starterDir)
     if (config.setupSequence.preCommands)
       await runPreCommands(config.setupSequence.preCommands, starterDir)
   } catch (error) {

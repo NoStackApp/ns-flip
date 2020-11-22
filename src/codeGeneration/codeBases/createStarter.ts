@@ -1,6 +1,6 @@
 import {installDevPackagesTaskList} from './setup/installDevPackagesTaskList'
 import {docPages, magicStrings, suffixes} from '../../shared/constants'
-import {CommandSpec, Configuration} from '../../shared/constants/types/configuration'
+import {Configuration} from '../../shared/constants/types/configuration'
 import {getConfiguration} from '../../shared/getConfiguration'
 import {getCodeInfo} from '../../shared/getCodeInfo'
 import {CustomCodeRepository} from '../../shared/constants/types/custom'
@@ -8,9 +8,8 @@ import {dirOptions} from '../../shared/dirOptions'
 import {createNewCode} from './createNewCode'
 import {installMainPackagesTaskList} from './setup/installMainPackagesTaskList'
 import {preCommandsTaskList} from './setup/preCommandsTaskList'
-import {convertCommandArgs} from './setup/convertCommandArgs'
+import {interactiveSequence} from "./setup/interactiveSequence";
 
-const execa = require('execa')
 const fs = require('fs-extra')
 const Listr = require('listr')
 const yaml = require('js-yaml')
@@ -22,34 +21,6 @@ async function checkFolder(starterDir: string) {
     } catch (error) {
       throw new Error(`cannot remove the starter ${starterDir}: ${error}`)
     }
-  }
-}
-
-async function spawnInteractiveChildProcess(commandSpec: CommandSpec) {
-  await execa(
-    commandSpec.file,
-    commandSpec.arguments,
-    commandSpec.options,
-  ).catch(
-    (error: any) => {
-      throw new Error(`error with executing ${commandSpec.file}: ${error}`)
-    },
-  )
-}
-
-async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string) {
-  let i
-  for (i = 0; i < commandSpecs.length; i++) {
-    const commandSpec = {...commandSpecs[i]}
-    if (!commandSpec) {
-      continue
-    }
-
-    commandSpec.arguments = convertCommandArgs(commandSpec.arguments, codeDir)
-
-    if (!commandSpec.options) commandSpec.options = {}
-    commandSpec.options.stdio = 'inherit'
-    await spawnInteractiveChildProcess(commandSpec)
   }
 }
 

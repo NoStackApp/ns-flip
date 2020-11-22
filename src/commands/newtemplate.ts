@@ -4,7 +4,7 @@ import {newTemplateQuestions} from '../templates/new/newTemplateQuestions'
 import {TemplateRequirements} from '../templates/new/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/new/generateTemplateFiles'
 import {magicStrings, suffixes} from '../shared/constants'
-import {setupCreation} from '../templates/new/setupCreation'
+import {setupDependencies} from '../templates/new/dependencies/setupDependencies'
 import {getConfiguration} from '../shared/getConfiguration'
 import {setPreCommands} from '../templates/new/setPreCommands'
 
@@ -60,15 +60,15 @@ export default class Newtemplate extends Command {
     // const {flags} = this.parse(Newtemplate)
 
     try {
-      const config = await getConfiguration('/home/yisroel/ns/samples')
+      const config = await getConfiguration('/home/yisroel/temp/apps')
       const sampleDir = '/home/yisroel/temp/clis/projectory'
-      const codeDir = '/home/yisroel/ns/samples/code5'
+      const codeDir = '/home/yisroel/Dropbox/ns/samples/code5'
 
       const starterDir = codeDir + suffixes.STARTUP_DIR
       await setPreCommands(config, starterDir)
       return
 
-      await setupCreation(sampleDir, config)
+      await setupDependencies(sampleDir, config)
 
       const responses: TemplateRequirements = await newTemplateQuestions()
       await generateTemplateFiles(responses)

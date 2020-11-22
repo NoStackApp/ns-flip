@@ -1,24 +1,11 @@
 'use strict'
-import {DependencyList, getDependencies} from './getDependencies'
+import {getDependencies} from './getDependencies'
 // import {removeNpmDependencyPrefix} from '../../shared/removeNpmDependencyPrefix'
-import {Configuration} from '../../shared/constants/types/configuration'
+import {Configuration} from '../../../shared/constants/types/configuration'
+import {AnswersForPackages, DependencyChoiceList, DependencyList} from "./dependencyTypes";
 
 const chalk = require('chalk')
 const inquirer = require('inquirer')
-
-interface DependencyChoice {
-  name: string;
-}
-
-interface DependencyChoiceList {
-  [index: number]: DependencyChoice;
-}
-
-interface AnswersForPackages {
-  mainPackages: string[];
-  devPackages: string[];
-  useVersions: string;
-}
 
 function createChoicesFromDepList(codeDependencies: DependencyList) {
   let dependencyChoices: DependencyChoiceList = []
@@ -45,7 +32,7 @@ function createSetupDependencyList(
   })
 }
 
-export async function setupCreation(sampleDir: string, config: Configuration) {
+export async function setupDependencies(sampleDir: string, config: Configuration) {
   const {codeDependencies, codeDevDependencies} = await getDependencies(sampleDir)
   const dependencyChoices: any = createChoicesFromDepList(codeDependencies)
   const devDependencyChoices: any = createChoicesFromDepList(codeDevDependencies)
