@@ -61,7 +61,8 @@ export default class Newtemplate extends Command {
   async run() {
     checkForUpdates()
 
-    // const {flags} = this.parse(Newtemplate)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const {flags} = this.parse(Newtemplate)
 
     try {
       const responses: TemplateRequirements = await newTemplateQuestions()
