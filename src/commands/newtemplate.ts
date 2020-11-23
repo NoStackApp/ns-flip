@@ -1,9 +1,16 @@
 import {Command, flags} from '@oclif/command'
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {newTemplateQuestions} from '../templates/newTemplateQuestions'
-import {TemplateRequirements} from '../templates/TemplateRequirements'
-import {generateTemplateFiles} from '../templates/generateTemplateFiles'
-import {magicStrings} from '../shared/constants'
+import {newTemplateQuestions} from '../templates/new/newTemplateQuestions'
+import {TemplateRequirements} from '../templates/new/TemplateRequirements'
+import {generateTemplateFiles} from '../templates/new/generateTemplateFiles'
+import {magicStrings, suffixes} from '../shared/constants'
+import {setupDependencies} from '../templates/new/dependencies/setupDependencies'
+import {getConfiguration} from '../shared/getConfiguration'
+import {executePreCommands} from '../templates/new/preCommands/executePreCommands'
+import {setPackagesToSuggestInserting} from '../templates/new/dependencies/setPackagesToSuggestInserting'
+import {updateConfig} from '../templates/new/updateConfig'
+import {installDependencies} from '../templates/new/dependencies/installDependencies'
+import {getPreCommands} from '../templates/new/preCommands/getPreCommands'
 
 const expandTilde = require('expand-tilde')
 const path = require('path')
@@ -60,8 +67,43 @@ export default class Newtemplate extends Command {
       const responses: TemplateRequirements = await newTemplateQuestions()
       await generateTemplateFiles(responses)
       this.log(printInstructionsForNewTemplate(responses))
+
+      const {
+        nsDir,
+        original,
+        templateName,
+      } = responses
+      const fullNsDir = expandTilde(nsDir)
+
+      const originalPath = expandTilde(original)
+
+      const originalParsed = path.parse(originalPath)
+      const originalName = originalParsed.name
+
+      const templates = `${fullNsDir}/templates`
+      const samples = `${fullNsDir}/samples`
+
+      const templateDir = `${templates}/ns-template-${templateName}`
+      const config = await getConfiguration(templateDir)
+      const sampleDir = `${samples}/${originalName}`
+      const codeDir = `${samples}/${templateName}-code`
+
+      const starterDir = codeDir + suffixes.STARTUP_DIR
+      await getPreCommands(config)
+
+      await executePreCommands(config, starterDir)
+
+      const suggestedDependencies = await setPackagesToSuggestInserting(starterDir, sampleDir)
+
+      await setupDependencies(suggestedDependencies, config)
+      await updateConfig(templateDir, config)
+      await installDependencies(config, starterDir)
+
+      // console.log(`config = ${JSON.stringify(config, null, 2)}`)
+      await updateConfig(templateDir, config)
     } catch (error) {
-      throw new Error(`Problem creating starter: ${error}`)
+      this.log(error)
+      throw new Error(`Problem creating template: ${error}`)
     }
   }
 }

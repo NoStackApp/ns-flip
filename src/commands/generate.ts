@@ -2,7 +2,7 @@ import {Command, flags} from '@oclif/command'
 
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {magicStrings} from '../shared/constants'
-import {createCodeBase} from '../apps/createCodeBase'
+import {createCodeBase} from '../codeGeneration/codeBases/createCodeBase'
 
 export default class Generate extends Command {
   static description = 'generates code based on a template and an \'ns file\'.  ' +

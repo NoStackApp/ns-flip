@@ -1,4 +1,4 @@
-import {magicStrings} from '../shared/constants'
+import {magicStrings} from '../../shared/constants'
 import {TemplateRequirements} from './TemplateRequirements'
 
 const chalk = require('chalk')
@@ -8,9 +8,9 @@ const fs = require('fs-extra')
 const Listr = require('listr')
 const path = require('path')
 
-import {dirOptions} from '../shared/dirOptions'
+import {dirOptions} from '../../shared/dirOptions'
 // import {help} from '@oclif/command/lib/flags'
-import {loadFileTemplate} from './loadFileTemplate'
+import {loadFileTemplate} from '../loadFileTemplate'
 
 export async function newTemplateTasks(requirements: TemplateRequirements) {
   const {
@@ -59,6 +59,9 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
         const staticDir = `${template}/static`
 
         try {
+          if (await fs.pathExists(sample))
+            throw new Error(`a sample file ${sample} already exists.` +
+            '  Please move that directory or create a new project name.')
           await fs.copy(originalPath, sample)
         } catch (error) {
           throw new Error(`${chalk.red(`error creating copying ${originalPath} to SAMPLE`)}
@@ -80,7 +83,7 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
     {
       title: 'Generate Files',
       task: async () => {
-        const fileTemplatesDir = `${__dirname}/${magicStrings.FILE_TEMPLATES}`
+        const fileTemplatesDir = `${__dirname}/../${magicStrings.FILE_TEMPLATES}`
 
         const generic = `${fileTemplatesDir}/${magicStrings.GENERIC_FILE}`
 
@@ -100,13 +103,13 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
         try {
           await fs.copy(generic, `${template}/${magicStrings.GENERIC_FILE}`)
 
-          const readmeTemplate = await loadFileTemplate(readme)
+          const readmeTemplate = await loadFileTemplate(readme, true)
           await fs.outputFile(`${template}/${magicStrings.README_FILE}`, readmeTemplate(context))
-          const configTemplate = await loadFileTemplate(configPath)
+          const configTemplate = await loadFileTemplate(configPath, true)
           await fs.outputFile(`${template}/${magicStrings.CONFIG_FILE}`, configTemplate(context))
-          const sampleNsFileTemplate = await loadFileTemplate(sampleNs)
+          const sampleNsFileTemplate = await loadFileTemplate(sampleNs, true)
           await fs.outputFile(`${template}/${magicStrings.SAMPLE_NS_FILE}`, sampleNsFileTemplate(context))
-          const startOfFileTemplate = await loadFileTemplate(startOfFile)
+          const startOfFileTemplate = await loadFileTemplate(startOfFile, true)
           await fs.outputFile(`${template}/partials/${magicStrings.START_OF_FILE_FILE}`, startOfFileTemplate(context))
         } catch (error) {
           throw new Error(`${chalk.red('error creating recommended TEMPLATE directories:')}
