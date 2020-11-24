@@ -1,4 +1,4 @@
-import {magicStrings} from '../../shared/constants'
+import {magicStrings, suffixes} from '../../shared/constants'
 import {TemplateRequirements} from './TemplateRequirements'
 
 const chalk = require('chalk')
@@ -6,7 +6,7 @@ const chalk = require('chalk')
 const expandTilde = require('expand-tilde')
 const fs = require('fs-extra')
 const Listr = require('listr')
-const path = require('path')
+// const path = require('path')
 
 import {dirOptions} from '../../shared/dirOptions'
 // import {help} from '@oclif/command/lib/flags'
@@ -25,14 +25,14 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
   const fullNsDir = expandTilde(nsDir)
   const originalPath = expandTilde(original)
 
-  const originalParsed = path.parse(originalPath)
-  const originalName = originalParsed.name
+  // const originalParsed = path.parse(originalPath)
+  // const originalName = originalParsed.name
 
   const templatesDir = `${fullNsDir}/templates`
   // const startersDir = `${fullNsDir}/starters`
   const samplesDir = `${fullNsDir}/samples`
 
-  const sample = `${samplesDir}/${originalName}`
+  const sample = `${samplesDir}/${templateName}-code.${suffixes.SAMPLE_DIR}`
   const template = `${templatesDir}/ns-template-${templateName}`
 
   const newTemplateTasklist = [
@@ -59,12 +59,13 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
         const staticDir = `${template}/static`
 
         try {
-          if (await fs.pathExists(sample))
-            throw new Error(`a sample file ${sample} already exists.` +
-            '  Please move that directory or create a new project name.')
+          // if (await fs.pathExists(sample))
+          //   throw new Error(`a sample file ${sample} already exists.` +
+          //   '  Please move that directory or create a new project name.')
+          await fs.remove(sample)
           await fs.copy(originalPath, sample)
         } catch (error) {
-          throw new Error(`${chalk.red(`error creating copying ${originalPath} to SAMPLE`)}
+          throw new Error(`${chalk.red(`error copying ${originalPath} to SAMPLE`)}
           ${error}`)
         }
 
