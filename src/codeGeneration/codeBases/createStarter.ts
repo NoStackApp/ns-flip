@@ -1,18 +1,18 @@
 import {installDevPackagesTaskList} from './setup/installDevPackagesTaskList'
 import {docPages, magicStrings, suffixes} from '../../shared/constants'
 import {Configuration} from '../../shared/constants/types/configuration'
-import {getConfiguration} from '../../shared/configs/getConfiguration'
-import {getCodeInfo} from '../../shared/getCodeInfo'
+import {getConfig} from '../../shared/configs/getConfig'
+import {getNsInfo} from '../../shared/nsFiles/getNsInfo'
 import {CustomCodeRepository} from '../../shared/constants/types/custom'
 import {dirOptions} from '../../shared/dirOptions'
 import {createNewCode} from './createNewCode'
 import {installMainPackagesTaskList} from './setup/installMainPackagesTaskList'
 import {preCommandsTaskList} from './setup/preCommandsTaskList'
 import {interactiveSequence} from './setup/interactiveSequence'
+import {updateNsInfo} from '../../shared/nsFiles/updateNsInfo'
 
 const fs = require('fs-extra')
 const Listr = require('listr')
-const yaml = require('js-yaml')
 
 async function checkFolder(starterDir: string) {
   if (await fs.pathExists(starterDir)) {
@@ -29,7 +29,7 @@ export async function createStarter(
   codeDir: string
 ) {
   const starterDir = codeDir + suffixes.STARTUP_DIR
-  const config: Configuration = await getConfiguration(templateDir)
+  const config: Configuration = await getConfig(templateDir)
   const {setupSequence} = config
   if (!setupSequence) throw new Error('\'generate\' cannot run because ' +
     '\'setupSequence\' is undefined in the config of the template.' +
@@ -67,11 +67,10 @@ export async function createStarter(
       task:
   async () => {
     const metaDir = `${starterDir}/${magicStrings.META_DIR}`
-    const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
     const customCode = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
 
-    const appInfo = await getCodeInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
-    if (appInfo) appInfo.starter = starterDir
+    const nsInfo = await getNsInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
+    if (nsInfo) nsInfo.starter = starterDir
 
     // ensure nsYml if possible
     // let appInfo = await getCodeInfo(nsYml)
@@ -91,7 +90,7 @@ export async function createStarter(
     try {
       await fs.ensureDir(metaDir, dirOptions)
       await fs.ensureDir(customDir, dirOptions)
-      if (appInfo) await fs.outputFile(nsYml, yaml.safeDump(appInfo))
+      await updateNsInfo(starterDir, nsInfo)
       await fs.outputJson(customCode, customCodeRepository)
     } catch (error) {
       // eslint-disable-next-line no-console

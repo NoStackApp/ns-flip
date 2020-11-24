@@ -1,6 +1,6 @@
 import * as chalk from 'chalk'
 import {Result} from 'dir-compare'
-import {getConfiguration} from '../../../shared/configs/getConfiguration'
+import {getConfig} from '../../../shared/configs/getConfig'
 import {updateConfig} from '../../../shared/configs/updateConfig'
 
 const inquirer = require('inquirer')
@@ -43,7 +43,7 @@ export async function handleNewFiles(
       return filePath.replace(/\/\//g, '/')
     })
 
-    const config = await getConfiguration(templateDir)
+    const config = await getConfig(templateDir)
 
     const newFilesForPrompt: string[] = []
     newFiles.map(relativeFilePath => {

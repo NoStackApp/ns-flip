@@ -5,7 +5,7 @@ import {TemplateRequirements} from '../templates/new/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/new/generateTemplateFiles'
 import {magicStrings, suffixes} from '../shared/constants'
 import {setupDependencies} from '../templates/new/dependencies/setupDependencies'
-import {getConfiguration} from '../shared/configs/getConfiguration'
+import {getConfig} from '../shared/configs/getConfig'
 import {executePreCommands} from '../templates/new/preCommands/executePreCommands'
 import {setPackagesToSuggestInserting} from '../templates/new/dependencies/setPackagesToSuggestInserting'
 import {updateConfig} from '../shared/configs/updateConfig'
@@ -87,7 +87,7 @@ export default class Newtemplate extends Command {
       const samples = `${fullNsDir}/samples`
 
       const templateDir = `${templates}/ns-template-${templateName}`
-      const config = await getConfiguration(templateDir)
+      const config = await getConfig(templateDir)
       const sampleDir = `${samples}/${originalName}`
       const codeDir = `${samples}/${templateName}-code`
 
