@@ -1,6 +1,6 @@
 import {magicStrings, suffixes} from '../shared/constants'
 import {getCodeInfo} from '../shared/getCodeInfo'
-import {getConfiguration} from '../shared/getConfiguration'
+import {getConfiguration} from '../shared/configs/getConfiguration'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {storeAddedCode} from './customCode/storeAddedCode'
 import {copyCodeBaseToNewDir} from './customCode/copyCodeBaseToNewDir'

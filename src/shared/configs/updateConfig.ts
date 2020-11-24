@@ -1,5 +1,5 @@
-import {Configuration} from '../../shared/constants/types/configuration'
-import {magicStrings} from '../../shared/constants'
+import {Configuration} from '../constants/types/configuration'
+import {magicStrings} from '../constants'
 
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
