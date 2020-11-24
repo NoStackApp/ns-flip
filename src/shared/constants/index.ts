@@ -139,6 +139,7 @@ export const suffixes = {
   BACKUP_DIR: '.backup',
   TEST_DIR: '.test',
   STARTUP_DIR: '.starter',
+  SAMPLE_DIR: '.sample',
 }
 
 export const docPages = {
