@@ -64,7 +64,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/2.1.5 linux-x64 node-v14.9.0
+ns-flip/2.1.6 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -98,8 +98,6 @@ OPTIONS
 EXAMPLE
   $ ns check ~/projects/myapp
 ```
-
-_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.5/lib/commands/check.js)_
 
 ## `ns contact [MESSAGE]`
 
@@ -169,8 +167,6 @@ EXAMPLES
   $ ns generate $CODE
 ```
 
-_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.5/lib/commands/generate.js)_
-
 ## `ns help [COMMAND]`
 
 display help for ns
@@ -202,6 +198,4 @@ OPTIONS
 EXAMPLE
   $ ns newtemplate
 ```
-
-_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.5/lib/commands/newtemplate.js)_
 <!-- commandsstop -->

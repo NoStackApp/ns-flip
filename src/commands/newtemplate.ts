@@ -11,8 +11,10 @@ import {setPackagesToSuggestInserting} from '../templates/new/dependencies/setPa
 import {updateConfig} from '../shared/configs/updateConfig'
 import {installDependencies} from '../templates/new/dependencies/installDependencies'
 import {getPreCommands} from '../templates/new/preCommands/getPreCommands'
+import * as chalk from 'chalk'
 
 const expandTilde = require('expand-tilde')
+const fs = require('fs-extra')
 const path = require('path')
 
 function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
@@ -25,8 +27,8 @@ function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
   const fullNsDir = expandTilde(nsDir)
   const originalPath = expandTilde(original)
 
-  const originalParsed = path.parse(originalPath)
-  const originalName = originalParsed.name
+  // const originalParsed = path.parse(originalPath)
+  // const originalName = originalParsed.name
   // const templateNameShortened = templateName.replace('ns-template-', '')
 
   return `Created the template at '${fullNsDir}/templates/ns-template-${templateName}'.
@@ -42,7 +44,7 @@ SAMPLES=$NS_DIR/samples
 ORIGINAL=${originalPath}
 
 TEMPLATE=$TEMPLATES/ns-template-${templateName}
-SAMPLE=$SAMPLES/${originalName}
+SAMPLE=$SAMPLES/${templateName}-code.sample
 CODE=$SAMPLES/${templateName}-code
 `
 }
@@ -93,15 +95,18 @@ export default class Newtemplate extends Command {
       await getPreCommands(config)
 
       await executePreCommands(config, starterDir)
+      fs.ensureDir(starterDir) // if no preCommands created the starterDir, we do so now.
 
       const suggestedDependencies = await setPackagesToSuggestInserting(starterDir, sampleDir)
 
-      await setupDependencies(suggestedDependencies, config)
+      if (suggestedDependencies) await setupDependencies(suggestedDependencies, config)
       await updateConfig(templateDir, config)
       await installDependencies(config, starterDir)
 
       // console.log(`config = ${JSON.stringify(config, null, 2)}`)
       await updateConfig(templateDir, config)
+
+      this.log(chalk.green(`\nYour template has been created at ${templateDir}.  See documentation at ${magicStrings.DOCUMENTATION}`))
     } catch (error) {
       this.log(error)
       throw new Error(`Problem creating template: ${error}`)
