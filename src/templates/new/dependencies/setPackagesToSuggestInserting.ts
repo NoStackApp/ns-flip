@@ -21,7 +21,6 @@ export async function setPackagesToSuggestInserting(starterDir: string, sampleDi
       return
     }
 
-    console.log(`path exists: ${samplePackageJsonPath}`)
     if (await fs.pathExists(samplePackageJsonPath)) {
       let starterPackageJson
       if (await fs.pathExists(starterPackageJsonPath)) {
@@ -29,13 +28,10 @@ export async function setPackagesToSuggestInserting(starterDir: string, sampleDi
       } else
         starterPackageJson = {}
 
-      console.log(`starterPackageJson: ${JSON.stringify(starterPackageJson)}`)
       const samplePackageJson = await fs.readJson(samplePackageJsonPath)
 
       const starterDependencies = starterPackageJson.dependencies
       const sampleDependencies = samplePackageJson.dependencies
-      console.log(`starterDependencies: ${JSON.stringify(starterDependencies)}`)
-      console.log(`sampleDependencies: ${JSON.stringify(sampleDependencies)}`)
       Object.keys(sampleDependencies).map(dependencyPackage => {
         const sampleDependency =
           removeNpmDependencyPrefix(
@@ -57,7 +53,6 @@ export async function setPackagesToSuggestInserting(starterDir: string, sampleDi
         }
       })
 
-      console.log(`dependencySet.codeDependencies: ${JSON.stringify(dependencySet.codeDependencies)}`)
       const starterDevDependencies = starterPackageJson.devDependencies
       const sampleDevDependencies = samplePackageJson.devDependencies
       Object.keys(sampleDevDependencies).map(dependencyPackage => {
@@ -76,7 +71,6 @@ export async function setPackagesToSuggestInserting(starterDir: string, sampleDi
             dependencySet.codeDevDependencies[dependencyPackage] = sampleDependency
         }
       })
-      console.log(`dependencySet: ${JSON.stringify(dependencySet)}`)
     }
 
     return dependencySet
