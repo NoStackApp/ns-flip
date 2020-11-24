@@ -1,4 +1,5 @@
 import {CommandSpec, Configuration} from '../../../shared/constants/types/configuration'
+import * as chalk from 'chalk'
 
 const inquirer = require('inquirer')
 const prompt = inquirer.createPromptModule()
@@ -17,11 +18,13 @@ const questionsForPreCommands = [
   {
     type: 'input',
     name: 'command',
-    message: 'Please enter a command that you want executed initially, ' +
-            "such as 'create-react-app'? If so, enter the first now.  If you need to " +
-            "specify the directory of a current generated code base, use '$codeDir'.  " +
-            'For instance, `git init $codeDir`. If there are no additional commands that you' +
-            ' need executed, just hit enter.',
+    message: `Enter any ${chalk.red('preCommands')} (commands that you want executed initially, ` +
+            "such as 'create-react-app')\n" +
+      chalk.red('NOTE') + ": the directory of a current generated code base is '$codeDir'.\n" +
+      chalk.red('NOTE') + ': use `npx` for a cli that your user may not have installed globally.\n' +
+      chalk.green('EXAMPLE1') + '`npx create-react-app $codeDir`\n' +
+      chalk.green('EXAMPLE2') + '`git init $codeDir`\n' +
+      'Just hit enter to finish.',
   },
   {
     type: 'list',

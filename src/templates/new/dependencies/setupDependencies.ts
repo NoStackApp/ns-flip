@@ -93,6 +93,8 @@ export async function setupDependencies(suggestedDependencies: DependencySet, co
     })
 
     try {
+      if (!config.setupSequence)
+        config.setupSequence = {}
       const answers: AnswersForPackages = await inquirer.prompt(questions)
 
       if (answers.useVersions) {
