@@ -3,6 +3,7 @@ import {checkForUpdates} from '../shared/checkForUpdates'
 import {getConfig} from '../shared/configs/getConfig'
 import {magicStrings} from '../shared/constants'
 import {getNsInfo} from '../shared/nsFiles/getNsInfo'
+import {staticSettings} from '../codeGeneration/codeBases/settings/staticSettings'
 
 const expandTilde = require('expand-tilde')
 
@@ -40,11 +41,13 @@ export default class Filediffs extends Command {
         `/${magicStrings.META_DIR}/${magicStrings.TEMPLATE}`)
       const nsInfo = await getNsInfo(codeDir)
 
-      const configStatic = config.static
-      const nsStatic = nsInfo.static
+      // const configStatic = config.static
+      // const nsStatic = nsInfo.static
 
-      console.log(`configStatic = ${JSON.stringify(configStatic, null, 2)}`)
-      console.log(`nsStatic = ${JSON.stringify(nsStatic, null, 2)}`)
+      // console.log(`configStatic = ${JSON.stringify(configStatic, null, 2)}`)
+      // console.log(`nsStatic = ${JSON.stringify(nsStatic, null, 2)}`)
+
+      await staticSettings(config, nsInfo)
     } catch (error) {
       this.error(error)
     }

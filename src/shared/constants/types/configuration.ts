@@ -44,8 +44,14 @@ export interface StaticFileTypeSpec {
     directory: string;
 }
 
-export interface StaticTypeSpec {
+export interface StaticFilesList {
   [fileType: string]: StaticFileTypeSpec;
+}
+
+export interface StaticTypeSpec {
+  description: string;
+  specs: any;
+  files: StaticFilesList;
 }
 
 export interface StaticTypesSpecList {
