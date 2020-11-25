@@ -1,14 +1,11 @@
-import {standardIgnored} from '../shared/constants'
 import {Configuration} from '../shared/constants/types/configuration'
+import {getIgnoredList} from '../shared/configs/getIgnoredList'
 // import execa = require('execa');
 const fs = require('fs-extra')
 
 export async function moveOverIgnored(sourceDir: string, updatedDir: string, config: Configuration) {
   // const testDir = `${sourceDir}${names.TEST_DIR_SUFFIX}`
-  let allIgnored = [...standardIgnored]
-  if (config.ignore)
-    allIgnored = [...allIgnored, ...config.ignore]
-  allIgnored.push(config.dirs.custom)
+  const allIgnored = getIgnoredList(config)
 
   await Promise.all(allIgnored.map(async fileOrFolder => {
     try {

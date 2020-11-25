@@ -76,6 +76,7 @@ USAGE
 <!-- commands -->
 * [`ns check CODEDIR`](#ns-check-codedir)
 * [`ns contact [MESSAGE]`](#ns-contact-message)
+* [`ns filediffs TEMPLATEDIR`](#ns-filediffs-templatedir)
 * [`ns generate CODEDIR`](#ns-generate-codedir)
 * [`ns help [COMMAND]`](#ns-help-command)
 * [`ns newtemplate`](#ns-newtemplate)
@@ -117,6 +118,28 @@ EXAMPLES
   $ ns contact "how do I set up comment delimiters with escape chars?" -e pauljones123@gmail.com
   $ ns contact "generate is breaking when I add handlers."
 ```
+
+_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.5/lib/commands/contact.js)_
+
+## `ns filediffs TEMPLATEDIR`
+
+create new template.
+
+```
+USAGE
+  $ ns filediffs TEMPLATEDIR
+
+ARGUMENTS
+  TEMPLATEDIR  directory containing the template
+
+OPTIONS
+  -h, --help  show CLI help
+
+EXAMPLE
+  $ ns filediffs
+```
+
+_See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.5/lib/commands/filediffs.js)_
 
 ## `ns generate CODEDIR`
 

@@ -1,7 +1,7 @@
 import {installDevPackagesTaskList} from './setup/installDevPackagesTaskList'
 import {docPages, magicStrings, suffixes} from '../../shared/constants'
 import {Configuration} from '../../shared/constants/types/configuration'
-import {getConfiguration} from '../../shared/getConfiguration'
+import {getConfiguration} from '../../shared/configs/getConfiguration'
 import {getCodeInfo} from '../../shared/getCodeInfo'
 import {CustomCodeRepository} from '../../shared/constants/types/custom'
 import {dirOptions} from '../../shared/dirOptions'

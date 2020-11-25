@@ -4,7 +4,7 @@ import {insertCustomChanges} from '../codeGeneration/customCode/insertCustomChan
 import {storeAddedCode} from '../codeGeneration/customCode/storeAddedCode'
 import {magicStrings, suffixes} from '../shared/constants'
 import {getCodeInfo} from '../shared/getCodeInfo'
-import {getConfiguration} from '../shared/getConfiguration'
+import {getConfiguration} from '../shared/configs/getConfiguration'
 import {checkDirForDiscrepancies} from './checkDirForDiscrepancies'
 // import {mergePackageJsons} from './mergePackageJsons'
 import {moveOverIgnored} from './moveOverIgnored'

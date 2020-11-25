@@ -6,7 +6,7 @@ import {loadFileTemplate} from '../../templates/loadFileTemplate'
 import {registerHelpers} from '../handlebars/registerHelpers'
 import {registerPartials} from '../handlebars/registerPartials'
 import {replaceCommentDelimiters} from './replaceCommentDelimiters'
-import {getConfiguration} from '../../shared/getConfiguration'
+import {getConfiguration} from '../../shared/configs/getConfiguration'
 
 const fs = require('fs-extra')
 const path = require('path')
