@@ -4,7 +4,7 @@ import {NsInfo} from '../constants/types/nsInfo'
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
 
-export async function updateNsInfo(codeDir: string, nsInfo: NsInfo) {
+export async function setNsInfo(codeDir: string, nsInfo: NsInfo) {
   const nsFile = codeDir + `/${magicStrings.META_DIR}/` + magicStrings.NS_FILE
   try {
     if (nsInfo) await fs.outputFile(nsFile, yaml.safeDump(nsInfo))

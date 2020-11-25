@@ -9,7 +9,7 @@ import {createNewCode} from './createNewCode'
 import {installMainPackagesTaskList} from './setup/installMainPackagesTaskList'
 import {preCommandsTaskList} from './setup/preCommandsTaskList'
 import {interactiveSequence} from './setup/interactiveSequence'
-import {updateNsInfo} from '../../shared/nsFiles/updateNsInfo'
+import {setNsInfo} from '../../shared/nsFiles/setNsInfo'
 
 const fs = require('fs-extra')
 const Listr = require('listr')
@@ -90,7 +90,7 @@ export async function createStarter(
     try {
       await fs.ensureDir(metaDir, dirOptions)
       await fs.ensureDir(customDir, dirOptions)
-      await updateNsInfo(starterDir, nsInfo)
+      await setNsInfo(starterDir, nsInfo)
       await fs.outputJson(customCode, customCodeRepository)
     } catch (error) {
       // eslint-disable-next-line no-console

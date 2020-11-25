@@ -8,7 +8,7 @@ import {setupDependencies} from '../templates/new/dependencies/setupDependencies
 import {getConfig} from '../shared/configs/getConfig'
 import {executePreCommands} from '../templates/new/preCommands/executePreCommands'
 import {setPackagesToSuggestInserting} from '../templates/new/dependencies/setPackagesToSuggestInserting'
-import {updateConfig} from '../shared/configs/updateConfig'
+import {setConfig} from '../shared/configs/setConfig'
 import {installDependencies} from '../templates/new/dependencies/installDependencies'
 import {getPreCommands} from '../templates/new/preCommands/getPreCommands'
 import * as chalk from 'chalk'
@@ -100,11 +100,11 @@ export default class Newtemplate extends Command {
       const suggestedDependencies = await setPackagesToSuggestInserting(starterDir, sampleDir)
 
       if (suggestedDependencies) await setupDependencies(suggestedDependencies, config)
-      await updateConfig(templateDir, config)
+      await setConfig(templateDir, config)
       await installDependencies(config, starterDir)
 
       // console.log(`config = ${JSON.stringify(config, null, 2)}`)
-      await updateConfig(templateDir, config)
+      await setConfig(templateDir, config)
 
       this.log(chalk.green(`\nYour template has been created at ${templateDir}.  See documentation at ${magicStrings.DOCUMENTATION}`))
     } catch (error) {
