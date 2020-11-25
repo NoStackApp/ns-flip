@@ -67,31 +67,13 @@ ${error}`)
     boilerPlateInfo,
     config,
   )
-  // console.log(`tags.contextForDynamic.formTypes.LIST=${JSON.stringify(tags.contextForDynamic.formTypes.LIST)}`)
-  // console.log(`tags.contextForDynamic.boilerPlateInfo.formType=${JSON.stringify(tags.contextForDynamic.boilerPlateInfo.formType)}`)
 
   // if (boilerPlate === 'genericCreationFormRoot') {
   //   console.log(`tags = ${JSON.stringify(tags, null, 2)}`)
   // }
-  // console.log(`options is: ${JSON.stringify(options)}`)
   await makeDirs(dirList)
 
-  // const unitTemplate = 'https://raw.githubusercontent.com/YizYah/basicNsFrontTemplate/master/generic.txt'
-  // let specificFileTemplate = function (tags: any) {
-  //   // eslint-disable-next-line no-console
-  //   console.error(`template not fetched.  This could be due to a uri error
-  //   tags = ${JSON.stringify(tags)}`)
-  //   throw new Error('template not fetched.  This could be due to a uri error')
-  // }
   try {
-    // await fetch(unitTemplate)
-    // .then((res: any) => res.text())
-    // .then((body: any) => {
-    //   specificFileTemplate = Handlebars.compile(body)
-    // })
-
-    // await fs.outputFile(`${path}/index.jsx`, specificFileTemplate(tags))
-    // console.log(`  path to output=${path}/index.jsx`)
     const fileText = await genericTemplate(tags)
     const finalPath = `${path}/index.jsx`
     const finalFileText = replaceCommentDelimiters(finalPath, config, fileText)

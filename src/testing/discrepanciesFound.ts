@@ -1,16 +1,8 @@
 import {logEntry} from './logEntry'
+import {links} from '../shared/constants'
+import * as chalk from 'chalk'
 
 const fs = require('fs-extra')
-
-// // parts of a discrepancy
-// const diffStatement = 'diff -rbBw ([^\\s])* ([^\\s])*\\n'
-// const locationStatement = '([0-9]|,)*(a|c|d)([0-9]|,)*\\n'
-// const firstFileLines = '((< .*\\n)*)'
-// const divider = '(---\\n)?'
-// const secondFileLines = '((> .*\\n)*)'
-
-// const fullRegExBody = `(?:${diffStatement})?${locationStatement}${firstFileLines}${divider}${secondFileLines}`
-// const regEx = new RegExp(fullRegExBody, 'g')
 
 export async function discrepanciesFound(
   diffFile: string,
@@ -31,7 +23,7 @@ export async function discrepanciesFound(
     problemsFound = true
     const logMessage = `
 *** DISCREPANCIES FOUND!  You can find the discrepancies in ${diffFile}. Please see
-https://www.npmjs.com/package/ns-front#working-with-test-results for how to resolve them. ***
+${chalk.red(links.TEST_RESULTS)} for how to resolve them. ***
 `
     try {
       await logEntry(logFile, logMessage, true)

@@ -1,9 +1,10 @@
 import {logEntry} from './logEntry'
+import {links} from '../shared/constants'
 
 const date = new Date()
 const initializedTestMessage =
-  `This file was created by running the ns-front test command on ${date.toLocaleString()}.
-See https://www.npmjs.com/package/ns-front for more info.
+  `This file was created by running the ns-front check command on ${date.toLocaleString()}.
+See ${links.DOCUMENTATION} for more info.
 -------------------------------------------------------------------------------
 `
 

@@ -1,4 +1,4 @@
-import {docPages, magicStrings} from '../../shared/constants'
+import {docPages, links, magicStrings} from '../../shared/constants'
 
 import {regenerateCode} from '../regenerateCode'
 import {copyTemplateToMeta} from './copyTemplateToMeta'
@@ -25,19 +25,19 @@ export async function createCodeBase(
       throw new Error('you called \'generate\' without specifying a template' +
         ` for a code base that does not yet exist (${codeDir}).  Please provide a template` +
         'with the \'-t\' flag to create the code base. ' +
-        `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+        `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
     }
     throw new Error('you called \'generate\' without specifying a template' +
       ' for a code base that does not have proper prior template info.  ' +
       'Please provide a template with the \'-t\' flag. ' +
-      `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+      `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
   }
 
   if (!templateDir && noSetup) {
     throw new Error('you called \'generate\' with the \'--noSetup\' flag without specifying ' +
       'a template.  Please either remove the \'--noSetup\' or provide a template ' +
       'with the \'-t\' flag. ' +
-      `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+      `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
   }
 
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {

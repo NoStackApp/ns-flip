@@ -1,7 +1,3 @@
-export const liveServer = 'https://api.matchlynx.com/graphql'
-// export const liveServer = 'https://api.matchlynx.com/graphql'
-// export const liveServer = 'https://qq0we0b5s4.execute-api.us-east-1.amazonaws.com/dev/graphql'
-
 export const associationTypes = {
   MULTIPLE: 'multiple',
   SINGLE_REQUIRED: 'singleRequired',
@@ -41,50 +37,6 @@ export interface BoilerPlateInfoType {
   nodeType: string;
 }
 
-// export const boilerPlateTypes = {
-//   CREATION_ROOT: `${formTypes.CREATION}${dataTypes.STRING}${nodeTypes.ROOT}`,
-//   CREATION_NON_ROOT: `${formTypes.CREATION}${dataTypes.STRING}${nodeTypes.NONROOT}`,
-//   CREATION_SELECTABLE: `${formTypes.CREATION}${dataTypes.STRING}${nodeTypes.SELECTABLE}`,
-//   CREATION_ROOT_GROUPING: `${formTypes.CREATION}${dataTypes.GROUPING}${nodeTypes.ROOT}`,
-//   CREATION_NON_ROOT_GROUPING: `${formTypes.CREATION}${dataTypes.GROUPING}${nodeTypes.NONROOT}`,
-//   MULTIPLE_NON_ROOT: `${formTypes.LIST}${dataTypes.STRING}${nodeTypes.NONROOT}`,
-//   MULTIPLE_SELECTABLE: `${formTypes.LIST}${dataTypes.STRING}${nodeTypes.SELECTABLE}`,
-//   MULTIPLE_ROOT: `${formTypes.LIST}${dataTypes.STRING}${nodeTypes.ROOT}`,
-//   MULTIPLE_NON_ROOT_GROUPING: `${formTypes.LIST}${dataTypes.GROUPING}${nodeTypes.NONROOT}`,
-//   MULTIPLE_ROOT_GROUPING: `${formTypes.LIST}${dataTypes.GROUPING}${nodeTypes.ROOT}`,
-//   SINGLE_NON_ROOT: `${formTypes.SINGLE_INSTANCE}${dataTypes.STRING}${nodeTypes.NONROOT}`,
-//   SINGLE_SELECTABLE: `${formTypes.SINGLE_INSTANCE}${dataTypes.STRING}${nodeTypes.SELECTABLE}`,
-//   SINGLE_ROOT: `${formTypes.SINGLE_INSTANCE}${dataTypes.STRING}${nodeTypes.ROOT}`,
-//   SINGLE_NON_ROOT_GROUPING: `${formTypes.SINGLE_INSTANCE}${dataTypes.GROUPING}${nodeTypes.NONROOT}`,
-//   SINGLE_ROOT_GROUPING: `${formTypes.SINGLE_INSTANCE}${dataTypes.GROUPING}${nodeTypes.ROOT}`,
-//   SINGLE_BOOLEAN: `${formTypes.SINGLE_INSTANCE}${dataTypes.BOOLEAN}${nodeTypes.PROPERTY}`,
-//   SINGLE_NUMBER: `${formTypes.SINGLE_INSTANCE}${dataTypes.NUMBER}${nodeTypes.PROPERTY}`,
-//   SINGLE_PROPERTY: `${formTypes.SINGLE_INSTANCE}${dataTypes.STRING}${nodeTypes.PROPERTY}`,
-//   SELECTION: `${formTypes.SELECTION}${dataTypes.STRING}${nodeTypes.SELECTABLE}`,
-// }
-
-// export const boilerPlates = {
-//   [boilerPlateTypes.CREATION_ROOT]: 'genericCreationFormRoot',
-//   [boilerPlateTypes.CREATION_NON_ROOT]: 'genericCreationFormNonRoot',
-//   [boilerPlateTypes.CREATION_SELECTABLE]: 'genericCreationFormSelectable',
-//   [boilerPlateTypes.CREATION_ROOT_GROUPING]: 'genericCreationFormRootGrouping',
-//   [boilerPlateTypes.CREATION_NON_ROOT_GROUPING]: 'genericCreationFormNonRootGrouping',
-//   [boilerPlateTypes.MULTIPLE_NON_ROOT]: 'genericMultipleNonRoot',
-//   [boilerPlateTypes.MULTIPLE_SELECTABLE]: 'genericMultipleSelectable',
-//   [boilerPlateTypes.MULTIPLE_ROOT]: 'genericMultipleRoot',
-//   [boilerPlateTypes.SINGLE_ROOT]: 'genericSingle',
-//   [boilerPlateTypes.SINGLE_NON_ROOT]: 'genericSingleNonRoot',
-//   [boilerPlateTypes.SINGLE_SELECTABLE]: 'genericSingleSelectable',
-//   [boilerPlateTypes.MULTIPLE_NON_ROOT_GROUPING]: 'genericMultipleNonRootGrouping',
-//   [boilerPlateTypes.MULTIPLE_ROOT_GROUPING]: 'genericMultipleRootGrouping',
-//   [boilerPlateTypes.SINGLE_ROOT_GROUPING]: 'genericSingleRootGrouping',
-//   [boilerPlateTypes.SINGLE_NON_ROOT_GROUPING]: 'genericSingleNonRootGrouping',
-//   [boilerPlateTypes.SINGLE_PROPERTY]: 'genericSingleProperty',
-//   [boilerPlateTypes.SINGLE_BOOLEAN]: 'genericSingleBoolean',
-//   [boilerPlateTypes.SINGLE_NUMBER]: 'genericSingleNumberProperty',
-//   [boilerPlateTypes.SELECTION]: 'genericSelection',
-// }
-
 export const boilerplateDir = `${__dirname}/../../resources/boilerplates`
 // console.log(`boilerplateDir =${boilerplateDir}`)
 
@@ -102,6 +54,18 @@ export const constraintTypes = {
 
 export const unitPrefixes = {
   SELECTABLE: 'selectable',
+}
+
+const domains = {
+  NS_DOMAIN: 'https://www.nostack.net',
+  NS_FLIP_NPM: 'https://www.npmjs.com/package/ns-front',
+  NS_FLIP_DOMAIN: 'https://ns-flip.nostack.net/',
+}
+
+export const links = {
+  DOCUMENTATION: domains.NS_FLIP_DOMAIN,
+  TEST_RESULTS: `${domains.NS_FLIP_DOMAIN}/Understanding-Test-Results`,
+  NS_RULES: `${domains.NS_FLIP_DOMAIN}/Safe-Custom-Code`,
 }
 
 export const magicStrings = {
@@ -122,7 +86,6 @@ export const magicStrings = {
   CONFIG_FILE: 'config.yml',
   SAMPLE_NS_FILE: 'sample.ns.yml',
   README_FILE: 'README.md',
-  DOCUMENTATION: 'https://ns-flip.nostack.net/',
 }
 
 export const feedbackForm = {
@@ -155,14 +118,6 @@ export const markupTags = {
   REPLACEMENT_START: 'ns__start_replacement',
   REPLACEMENT_END: 'ns__end_replacement',
   FILE_INFO: 'ns__file',
-}
-
-const NS_DOMAIN = 'https://www.nostack.net'
-const NS_FLIP_NPM = 'https://www.npmjs.com/package/ns-front'
-
-export const links = {
-  NS_RULES: `${NS_DOMAIN}/ns-front/`,
-  TEST_RESULTS: `${NS_FLIP_NPM}#working-with-test-results`,
 }
 
 export const standardIgnored = [

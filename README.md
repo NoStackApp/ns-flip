@@ -37,10 +37,10 @@ A template can generate three types of files:
 
 You can create templates with locations designated for custom code.  You can also name regions that can be replaced or removed in the generated code.  Ns-flip stores the custom changes before regenerating and restores them.
 
-See some [standard use cases](https://ns-flip.nostack.net/Uses).
+See some [standard use cases][2].
 
 # How
-A _template_ is a directory with requirements explained in the [documentation](https://ns-flip.nostack.net/).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
+A _template_ is a directory with requirements explained in the [documentation][1].  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
 ![ns-flip-commands](images/ns-flip-2.x-commands.png)
 
@@ -50,7 +50,7 @@ A _template_ is a directory with requirements explained in the [documentation](h
 
 # Help
 
-* Read our [documentation](https://ns-flip.nostack.net)
+* Read our [documentation][1]
 * Post questions on our [Community](https://spectrum.chat/ns-flip)
 *  [open issues](https://github.com/NoStackApp/ns-flip/issues/new)
 
@@ -64,7 +64,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/2.1.6 linux-x64 node-v14.9.0
+ns-flip/2.1.8 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -99,6 +99,8 @@ EXAMPLE
   $ ns check ~/projects/myapp
 ```
 
+_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/check.js)_
+
 ## `ns contact [MESSAGE]`
 
 send feedback or request to ns-flip.  Optionally provide email and other fields.
@@ -119,7 +121,7 @@ EXAMPLES
   $ ns contact "generate is breaking when I add handlers."
 ```
 
-_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.5/lib/commands/contact.js)_
+_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/contact.js)_
 
 ## `ns filediffs TEMPLATEDIR`
 
@@ -139,7 +141,7 @@ EXAMPLE
   $ ns filediffs
 ```
 
-_See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.5/lib/commands/filediffs.js)_
+_See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/filediffs.js)_
 
 ## `ns generate CODEDIR`
 
@@ -166,6 +168,8 @@ EXAMPLES
   $ ns generate $CODE -t $TEMPLATE --noSetup
   $ ns generate $CODE
 ```
+
+_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/generate.js)_
 
 ## `ns help [COMMAND]`
 
@@ -198,4 +202,10 @@ OPTIONS
 EXAMPLE
   $ ns newtemplate
 ```
+
+_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/newtemplate.js)_
 <!-- commandsstop -->
+
+
+   [1]: https://ns-flip.nostack.net/
+   [2]: https://ns-flip.nostack.net/uses

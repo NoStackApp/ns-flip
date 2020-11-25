@@ -6,7 +6,7 @@ import {handleNewFiles} from '../templates/new/files/handleNewFiles'
 import {getConfig} from '../shared/configs/getConfig'
 import {getIgnoredList} from '../shared/configs/getIgnoredList'
 import * as chalk from 'chalk'
-import {magicStrings} from '../shared/constants'
+import {links} from '../shared/constants'
 
 const expandTilde = require('expand-tilde')
 
@@ -80,7 +80,7 @@ export default class Filediffs extends Command {
         modifiedFiles.map(fileName => this.log(`\t${fileName}`))
       }
 
-      this.log(chalk.greenBright(`See ${magicStrings.DOCUMENTATION}Add-Files-For-Customization` +
+      this.log(chalk.greenBright(`See ${links.DOCUMENTATION}Add-Files-For-Customization` +
       ' for how to remove these discrepancies.'))
     } catch (error) {
       this.log(error)

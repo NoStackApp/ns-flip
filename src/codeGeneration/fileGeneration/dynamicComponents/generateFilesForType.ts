@@ -39,11 +39,6 @@ export async function generateFilesForType(
   //   nodeType = nodeTypes.ROOT
   // }
 
-  // console.log(`*** typeName=${type}, typeInfo=${JSON.stringify(typeInfo)}`)
-
-  // const templateLocation = '/home/yisroel/projects/nsBasicTemplate'
-  // const templateLocation = 'https://raw.githubusercontent.com/YizYah/basicNsFrontTemplate/master/'
-
   // TODO: need to confirm that this is correct.  Especially the component type.
   if (sourceUnit) {
     const selectionBoilerPlateInfo: BoilerPlateInfoType = {
