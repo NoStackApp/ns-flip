@@ -2,6 +2,7 @@ import {Configuration} from '../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../shared/constants/types/nsInfo'
 import {pluralLowercaseName, pluralName, singularName} from '../../../shared/inflections'
 import {createGeneralInfo} from './createGeneralInfo'
+import {links} from '../../../shared/constants'
 
 const Handlebars = require('handlebars')
 
@@ -33,7 +34,10 @@ export const contextForStatic = async (
 
   const general = createGeneralInfo(nsInfo, codeDir)
 
+  const nsFlipDocumentation = links.DOCUMENTATION
+
   return {
+    nsFlipDocumentation,
     specs,
     slug,
     names,

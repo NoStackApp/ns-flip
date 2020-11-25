@@ -1,7 +1,7 @@
 import {Command, flags} from '@oclif/command'
 
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {magicStrings} from '../shared/constants'
+import {links} from '../shared/constants'
 import {createCodeBase} from '../codeGeneration/codeBases/createCodeBase'
 
 export default class Generate extends Command {
@@ -58,7 +58,7 @@ export default class Generate extends Command {
       throw new Error(`problem generating code: ${error}`)
     }
 
-    this.log(`Generated the code at ${codeDir}.  For documentation: ${magicStrings.DOCUMENTATION}`)
+    this.log(`Generated the code at ${codeDir}.  For documentation: ${links.DOCUMENTATION}`)
     // shell.exec(`/home/yisrael/projects/ns-cli/bin/create-no-stack-app "${codeDir}"`)
   }
 }

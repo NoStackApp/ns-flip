@@ -37,10 +37,10 @@ A template can generate three types of files:
 
 You can create templates with locations designated for custom code.  You can also name regions that can be replaced or removed in the generated code.  Ns-flip stores the custom changes before regenerating and restores them.
 
-See some [standard use cases](https://ns-flip.nostack.net/Uses).
+See some [standard use cases][2].
 
 # How
-A _template_ is a directory with requirements explained in the [documentation](https://ns-flip.nostack.net/).  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
+A _template_ is a directory with requirements explained in the [documentation][1].  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
 ![ns-flip-commands](images/ns-flip-2.x-commands.png)
 
@@ -50,7 +50,7 @@ A _template_ is a directory with requirements explained in the [documentation](h
 
 # Help
 
-* Read our [documentation](https://ns-flip.nostack.net)
+* Read our [documentation][1]
 * Post questions on our [Community](https://spectrum.chat/ns-flip)
 *  [open issues](https://github.com/NoStackApp/ns-flip/issues/new)
 
@@ -205,3 +205,7 @@ EXAMPLE
 
 _See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.7/lib/commands/newtemplate.js)_
 <!-- commandsstop -->
+
+
+   [1]: https://ns-flip.nostack.net/
+   [2]: https://ns-flip.nostack.net/uses

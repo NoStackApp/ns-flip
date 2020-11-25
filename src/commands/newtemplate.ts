@@ -3,7 +3,7 @@ import {checkForUpdates} from '../shared/checkForUpdates'
 import {newTemplateQuestions} from '../templates/new/newTemplateQuestions'
 import {TemplateRequirements} from '../templates/new/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/new/generateTemplateFiles'
-import {magicStrings, suffixes} from '../shared/constants'
+import {links, suffixes} from '../shared/constants'
 import {setupDependencies} from '../templates/new/dependencies/setupDependencies'
 import {getConfiguration} from '../shared/configs/getConfiguration'
 import {executePreCommands} from '../templates/new/preCommands/executePreCommands'
@@ -33,7 +33,7 @@ function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
 
   return `Created the template at '${fullNsDir}/templates/ns-template-${templateName}'.
 See instructions to get it working:
-    ${magicStrings.DOCUMENTATION}/Creating-Templates.
+    ${links.DOCUMENTATION}/Creating-Templates.
 
 Paste the following into your browser to set the variables used in the examples there
 (you may want to save the following lines to a file to reuse easily):
@@ -106,7 +106,8 @@ export default class Newtemplate extends Command {
       // console.log(`config = ${JSON.stringify(config, null, 2)}`)
       await updateConfig(templateDir, config)
 
-      this.log(chalk.green(`\nYour template has been created at ${templateDir}.  See documentation at ${magicStrings.DOCUMENTATION}`))
+      this.log(chalk.green(`\nYour template has been created at ${templateDir}.` +
+        `See documentation at ${links.DOCUMENTATION}`))
     } catch (error) {
       this.log(error)
       throw new Error(`Problem creating template: ${error}`)

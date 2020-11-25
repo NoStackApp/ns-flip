@@ -1,5 +1,5 @@
 import {installDevPackagesTaskList} from './setup/installDevPackagesTaskList'
-import {docPages, magicStrings, suffixes} from '../../shared/constants'
+import {docPages, links, magicStrings, suffixes} from '../../shared/constants'
 import {Configuration} from '../../shared/constants/types/configuration'
 import {getConfiguration} from '../../shared/configs/getConfiguration'
 import {getCodeInfo} from '../../shared/getCodeInfo'
@@ -33,7 +33,7 @@ export async function createStarter(
   const {setupSequence} = config
   if (!setupSequence) throw new Error('\'generate\' cannot run because ' +
     '\'setupSequence\' is undefined in the config of the template.' +
-    ` See ${magicStrings.DOCUMENTATION}/${docPages.SETUP}.`)
+    ` See ${links.DOCUMENTATION}/${docPages.SETUP}.`)
 
   const {mainInstallation, devInstallation, preCommands, interactive} = setupSequence
 

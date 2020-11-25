@@ -1,4 +1,4 @@
-import {docPages, magicStrings} from '../../shared/constants'
+import {docPages, links, magicStrings} from '../../shared/constants'
 
 import {regenerateCode} from '../regenerateCode'
 import {copyTemplateToMeta} from './copyTemplateToMeta'
@@ -25,19 +25,19 @@ export async function createCodeBase(
       throw new Error('you called \'generate\' without specifying a template' +
         ` for a code base that does not yet exist (${codeDir}).  Please provide a template` +
         'with the \'-t\' flag to create the code base. ' +
-        `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+        `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
     }
     throw new Error('you called \'generate\' without specifying a template' +
       ' for a code base that does not have proper prior template info.  ' +
       'Please provide a template with the \'-t\' flag. ' +
-      `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+      `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
   }
 
   if (!templateDir && noSetup) {
     throw new Error('you called \'generate\' with the \'--noSetup\' flag without specifying ' +
       'a template.  Please either remove the \'--noSetup\' or provide a template ' +
       'with the \'-t\' flag. ' +
-      `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+      `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
   }
 
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {
@@ -71,7 +71,7 @@ export async function createCodeBase(
               //   throw new Error('you called \'generate\' without specifying a template' +
               //     ' for a code base that does not yet exist.  Please provide a template' +
               //     'with the \'-t\' flag. ' +
-              //     `See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+              //     `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
               try {
                 const newAppTasks = await createNewCode(codeDir, starterDir)// , finalTemplateDir)
                 await newAppTasks.run()
@@ -102,7 +102,7 @@ export async function createCodeBase(
     // const isInstalledTemplate = await fs.pathExists(codeMetaDir + '/' + magicStrings.TEMPLATE)
     // if (!isStarterDir || !isInstalledTemplate) {
     //   throw new Error(`You must provide a template to create ${starterDir}.  Use -t.` +
-    //   ` See ${magicStrings.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
+    //   ` See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
     // }
     return new Listr([
       generateCode,
@@ -129,7 +129,7 @@ export async function createCodeBase(
   const {setupSequence} = config
   if (!setupSequence) throw new Error('\'generate\' cannot run because ' +
     '\'setupSequence\' is undefined in the config of the template.' +
-    ` See ${magicStrings.DOCUMENTATION}/${docPages.SETUP}.`)
+    ` See ${links.DOCUMENTATION}/${docPages.SETUP}.`)
 
   const {mainInstallation, devInstallation, preCommands, interactive} = setupSequence
 
