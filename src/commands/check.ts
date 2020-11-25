@@ -10,7 +10,7 @@ const descriptionString = 'Confirms that your custom changes have been entered s
   'and then simply compares it against your current version.  ' +
   'If there are differences, then there is a problem with your code.' +
   ' For documentation about safe custom code changes, ' +
-  `please see ${magicStrings.DOCUMENTATION}/Safe-Custom-Code.`
+  `please see ${links.DOCUMENTATION}/Safe-Custom-Code.`
 
 export default class Check extends Command {
   static description = String(descriptionString)
@@ -62,7 +62,7 @@ See the log file ${logFile} or the above messages for more information.`)
 :( The app did not pass the tests. :(`, false)
       await logEntry(logFile, logMessage, true)
 
-      this.log(`For documentation: ${magicStrings.DOCUMENTATION}/Understanding-Test-Results`)
+      this.log(`For documentation: ${links.DOCUMENTATION}/Understanding-Test-Results`)
 
       return 1
     }
@@ -71,7 +71,7 @@ See the log file ${logFile} or the above messages for more information.`)
 :) The app is passing all tests! :)`
     await logEntry(logFile, logMessage, true)
 
-    this.log(`Finished the test.  For documentation: ${magicStrings.DOCUMENTATION}`)
+    this.log(`Finished the test.  For documentation: ${links.DOCUMENTATION}`)
 
     return 0
   }

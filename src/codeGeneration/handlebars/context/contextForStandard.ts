@@ -1,4 +1,4 @@
-import {dataTypes, nodeTypes, magicStrings} from '../../../shared/constants'
+import {dataTypes, nodeTypes, magicStrings, links} from '../../../shared/constants'
 import {NsInfo, BackendIdList} from '../../../shared/constants/types/nsInfo'
 import {Schema} from '../../../shared/constants/types/schema'
 import {
@@ -66,8 +66,10 @@ export const contextForStandard = async (
   // }) + ', loc:'
 
   const general = await createGeneralInfo(nsInfo, codeDir)
+  const nsFlipDocumentation = links.DOCUMENTATION
 
   return {
+    nsFlipDocumentation,
     nodeTypes,
     dataTypes,
     names,

@@ -1,6 +1,6 @@
 {
   "name": "ns-flip",
-  "description": "build and use updatable templates: can be reapplied to code without losing custom changes to files. Documentation: https://github.com/NoStackApp/ns-flip/wiki",
+  "description": "build and use updatable templates: can be reapplied to code without losing custom changes to files.",
   "version": "2.1.7",
   "author": "YizYah @YizYah",
   "bin": {
@@ -75,7 +75,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "http://ns-flip.nostack.net/",
+  "homepage": "https://ns-flip.nostack.net/",
   "license": "MIT",
   "main": "lib/index.js",
   "oclif": {

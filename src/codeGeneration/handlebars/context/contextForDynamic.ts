@@ -1,4 +1,4 @@
-import {associationTypes, BoilerPlateInfoType, dataTypes, nodeTypes} from '../../../shared/constants'
+import {associationTypes, BoilerPlateInfoType, dataTypes, links, nodeTypes} from '../../../shared/constants'
 import {NsInfo} from '../../../shared/constants/types/nsInfo'
 import {Schema, TreeTypeChildrenList} from '../../../shared/constants/types/schema'
 import {
@@ -147,7 +147,10 @@ export const contextForDynamic = async (
     single: singleChildrenInfo,
   }
 
+  const nsFlipDocumentation = links.DOCUMENTATION
+
   return {
+    nsFlipDocumentation,
     nodeTypes,
     dataTypes,
     stackInfo,

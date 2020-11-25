@@ -1,7 +1,7 @@
 import {Command, flags} from '@oclif/command'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {sendRequest} from '../contact/sendRequest'
-import {magicStrings} from '../shared/constants'
+import {links} from '../shared/constants'
 
 export default class Contact extends Command {
   static description = 'send feedback or request to ns-flip.  Optionally provide email and other fields.'
@@ -45,6 +45,6 @@ export default class Contact extends Command {
     }
 
     this.log('Message has been sent.  We should see the message during our next business day.' +
-      `  Meanwhile, please check out our documentation: ${magicStrings.DOCUMENTATION}.`)
+      `  Meanwhile, please check out our documentation: ${links.DOCUMENTATION}.`)
   }
 }

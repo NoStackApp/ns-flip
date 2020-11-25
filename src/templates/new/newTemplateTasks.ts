@@ -1,4 +1,4 @@
-import {magicStrings, suffixes} from '../../shared/constants'
+import {links, magicStrings, suffixes} from '../../shared/constants'
 import {TemplateRequirements} from './TemplateRequirements'
 
 const chalk = require('chalk')
@@ -96,6 +96,7 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
         const context = {
           templateName,
           category,
+          nsFlipDocumentation: links.DOCUMENTATION,
           templateDirectory: template,
           customDir,
           fileFilter,
