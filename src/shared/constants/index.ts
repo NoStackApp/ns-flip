@@ -125,6 +125,7 @@ export const standardIgnored = [
   '.git',
   'package-lock.json',
   'meta',
+  '.idea',
 ]
 
 export interface Delimiters {

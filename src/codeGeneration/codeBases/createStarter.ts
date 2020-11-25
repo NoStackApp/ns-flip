@@ -2,7 +2,6 @@ import {installDevPackagesTaskList} from './setup/installDevPackagesTaskList'
 import {docPages, links, magicStrings, suffixes} from '../../shared/constants'
 import {Configuration} from '../../shared/constants/types/configuration'
 import {getConfig} from '../../shared/configs/getConfig'
-import {getNsInfo} from '../../shared/nsFiles/getNsInfo'
 import {CustomCodeRepository} from '../../shared/constants/types/custom'
 import {dirOptions} from '../../shared/dirOptions'
 import {createNewCode} from './createNewCode'
@@ -10,9 +9,11 @@ import {installMainPackagesTaskList} from './setup/installMainPackagesTaskList'
 import {preCommandsTaskList} from './setup/preCommandsTaskList'
 import {interactiveSequence} from './setup/interactiveSequence'
 import {setNsInfo} from '../../shared/nsFiles/setNsInfo'
+import {NsInfo} from '../../shared/constants/types/nsInfo'
 
 const fs = require('fs-extra')
 const Listr = require('listr')
+const yaml = require('js-yaml')
 
 async function checkFolder(starterDir: string) {
   if (await fs.pathExists(starterDir)) {
@@ -65,38 +66,39 @@ export async function createStarter(
     {
       title: 'Add Meta-Data',
       task:
-  async () => {
-    const metaDir = `${starterDir}/${magicStrings.META_DIR}`
-    const customCode = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+        async () => {
+          const metaDir = `${starterDir}/${magicStrings.META_DIR}`
+          const customCode = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
 
-    const nsInfo = await getNsInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
-    if (nsInfo) nsInfo.starter = starterDir
+          let nsInfo: NsInfo
+          try {
+            const nsYml = fs.readFileSync(`${templateDir}/${magicStrings.SAMPLE_NS_FILE}`, 'utf8')
+            nsInfo = await yaml.safeLoad(nsYml)
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(`error opening sample ns file in the template directory ${templateDir}`)
+            throw error
+          }
 
-    // ensure nsYml if possible
-    // let appInfo = await getCodeInfo(nsYml)
-    // if (!appInfo) {
-    //   appInfo = await getCodeInfo(`${templateDir}/sample.${magicStrings.NS_FILE}`)
-    //   if (appInfo)
-    //     await fs.outputFile(nsYml, yaml.safeDump(appInfo))
-    // }
+          if (nsInfo) nsInfo.starter = starterDir
 
-    const customDir = `${starterDir}/${config.dirs.custom}`
-    const customCodeRepository: CustomCodeRepository = {
-      addedCode: {},
-      replacedCode: {},
-      removedCode: {},
-    }
+          const customDir = `${starterDir}/${config.dirs.custom}`
+          const customCodeRepository: CustomCodeRepository = {
+            addedCode: {},
+            replacedCode: {},
+            removedCode: {},
+          }
 
-    try {
-      await fs.ensureDir(metaDir, dirOptions)
-      await fs.ensureDir(customDir, dirOptions)
-      await setNsInfo(starterDir, nsInfo)
-      await fs.outputJson(customCode, customCodeRepository)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
-    }
-  },
+          try {
+            await fs.ensureDir(metaDir, dirOptions)
+            await fs.ensureDir(customDir, dirOptions)
+            await setNsInfo(starterDir, nsInfo)
+            await fs.outputJson(customCode, customCodeRepository)
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(error)
+          }
+        },
     },
   ]
 

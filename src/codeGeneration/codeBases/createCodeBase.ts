@@ -14,6 +14,7 @@ export async function createCodeBase(
 ) {
   const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
   const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
+  console.log(`codeTemplateDir=${codeTemplateDir}`)
   const existsCodeTemplateDir = await fs.pathExists(codeTemplateDir)
 
   if (!templateDir && noSetup) {
@@ -40,6 +41,7 @@ export async function createCodeBase(
       `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
   }
 
+  console.log(`existsCodeTemplateDir=${existsCodeTemplateDir}, noSetup=${noSetup} `)
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {
     await createStarter(templateDir, codeDir)
   }

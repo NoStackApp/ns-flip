@@ -20,8 +20,7 @@ export async function failsTests(codeDir: string) {
   const diffsFile = `${testMetaDir}/${magicStrings.DIFFS}`
   const logFile = `${testMetaDir}/${magicStrings.TESTS_LOG}`
 
-  const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
-  const nsInfo = await getNsInfo(nsYml)
+  const nsInfo = await getNsInfo(metaDir)
 
   const {starter} = nsInfo
 

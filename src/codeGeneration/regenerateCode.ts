@@ -30,8 +30,7 @@ const fs = require('fs-extra')
 
 export async function regenerateCode(codeDir: string) {
   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
-  const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
-  const nsInfo = await getNsInfo(nsYml)
+  const nsInfo = await getNsInfo(codeDir)
   const starter = `${codeDir}${suffixes.STARTUP_DIR}`
 
   // WARNING: breaking change from 1.6.8!!
