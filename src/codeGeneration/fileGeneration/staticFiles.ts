@@ -71,7 +71,7 @@ ${error}`)
     instanceNamesForType.map(async instance => {
       const instanceInfo = instancesForType[instance]
       fileTypeList.map(async (fileType: string) => {
-        const fileTypeInfo: any = staticTypeInfo[fileType]
+        const fileTypeInfo: any = staticTypeInfo.files[fileType]
         const {name, suffix, directory} = fileTypeInfo
 
         const pathString = `${templateDir}/static/${fileType}.hbs`
