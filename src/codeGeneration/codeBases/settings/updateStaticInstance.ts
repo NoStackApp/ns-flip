@@ -2,6 +2,7 @@ import {Configuration} from '../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../shared/constants/types/nsInfo'
 import * as chalk from 'chalk'
 import {setNsInfo} from '../../../shared/nsFiles/setNsInfo'
+import {updateInstanceSpecs} from './updateInstanceSpecs'
 
 const inquirer = require('inquirer')
 
@@ -78,33 +79,35 @@ export async function updateStaticInstance(
 
   const answers: AnswersForUpdateInstance = await inquirer.prompt(questions)
 
-  const actionType = answers[ACTION]
-  if (actionType === actionTypes.BACK) {
-    // eslint-disable-next-line no-console
-    console.log(`finished updating ${staticType}...`)
-    return
-  }
-
-  if (actionType === actionTypes.DELETE) {
-    delete nsInfo.static[staticType][instanceName]
-    setNsInfo(codeDir, nsInfo)
-    // eslint-disable-next-line no-console
-    console.log(chalk.red(`${instanceName} deleted...`))
-    return
-  }
-
-  if (actionType === actionTypes.RENAME) {
-    if (instanceName !== answers[NAME]) {
-      nsInfo.static[staticType][answers[NAME]] = {...instanceInfo}
-      delete nsInfo.static[staticType][instanceName]
+  while (answers[ACTION]) {
+    const actionType = answers[ACTION]
+    if (actionType === actionTypes.BACK) {
+      // eslint-disable-next-line no-console
+      console.log(`finished updating ${staticType}...`)
+      return
     }
 
-    nsInfo.static[staticType][answers[NAME]].slug = answers[SLUG]
-    setNsInfo(codeDir, nsInfo)
-    // eslint-disable-next-line no-console
-    console.log(chalk.red(`${instanceName} updated...`))
-    return
-  }
+    if (actionType === actionTypes.DELETE) {
+      delete nsInfo.static[staticType][instanceName]
+      setNsInfo(codeDir, nsInfo)
+      // eslint-disable-next-line no-console
+      console.log(chalk.red(`${instanceName} deleted...`))
+      return
+    }
 
-  updateSpecs
+    if (actionType === actionTypes.RENAME) {
+      if (instanceName !== answers[NAME]) {
+        nsInfo.static[staticType][answers[NAME]] = {...instanceInfo}
+        delete nsInfo.static[staticType][instanceName]
+      }
+
+      nsInfo.static[staticType][answers[NAME]].slug = answers[SLUG]
+      setNsInfo(codeDir, nsInfo)
+      // eslint-disable-next-line no-console
+      console.log(chalk.red(`${instanceName} updated...`))
+      return
+    }
+
+    await updateInstanceSpecs(staticType, instanceName, config, nsInfo, codeDir)
+  }
 }
