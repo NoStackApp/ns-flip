@@ -64,7 +64,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/2.1.8 linux-x64 node-v14.9.0
+ns-flip/2.2.0 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -80,6 +80,7 @@ USAGE
 * [`ns generate CODEDIR`](#ns-generate-codedir)
 * [`ns help [COMMAND]`](#ns-help-command)
 * [`ns newtemplate`](#ns-newtemplate)
+* [`ns settings CODEDIR`](#ns-settings-codedir)
 
 ## `ns check CODEDIR`
 
@@ -98,8 +99,6 @@ OPTIONS
 EXAMPLE
   $ ns check ~/projects/myapp
 ```
-
-_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/check.js)_
 
 ## `ns contact [MESSAGE]`
 
@@ -121,8 +120,6 @@ EXAMPLES
   $ ns contact "generate is breaking when I add handlers."
 ```
 
-_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/contact.js)_
-
 ## `ns filediffs TEMPLATEDIR`
 
 create new template.
@@ -140,8 +137,6 @@ OPTIONS
 EXAMPLE
   $ ns filediffs
 ```
-
-_See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/filediffs.js)_
 
 ## `ns generate CODEDIR`
 
@@ -168,8 +163,6 @@ EXAMPLES
   $ ns generate $CODE -t $TEMPLATE --noSetup
   $ ns generate $CODE
 ```
-
-_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/generate.js)_
 
 ## `ns help [COMMAND]`
 
@@ -203,7 +196,23 @@ EXAMPLE
   $ ns newtemplate
 ```
 
-_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/newtemplate.js)_
+## `ns settings CODEDIR`
+
+create new template.
+
+```
+USAGE
+  $ ns settings CODEDIR
+
+ARGUMENTS
+  CODEDIR  directory containing the code
+
+OPTIONS
+  -h, --help  show CLI help
+
+EXAMPLE
+  $ ns settings $CODE
+```
 <!-- commandsstop -->
 
 
