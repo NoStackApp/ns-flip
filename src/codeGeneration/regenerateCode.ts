@@ -1,6 +1,6 @@
 import {magicStrings, suffixes} from '../shared/constants'
-import {getCodeInfo} from '../shared/getCodeInfo'
-import {getConfiguration} from '../shared/configs/getConfiguration'
+import {getNsInfo} from '../shared/nsFiles/getNsInfo'
+import {getConfig} from '../shared/configs/getConfig'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {storeAddedCode} from './customCode/storeAddedCode'
 import {copyCodeBaseToNewDir} from './customCode/copyCodeBaseToNewDir'
@@ -30,14 +30,13 @@ const fs = require('fs-extra')
 
 export async function regenerateCode(codeDir: string) {
   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
-  const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
-  const nsInfo = await getCodeInfo(nsYml)
+  const nsInfo = await getNsInfo(codeDir)
   const starter = `${codeDir}${suffixes.STARTUP_DIR}`
 
   // WARNING: breaking change from 1.6.8!!
   // const config = await getConfiguration(template.dir)
   const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
-  const config = await getConfiguration(templateDir)
+  const config = await getConfig(templateDir)
 
   const backupDir = `${codeDir}${suffixes.BACKUP_DIR}`
 

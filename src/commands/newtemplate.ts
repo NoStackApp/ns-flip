@@ -5,10 +5,10 @@ import {TemplateRequirements} from '../templates/new/TemplateRequirements'
 import {generateTemplateFiles} from '../templates/new/generateTemplateFiles'
 import {links, suffixes} from '../shared/constants'
 import {setupDependencies} from '../templates/new/dependencies/setupDependencies'
-import {getConfiguration} from '../shared/configs/getConfiguration'
+import {getConfig} from '../shared/configs/getConfig'
 import {executePreCommands} from '../templates/new/preCommands/executePreCommands'
 import {setPackagesToSuggestInserting} from '../templates/new/dependencies/setPackagesToSuggestInserting'
-import {updateConfig} from '../shared/configs/updateConfig'
+import {setConfig} from '../shared/configs/setConfig'
 import {installDependencies} from '../templates/new/dependencies/installDependencies'
 import {getPreCommands} from '../templates/new/preCommands/getPreCommands'
 import * as chalk from 'chalk'
@@ -87,7 +87,7 @@ export default class Newtemplate extends Command {
       const samples = `${fullNsDir}/samples`
 
       const templateDir = `${templates}/ns-template-${templateName}`
-      const config = await getConfiguration(templateDir)
+      const config = await getConfig(templateDir)
       const sampleDir = `${samples}/${originalName}`
       const codeDir = `${samples}/${templateName}-code`
 
@@ -100,11 +100,11 @@ export default class Newtemplate extends Command {
       const suggestedDependencies = await setPackagesToSuggestInserting(starterDir, sampleDir)
 
       if (suggestedDependencies) await setupDependencies(suggestedDependencies, config)
-      await updateConfig(templateDir, config)
+      await setConfig(templateDir, config)
       await installDependencies(config, starterDir)
 
       // console.log(`config = ${JSON.stringify(config, null, 2)}`)
-      await updateConfig(templateDir, config)
+      await setConfig(templateDir, config)
 
       this.log(chalk.green(`\nYour template has been created at ${templateDir}.` +
         `See documentation at ${links.DOCUMENTATION}`))

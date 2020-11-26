@@ -3,7 +3,7 @@ import {Configuration} from '../constants/types/configuration'
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
 
-export async function getConfiguration(templateDir: string) {
+export async function getConfig(templateDir: string) {
   let config: Configuration
   const configFile = `${templateDir}/config.yml`
   try {

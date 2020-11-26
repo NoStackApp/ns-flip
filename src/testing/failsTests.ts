@@ -3,8 +3,8 @@ import {generateCode} from '../codeGeneration/generateCode'
 import {insertCustomChanges} from '../codeGeneration/customCode/insertCustomChanges'
 import {storeAddedCode} from '../codeGeneration/customCode/storeAddedCode'
 import {magicStrings, suffixes} from '../shared/constants'
-import {getCodeInfo} from '../shared/getCodeInfo'
-import {getConfiguration} from '../shared/configs/getConfiguration'
+import {getNsInfo} from '../shared/nsFiles/getNsInfo'
+import {getConfig} from '../shared/configs/getConfig'
 import {checkDirForDiscrepancies} from './checkDirForDiscrepancies'
 // import {mergePackageJsons} from './mergePackageJsons'
 import {moveOverIgnored} from './moveOverIgnored'
@@ -20,8 +20,7 @@ export async function failsTests(codeDir: string) {
   const diffsFile = `${testMetaDir}/${magicStrings.DIFFS}`
   const logFile = `${testMetaDir}/${magicStrings.TESTS_LOG}`
 
-  const nsYml = `${metaDir}/${magicStrings.NS_FILE}`
-  const nsInfo = await getCodeInfo(nsYml)
+  const nsInfo = await getNsInfo(metaDir)
 
   const {starter} = nsInfo
 
@@ -29,7 +28,7 @@ export async function failsTests(codeDir: string) {
 
   // WARNING: breaking change from 1.6.8!!
   // const config = await getConfiguration(template.dir)
-  const config = await getConfiguration(templateDir)
+  const config = await getConfig(templateDir)
 
   let problemsFound = false
   if (!starter) throw new Error(`the '${magicStrings.NS_FILE}' file contains no starter.  ` +

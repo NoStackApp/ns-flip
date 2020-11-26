@@ -88,6 +88,12 @@ export const magicStrings = {
   README_FILE: 'README.md',
 }
 
+export const menuChoices = {
+  QUIT: 'quit',
+  ADD_NEW: 'add',
+
+}
+
 export const feedbackForm = {
   URL: 'https://docs.google.com/forms/d/1DooR4toIL-15Ozk6cxB1A8gMJR5e3dntalYAr60PM9Q/formResponse',
   fields: {
@@ -125,6 +131,7 @@ export const standardIgnored = [
   '.git',
   'package-lock.json',
   'meta',
+  '.idea',
 ]
 
 export interface Delimiters {

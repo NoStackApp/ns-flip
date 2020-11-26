@@ -3,7 +3,7 @@ import {checkForUpdates} from '../shared/checkForUpdates'
 
 import {compareSync, Result} from 'dir-compare'
 import {handleNewFiles} from '../templates/new/files/handleNewFiles'
-import {getConfiguration} from '../shared/configs/getConfiguration'
+import {getConfig} from '../shared/configs/getConfig'
 import {getIgnoredList} from '../shared/configs/getIgnoredList'
 import * as chalk from 'chalk'
 import {links} from '../shared/constants'
@@ -43,7 +43,7 @@ export default class Filediffs extends Command {
       const sample = '/home/yisroel/ns2/samples/ez-oclif-cli-code.sample'
       const code = '/home/yisroel/ns2/samples/ez-oclif-cli-code'
 
-      const config = await getConfiguration(templateDir)
+      const config = await getConfig(templateDir)
       const allIgnored = getIgnoredList(config).map(dir => {
         if (dir.includes('/')) return '/' + dir
         return dir

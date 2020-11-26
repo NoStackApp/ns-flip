@@ -1,7 +1,7 @@
 import * as chalk from 'chalk'
 import {Result} from 'dir-compare'
-import {getConfiguration} from '../../../shared/configs/getConfiguration'
-import {updateConfig} from '../../../shared/configs/updateConfig'
+import {getConfig} from '../../../shared/configs/getConfig'
+import {setConfig} from '../../../shared/configs/setConfig'
 
 const inquirer = require('inquirer')
 const fs = require('fs-extra')
@@ -43,7 +43,7 @@ export async function handleNewFiles(
       return filePath.replace(/\/\//g, '/')
     })
 
-    const config = await getConfiguration(templateDir)
+    const config = await getConfig(templateDir)
 
     const newFilesForPrompt: string[] = []
     newFiles.map(relativeFilePath => {
@@ -68,7 +68,7 @@ export async function handleNewFiles(
           file: 'rm',
           arguments: [`$codeDir/${newFileName}`],
         })
-        await updateConfig(templateDir, config)
+        await setConfig(templateDir, config)
       }
       if (newFileTreatment === newFileOptions.COPY) {
         await copyFileToSample(newFileTreatment, code, sample)

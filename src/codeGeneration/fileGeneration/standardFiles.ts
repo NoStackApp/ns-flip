@@ -6,7 +6,7 @@ import {loadFileTemplate} from '../../templates/loadFileTemplate'
 import {registerHelpers} from '../handlebars/registerHelpers'
 import {registerPartials} from '../handlebars/registerPartials'
 import {replaceCommentDelimiters} from './replaceCommentDelimiters'
-import {getConfiguration} from '../../shared/configs/getConfiguration'
+import {getConfig} from '../../shared/configs/getConfig'
 
 const fs = require('fs-extra')
 const path = require('path')
@@ -23,7 +23,7 @@ export async function standardFiles(
   stackInfo: Schema,
 ) {
   const standardDir = `${templateDir}/standard`
-  const config = await getConfiguration(templateDir)
+  const config = await getConfig(templateDir)
 
   try {
     await registerPartials(`${templateDir}/partials`)
