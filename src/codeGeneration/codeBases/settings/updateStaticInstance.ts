@@ -6,7 +6,8 @@ import {setNsInfo} from '../../../shared/nsFiles/setNsInfo'
 const inquirer = require('inquirer')
 
 const actionTypes = {
-  UPDATE: 'update',
+  RENAME: 'rename',
+  UPDATE_SPECS: 'updateSpecs',
   DELETE: 'delete',
   BACK: 'back',
 }
@@ -17,11 +18,6 @@ interface AnswersForUpdateInstance {
   slug: string;
 }
 
-const questionNames = {
-  ACTION: 'action',
-  NAME: 'name',
-  SLUG: 'slug',
-}
 const ACTION = 'action'
 const NAME = 'name'
 const SLUG = 'slug'
@@ -57,25 +53,25 @@ export async function updateStaticInstance(
       type: 'list',
       loop: false,
       message: `What would you like to do with ${instanceName}?`,
-      name: questionNames.ACTION,
-      choices: [actionTypes.UPDATE, actionTypes.DELETE, actionTypes.BACK],
+      name: ACTION,
+      choices: [actionTypes.RENAME, actionTypes.UPDATE_SPECS, actionTypes.DELETE, actionTypes.BACK],
     },
     {
       type: 'input',
-      name: questionNames.NAME,
+      name: NAME,
       message: 'What should the name be?',
       default: instanceName,
       when: function (answers: AnswersForUpdateInstance) {
-        return (answers.action === actionTypes.UPDATE)
+        return (answers.action === actionTypes.RENAME)
       },
     },
     {
       type: 'input',
-      name: questionNames.SLUG,
+      name: SLUG,
       message: 'What should the slug be?',
       default: instanceInfo.slug,
       when: function (answers: AnswersForUpdateInstance) {
-        return answers.action === actionTypes.UPDATE
+        return answers.action === actionTypes.RENAME
       },
     },
   ]
@@ -85,7 +81,7 @@ export async function updateStaticInstance(
   const actionType = answers[ACTION]
   if (actionType === actionTypes.BACK) {
     // eslint-disable-next-line no-console
-    console.log(`cancelled update to ${staticType}...`)
+    console.log(`finished updating ${staticType}...`)
     return
   }
 
@@ -97,14 +93,18 @@ export async function updateStaticInstance(
     return
   }
 
-  // perform update
-  if (instanceName !== answers[NAME]) {
-    nsInfo.static[staticType][answers[NAME]] = {...instanceInfo}
-    delete nsInfo.static[staticType][instanceName]
+  if (actionType === actionTypes.RENAME) {
+    if (instanceName !== answers[NAME]) {
+      nsInfo.static[staticType][answers[NAME]] = {...instanceInfo}
+      delete nsInfo.static[staticType][instanceName]
+    }
+
+    nsInfo.static[staticType][answers[NAME]].slug = answers[SLUG]
+    setNsInfo(codeDir, nsInfo)
+    // eslint-disable-next-line no-console
+    console.log(chalk.red(`${instanceName} updated...`))
+    return
   }
 
-  nsInfo.static[staticType][answers[NAME]].slug = answers[SLUG]
-  setNsInfo(codeDir, nsInfo)
-  // eslint-disable-next-line no-console
-  console.log(chalk.red(`${instanceName} updated...`))
+  updateSpecs
 }
