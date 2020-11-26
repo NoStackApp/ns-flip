@@ -1,14 +1,15 @@
 import {Configuration} from '../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../shared/constants/types/nsInfo'
 import {updateStaticTypeInstances} from './updateStaticTypeInstances'
-import {magicStrings, menuChoices} from '../../../shared/constants'
+import {menuChoices} from '../../../shared/constants'
 import {Choice} from './settingsTypes'
 
 const chalk = require('chalk')
 const inquirer = require('inquirer')
 
+const TYPE = 'staticType'
 interface AnswersForStaticType {
-  staticType: string;
+  [TYPE]: string;
 }
 
 function staticTypesFromConfig(config: Configuration) {
@@ -19,7 +20,7 @@ function staticTypesFromConfig(config: Configuration) {
     const types = Object.keys(staticTypes)
     staticTypeChoices = types.map((typeName: string) => {
       return {
-        name: chalk.bgBlueBright(typeName) + ': ' + staticTypes[typeName].description,
+        name: chalk.blueBright(typeName) + ': ' + staticTypes[typeName].description,
         value: typeName,
         short: typeName,
       }
@@ -49,9 +50,8 @@ async function chooseStaticType(config: Configuration) {
   const questions = [{
     type: 'list',
     loop: false,
-    message: 'Choose a ' +
-      chalk.green('static type'),
-    name: 'staticType',
+    message: `Updating Static Instances.  Choose a ${chalk.blueBright('static type')}.`,
+    name: TYPE,
     choices: choiceList,
   }]
 
@@ -59,16 +59,19 @@ async function chooseStaticType(config: Configuration) {
   return answers.staticType
 }
 
-export async function staticSettings(config: Configuration, nsInfo: NsInfo) {
+export async function staticSettings(config: Configuration, nsInfo: NsInfo, codeDir: string) {
   let staticType = await chooseStaticType(config)
+  // console.log(`** staticType at the beginning of staticSettings while = ${staticType}`)
 
   while (staticType) {
     if (staticType === menuChoices.QUIT) {
-      console.log('finished...')
+      // eslint-disable-next-line no-console
+      console.log('Finished updating static types...')
       return
     }
 
-    await updateStaticTypeInstances(staticType, config, nsInfo)
+    await updateStaticTypeInstances(staticType, config, nsInfo, codeDir)
     staticType = await chooseStaticType(config)
+    // console.log(`** staticType at the end of staticSettings while = ${staticType}`)
   }
 }

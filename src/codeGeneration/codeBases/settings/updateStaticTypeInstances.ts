@@ -2,12 +2,17 @@ import {Configuration} from '../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../shared/constants/types/nsInfo'
 import {Choice} from './settingsTypes'
 import {menuChoices} from '../../../shared/constants'
+import {addStaticInstance} from './addStaticInstance'
+import {updateStaticInstance} from './updateStaticInstance'
+
 const inquirer = require('inquirer')
 
 const chalk = require('chalk')
 
+const INSTANCE = 'staticInstance'
+
 interface AnswersForStaticInstance {
-  staticInstance: string;
+  [INSTANCE]: string;
 }
 
 function staticInstancesFromNsInfo(staticType: string, nsInfo: NsInfo) {
@@ -51,64 +56,56 @@ async function chooseStaticInstance(staticType: string, nsInfo: NsInfo) {
   const questions = [{
     type: 'list',
     loop: false,
-    message: 'Choose a ' +
-      chalk.green('static instance') +
-      'to edit, or add a new one.',
-    name: 'staticType',
+    message: `Choose a ${chalk.blueBright(staticType)} to edit, or ${chalk.greenBright('add a new one')}...`,
+    name: INSTANCE,
     choices: choiceList,
   }]
 
   const answers: AnswersForStaticInstance = await inquirer.prompt(questions)
+  // console.log(`** answers for static instance=${JSON.stringify(answers)}`)
   return answers.staticInstance
-}
-
-async function addStaticInstance(staticType: string, nsInfo: NsInfo) {
-  console.log('in add status instance...')
-  const addInstanceQuestions = [
-    {
-      type: 'input',
-      name: 'name',
-      message: `What's the name of the instance of ${staticType}?`,
-    },
-    {
-      type: 'input',
-      name: 'slug',
-      message: "What's the slug?  (It will get inserted into things like file names.)",
-    },
-  ]
-
-  inquirer.prompt(addInstanceQuestions).then((answers: any) => {
-    console.log(JSON.stringify(answers, null, '  '))
-  })
 }
 
 export async function updateStaticTypeInstances(
   staticType: string,
   config: Configuration,
-  nsInfo: NsInfo) {
+  nsInfo: NsInfo,
+  codeDir: string,
+) {
+  // eslint-disable-next-line no-console
   console.log(`Update the instances for static type ${staticType}.`)
 
   const staticTypes = config.static
+  // // console.log(`**staticTypes[staticType]: ${JSON.stringify(staticTypes[staticType], null, ' ')}.`)
   const typeDescription = staticTypes[staticType].description
+  // eslint-disable-next-line no-console
   console.log(chalk.green(typeDescription))
 
   let staticInstance = await chooseStaticInstance(staticType, nsInfo)
+  // console.log(`** staticInstance=${staticInstance}`)
 
   while (staticInstance) {
     if (staticInstance === menuChoices.QUIT) {
-      console.log('finished...')
+      // eslint-disable-next-line no-console
+      console.log(`Finished updating ${staticType}...`)
       return
     }
 
     if (staticInstance === menuChoices.ADD_NEW) {
-      await addStaticInstance(staticType, nsInfo)
+      await addStaticInstance(staticType, config, nsInfo, codeDir)
     }
 
     if (staticInstance !== menuChoices.ADD_NEW) {
-      console.log(`instance to edit = ${staticInstance}`)
+      // console.log(`** instance to edit = ${staticInstance}`)
+      await updateStaticInstance(
+        staticType,
+        staticInstance,
+        config,
+        nsInfo,
+        codeDir
+      )
     }
 
-    await updateStaticTypeInstances(staticInstance, config, nsInfo)
     staticInstance = await chooseStaticInstance(staticType, nsInfo)
   }
 }

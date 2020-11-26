@@ -1,10 +1,10 @@
 import {expect, test} from '@oclif/test'
-describe('check', function () {
+describe('settings', () => {
   test
   .stderr()
-  .command(['check', 'nonexistentFile'])
+  .command(['settings'])
   .catch(error => {
-    expect(error.message).to.contain('no such file or directory')
+    expect(error.message).to.contain('Missing 1 required arg')
   })
   .it('requires existent code base')
 })

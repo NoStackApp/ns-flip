@@ -47,7 +47,7 @@ export default class Filediffs extends Command {
       // console.log(`configStatic = ${JSON.stringify(configStatic, null, 2)}`)
       // console.log(`nsStatic = ${JSON.stringify(nsStatic, null, 2)}`)
 
-      await staticSettings(config, nsInfo)
+      await staticSettings(config, nsInfo, codeDir)
     } catch (error) {
       this.error(error)
     }
