@@ -4,7 +4,6 @@ import {getConfig} from '../shared/configs/getConfig'
 import {magicStrings} from '../shared/constants'
 import {getNsInfo} from '../shared/nsFiles/getNsInfo'
 import {staticSettings} from '../codeGeneration/codeBases/settings/staticSettings'
-
 const expandTilde = require('expand-tilde')
 
 export default class Filediffs extends Command {

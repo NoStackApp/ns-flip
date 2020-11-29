@@ -2,11 +2,13 @@ import {Configuration} from '../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../shared/constants/types/nsInfo'
 import * as chalk from 'chalk'
 import {setNsInfo} from '../../../shared/nsFiles/setNsInfo'
+import {staticInstanceSpecs} from './staticInstanceSpecs'
 
 const inquirer = require('inquirer')
 
 const actionTypes = {
-  UPDATE: 'update',
+  RENAME: 'rename',
+  SPECS: 'specs',
   DELETE: 'delete',
   BACK: 'back',
 }
@@ -25,11 +27,13 @@ const questionNames = {
 const ACTION = 'action'
 const NAME = 'name'
 const SLUG = 'slug'
+const SPECS = 'specs'
 
 interface AnswersForUpdateInstance {
   action: string;
   name: string;
   slug: string;
+  specs: string;
 }
 
 // interface AnswersForUpdateInstance {
@@ -66,7 +70,7 @@ export async function updateStaticInstance(
       message: 'What should the name be?',
       default: instanceName,
       when: function (answers: AnswersForUpdateInstance) {
-        return (answers.action === actionTypes.UPDATE)
+        return (answers.action === actionTypes.RENAME)
       },
     },
     {
@@ -75,7 +79,7 @@ export async function updateStaticInstance(
       message: 'What should the slug be?',
       default: instanceInfo.slug,
       when: function (answers: AnswersForUpdateInstance) {
-        return answers.action === actionTypes.UPDATE
+        return answers.action === actionTypes.RENAME
       },
     },
   ]
@@ -95,6 +99,12 @@ export async function updateStaticInstance(
     // eslint-disable-next-line no-console
     console.log(chalk.red(`${instanceName} deleted...`))
     return
+  }
+
+  if (actionType === actionTypes.SPECS) {
+    await staticInstanceSpecs()
+    // eslint-disable-next-line no-console
+    console.log(chalk.red(`${instanceName} specs updated...`))
   }
 
   // perform update
