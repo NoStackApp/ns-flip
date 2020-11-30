@@ -54,8 +54,7 @@ A _template_ is a directory with requirements explained in the [documentation][1
 * Post questions on our [Community](https://spectrum.chat/ns-flip)
 *  [open issues](https://github.com/NoStackApp/ns-flip/issues/new)
 
-[![Getting Started with ns-flip 1.6 Templating](http://img.youtube.com/vi/_Wg1J9KKvns/0.jpg)](http://www.youtube.com/watch?v=_Wg1J9KKvns)
-
+[![Getting Started with ns-flip 1.6 Templating](https://img.youtube.com/vi/whb6B2FA_Yo/maxresdefault.jpg)](https://youtu.be/whb6B2FA_Yo)
 
 # Usage
 <!-- usage -->
@@ -64,7 +63,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/2.1.8 linux-x64 node-v14.9.0
+ns-flip/2.2.1 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -80,6 +79,7 @@ USAGE
 * [`ns generate CODEDIR`](#ns-generate-codedir)
 * [`ns help [COMMAND]`](#ns-help-command)
 * [`ns newtemplate`](#ns-newtemplate)
+* [`ns settings CODEDIR`](#ns-settings-codedir)
 
 ## `ns check CODEDIR`
 
@@ -99,7 +99,7 @@ EXAMPLE
   $ ns check ~/projects/myapp
 ```
 
-_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/check.js)_
+_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.2.1/lib/commands/check.js)_
 
 ## `ns contact [MESSAGE]`
 
@@ -121,7 +121,7 @@ EXAMPLES
   $ ns contact "generate is breaking when I add handlers."
 ```
 
-_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/contact.js)_
+_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.2.1/lib/commands/contact.js)_
 
 ## `ns filediffs TEMPLATEDIR`
 
@@ -141,7 +141,7 @@ EXAMPLE
   $ ns filediffs
 ```
 
-_See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/filediffs.js)_
+_See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.2.1/lib/commands/filediffs.js)_
 
 ## `ns generate CODEDIR`
 
@@ -169,7 +169,7 @@ EXAMPLES
   $ ns generate $CODE
 ```
 
-_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/generate.js)_
+_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.2.1/lib/commands/generate.js)_
 
 ## `ns help [COMMAND]`
 
@@ -203,7 +203,27 @@ EXAMPLE
   $ ns newtemplate
 ```
 
-_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.1.8/lib/commands/newtemplate.js)_
+_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.2.1/lib/commands/newtemplate.js)_
+
+## `ns settings CODEDIR`
+
+create new template.
+
+```
+USAGE
+  $ ns settings CODEDIR
+
+ARGUMENTS
+  CODEDIR  directory containing the code
+
+OPTIONS
+  -h, --help  show CLI help
+
+EXAMPLE
+  $ ns settings $CODE
+```
+
+_See code: [lib/commands/settings.js](https://github.com/NoStackApp/ns-flip/blob/v2.2.1/lib/commands/settings.js)_
 <!-- commandsstop -->
 
 

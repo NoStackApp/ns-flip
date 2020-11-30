@@ -12,7 +12,7 @@ interface AnswersForStaticType {
   [TYPE]: string;
 }
 
-function staticTypesFromConfig(config: Configuration) {
+export function staticTypesFromConfig(config: Configuration) {
   const staticTypes = config.static
 
   let staticTypeChoices: Choice[] = []
@@ -29,7 +29,7 @@ function staticTypesFromConfig(config: Configuration) {
   return staticTypeChoices
 }
 
-async function chooseStaticType(config: Configuration) {
+export async function chooseStaticType(config: Configuration) {
   const choiceList: Choice[] = staticTypesFromConfig(config)
 
   if (choiceList.length === 0) {
