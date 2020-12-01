@@ -1,7 +1,7 @@
-import {Configuration} from '../../../shared/constants/types/configuration'
-import {NsInfo} from '../../../shared/constants/types/nsInfo'
-import {Choice} from './settingsTypes'
-import {menuChoices} from '../../../shared/constants'
+import {Configuration} from '../../../../shared/constants/types/configuration'
+import {NsInfo} from '../../../../shared/constants/types/nsInfo'
+import {Choice} from '../settingsTypes'
+import {menuChoices} from '../../../../shared/constants'
 import {addStaticInstance} from './addStaticInstance'
 import {updateStaticInstance} from './updateStaticInstance'
 

@@ -1,4 +1,4 @@
-import {types} from './types'
+import {types} from '../types'
 
 const inquirer = require('inquirer')
 
@@ -9,7 +9,7 @@ interface NewSpecElementQuestion {
 }
 
 export async function addNewSpecElement(specsForInstance: any, specsForType: any) {
-  console.log(`** in addNewSpecElement. specsForType.contents = ${JSON.stringify(specsForType.contents, null, 2)}`)
+  // console.log(`** in addNewSpecElement. specsForType.contents = ${JSON.stringify(specsForType.contents, null, 2)}`)
 
   const questions: NewSpecElementQuestion[] = []
   const subTypes = Object.keys(specsForType.contents)
@@ -25,7 +25,6 @@ export async function addNewSpecElement(specsForInstance: any, specsForType: any
     }
   })
   const answers = await inquirer.prompt(questions)
-  console.log(`answers=${JSON.stringify(answers)}`)
   specsForInstance.push(answers)
   return specsForInstance
 }

@@ -1,6 +1,6 @@
 import {Configuration} from '../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../shared/constants/types/nsInfo'
-import {updateStaticTypeInstances} from './updateStaticTypeInstances'
+import {updateStaticTypeInstances} from './instances/updateStaticTypeInstances'
 import {menuChoices} from '../../../shared/constants'
 import {Choice} from './settingsTypes'
 

@@ -1,9 +1,9 @@
-import {Configuration} from '../../../shared/constants/types/configuration'
-import {NsInfo} from '../../../shared/constants/types/nsInfo'
+import {Configuration} from '../../../../shared/constants/types/configuration'
+import {NsInfo} from '../../../../shared/constants/types/nsInfo'
 import * as chalk from 'chalk'
-import {setNsInfo} from '../../../shared/nsFiles/setNsInfo'
+import {setNsInfo} from '../../../../shared/nsFiles/setNsInfo'
 // <<<<<<< HEAD
-import {updateInstanceSpecs} from './updateInstanceSpecs'
+import {updateInstanceSpecs} from '../specs/updateInstanceSpecs'
 // =======
 // import {staticInstanceSpecs} from './staticInstanceSpecs'
 // >>>>>>> staticSpecs
