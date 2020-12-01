@@ -63,7 +63,7 @@ ${error}`)
     const staticTypeInfo = config.static[staticType]
     if (!staticTypeInfo) throw new Error(`app.yml refers to static type ${staticType} ` +
       'not defined in the template')
-    const fileTypeList = Object.keys(staticTypeInfo)
+    const fileTypeList = Object.keys(staticTypeInfo.files)
 
     const instancesForType = staticInfo[staticType]
     const instanceNamesForType = Object.keys(instancesForType)
