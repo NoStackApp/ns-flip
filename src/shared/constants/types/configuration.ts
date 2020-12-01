@@ -48,9 +48,19 @@ export interface StaticFilesList {
   [fileType: string]: StaticFileTypeSpec;
 }
 
+export interface SpecSet {
+  [name: string]: Specs;
+}
+
+export interface Specs {
+  type: string;
+  required: boolean;
+  contents?: SpecSet;
+}
+
 export interface StaticTypeSpec {
   description: string;
-  specs: any;
+  specs: SpecSet;
   files: StaticFilesList;
 }
 
