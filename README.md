@@ -125,7 +125,7 @@ _See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/
 
 ## `ns filediffs TEMPLATEDIR`
 
-create new template.
+compare the files in your sample target code and in the code being generated. In some cases makes suggestions.
 
 ```
 USAGE
@@ -138,7 +138,7 @@ OPTIONS
   -h, --help  show CLI help
 
 EXAMPLE
-  $ ns filediffs
+  $ ns filediffs $TEMPLATE
 ```
 
 _See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.2.2/lib/commands/filediffs.js)_
