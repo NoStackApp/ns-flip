@@ -16,6 +16,8 @@ export default class Filediffs extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
+    codeDir: flags.string({char: 'c', description: 'code directory.  Will override the default'}),
+    sampleDir: flags.string({char: 's', description: 'sample directory.  Will override the default'}),
   }
 
   static args = [
@@ -29,7 +31,7 @@ export default class Filediffs extends Command {
   ]
 
   static examples = [
-    '$ ns filediffs $TEMPLATE',
+    '$ ns filediffs $TEMPLATE -c $CODE -s $SAMPLE',
   ]
 
   async run() {
@@ -39,11 +41,10 @@ export default class Filediffs extends Command {
     const {flags, args} = this.parse(Filediffs)
 
     const templateDir = expandTilde(args.templateDir)
+    const code = expandTilde(flags.codeDir)
+    const sample = expandTilde(flags.sampleDir)
 
     try {
-      const sample = '/home/yisroel/ns2/samples/ez-oclif-cli-code.sample'
-      const code = '/home/yisroel/ns2/samples/ez-oclif-cli-code'
-
       const config = await getConfig(templateDir)
       const allIgnored = getIgnoredList(config).map(dir => {
         if (dir.includes('/')) return '/' + dir

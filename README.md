@@ -135,10 +135,12 @@ ARGUMENTS
   TEMPLATEDIR  directory containing the template
 
 OPTIONS
-  -h, --help  show CLI help
+  -c, --codeDir=codeDir      code directory.  Will override the default
+  -h, --help                 show CLI help
+  -s, --sampleDir=sampleDir  sample directory.  Will override the default
 
 EXAMPLE
-  $ ns filediffs $TEMPLATE
+  $ ns filediffs $TEMPLATE -c $CODE -s $SAMPLE
 ```
 
 _See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.2.3/lib/commands/filediffs.js)_
