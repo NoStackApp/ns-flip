@@ -11,7 +11,8 @@ import {links} from '../shared/constants'
 const expandTilde = require('expand-tilde')
 
 export default class Filediffs extends Command {
-  static description = 'create new template.'
+  static description = 'compare the files in your sample target code ' +
+    'and in the code being generated. In some cases makes suggestions.'
 
   static flags = {
     help: flags.help({char: 'h'}),
@@ -28,7 +29,7 @@ export default class Filediffs extends Command {
   ]
 
   static examples = [
-    '$ ns filediffs',
+    '$ ns filediffs $TEMPLATE',
   ]
 
   async run() {

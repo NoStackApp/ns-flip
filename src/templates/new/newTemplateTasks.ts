@@ -32,7 +32,7 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
   // const startersDir = `${fullNsDir}/starters`
   const samplesDir = `${fullNsDir}/samples`
 
-  const sample = `${samplesDir}/${templateName}-code.${suffixes.SAMPLE_DIR}`
+  const sample = `${samplesDir}/${templateName}-code${suffixes.SAMPLE_DIR}`
   const template = `${templatesDir}/ns-template-${templateName}`
 
   const newTemplateTasklist = [
