@@ -1,7 +1,7 @@
 import {Configuration} from '../../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../../shared/constants/types/nsInfo'
 import {Choice} from '../settingsTypes'
-import {menuChoices} from '../../../../shared/constants'
+import {ADD_NEW_VALUE, menuChoices} from '../../../../shared/constants'
 import {addStaticInstance} from './addStaticInstance'
 import {updateStaticInstance} from './updateStaticInstance'
 
@@ -23,7 +23,7 @@ function staticInstancesFromNsInfo(staticType: string, nsInfo: NsInfo) {
 
   const addNew = {
     name: chalk.greenBright(`Add new instance of ${staticType}`),
-    value: menuChoices.ADD_NEW,
+    value: ADD_NEW_VALUE,
     short: menuChoices.ADD_NEW,
   }
 
@@ -91,11 +91,11 @@ export async function updateStaticTypeInstances(
       return
     }
 
-    if (staticInstance === menuChoices.ADD_NEW) {
+    if (staticInstance === ADD_NEW_VALUE) {
       await addStaticInstance(staticType, config, nsInfo, codeDir)
     }
 
-    if (staticInstance !== menuChoices.ADD_NEW) {
+    if (staticInstance !== ADD_NEW_VALUE) {
       // console.log(`** instance to edit = ${staticInstance}`)
       await updateStaticInstance(
         staticType,
