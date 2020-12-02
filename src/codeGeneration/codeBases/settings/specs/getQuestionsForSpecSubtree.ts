@@ -10,14 +10,21 @@ interface SpecChoice {
     short: string;
 }
 
+const extendedDescription = (type: string, description: string) =>
+  description.length > 0 ?
+    type + ' ' + explanation(description) :
+    type
+
 function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: any) {
   const typeOfValue = specType.type
   const typeDescription = specType.description || ''
-  if (!typeOfValue) throw new Error(`problem in config.  The spec type ${name} does not have a proper 'type' value. e.g. 'list' or 'set'.`)
-  // console.log(`** in answerForSpecificSubtype for ${name}.  typeOfValue = ${typeOfValue}`)
+  if (!typeOfValue)
+    throw new Error(
+      `problem in config.  The spec type ${name} does not have a proper 'type' value. e.g. 'list' or 'set'.`)
+
   if (typeOfValue === types.LIST || typeOfValue === types.SET) {
     const required = specType.required || false
-    let nameShown = `edit ${menuOption((pluralize(name))} [${typeOfValue} ${explanation(typeDescription)}]`
+    let nameShown = `edit ${menuOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
     if (required) nameShown += attention('*')
     return {
       name: nameShown,
@@ -26,8 +33,12 @@ function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: a
     }
   }
   const currentValue = instanceInfo || 'not set...'
-  const displayedValue = currentValue.length < 40 ? currentValue : currentValue.substr(0, 35) + '...'
-  let nameShown = `edit ${menuOption(name)} [${typeOfValue} ${explanation(typeDescription)}]`
+  let displayedValue = currentValue
+  if (typeof currentValue === 'string')
+    displayedValue = currentValue.length < 40 ?
+      currentValue :
+      currentValue.substr(0, 35) + '...'
+  let nameShown = `edit ${menuOption(name)} [${extendedDescription(typeOfValue, typeDescription)}]`
   if (specType.required) nameShown += attention('*')
   nameShown += ` value: ${userValue(displayedValue)}`
   return {
@@ -53,7 +64,7 @@ function getChoicesForSpecChildren(
         const name = instance.name || 'unnamed'
         const typeOfValue = types.SET
         specChildrenChoices.push({
-          name: `edit ${menuOption((name)}`,
+          name: `edit ${menuOption(name)}`,
           value: {name, typeOfValue, required: false, index},
           short: name,
         })

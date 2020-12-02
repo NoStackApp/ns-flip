@@ -4,6 +4,7 @@ import {Choice} from '../settingsTypes'
 import {ADD_NEW_VALUE, menuChoices} from '../../../../shared/constants'
 import {addStaticInstance} from './addStaticInstance'
 import {updateStaticInstance} from './updateStaticInstance'
+import {exitOption, progress, statusUpdate} from '../../../../shared/constants/chalkColors'
 
 const inquirer = require('inquirer')
 
@@ -22,13 +23,13 @@ function staticInstancesFromNsInfo(staticType: string, nsInfo: NsInfo) {
   const staticInstances = staticInfo[staticType]
 
   const addNew = {
-    name: chalk.greenBright(`Add new instance of ${staticType}`),
+    name: progress(`Add new instance of ${staticType}`),
     value: ADD_NEW_VALUE,
     short: menuChoices.ADD_NEW,
   }
 
   const quit = {
-    name: chalk.red('done'),
+    name: exitOption('done'),
     value: menuChoices.QUIT,
     short: 'done',
   }
@@ -87,7 +88,7 @@ export async function updateStaticTypeInstances(
   while (staticInstance) {
     if (staticInstance === menuChoices.QUIT) {
       // eslint-disable-next-line no-console
-      console.log(`Finished updating ${staticType}...`)
+      console.log(statusUpdate(`Finished updating ${staticType}...`))
       return
     }
 
