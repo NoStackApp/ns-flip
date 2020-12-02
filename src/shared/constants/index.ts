@@ -88,6 +88,8 @@ export const magicStrings = {
   README_FILE: 'README.md',
 }
 
+export const ADD_NEW_VALUE = '__add__'
+
 export const menuChoices = {
   QUIT: 'quit',
   ADD_NEW: 'add',
