@@ -1,6 +1,12 @@
 import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {ADD_NEW, AnswerValue, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
-import {attention, explanation, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
+import {
+  attention,
+  explanation,
+  menuOption,
+  progress,
+  userValue,
+} from '../../../../shared/constants/chalkColors'
 
 const pluralize = require('pluralize')
 
@@ -138,11 +144,23 @@ export function getQuestionsForSpecSubtree(
   if (required) {
     questions.push(
       {
+        type: 'input',
+        name: EDIT,
+        message: `What should the value of ${currentName} be?`,
+        default: specsForInstance,
+      },
+    )
+  } else {
+    questions.push(
+      {
         type: 'list',
         loop: false,
         message: `What would you like to do for ${currentName}?`,
         name: EDIT_OPTIONS,
-        choices: ['edit', 'delete'],
+        choices: [
+          'edit',
+          'delete',
+        ],
       },
       {
         type: 'input',
@@ -152,15 +170,6 @@ export function getQuestionsForSpecSubtree(
         when: function (answers: any) {
           return (answers[EDIT_OPTIONS] === 'edit')
         },
-      },
-    )
-  } else {
-    questions.push(
-      {
-        type: 'input',
-        name: EDIT,
-        message: `What should the value of ${currentName} be?`,
-        default: specsForInstance,
       },
     )
   }

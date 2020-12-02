@@ -3,7 +3,7 @@ import {NsInfo} from '../../../../shared/constants/types/nsInfo'
 import {setNsInfo} from '../../../../shared/nsFiles/setNsInfo'
 
 import {updateInstanceSpecs} from '../specs/updateInstanceSpecs'
-import {attention, exitOption, menuOption, statusUpdate} from '../../../../shared/constants/chalkColors'
+import {exitOption, menuOption, statusUpdate} from '../../../../shared/constants/chalkColors'
 
 const inquirer = require('inquirer')
 
@@ -93,7 +93,7 @@ export async function updateStaticInstance(
       delete nsInfo.static[staticType][instanceName]
       setNsInfo(codeDir, nsInfo)
       // eslint-disable-next-line no-console
-      console.log(attention(`${instanceName} deleted...`))
+      console.log(statusUpdate(`${instanceName} deleted...`))
       return
     }
 
@@ -106,7 +106,7 @@ export async function updateStaticInstance(
       nsInfo.static[staticType][answers[NAME]].slug = answers[SLUG]
       setNsInfo(codeDir, nsInfo)
       // eslint-disable-next-line no-console
-      console.log(attention(`${instanceName} updated...`))
+      console.log(statusUpdate(`${instanceName} updated...`))
       return
     }
 

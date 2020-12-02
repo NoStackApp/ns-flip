@@ -29,12 +29,19 @@ export async function updateSpecSubtree(
       required)
     const answers: AnswersForStaticInstanceSpec = await inquirer.prompt(questions)
 
-    // console.log(`** questions=${JSON.stringify(questions, null, 1)}`)
-    // console.log(`** answers=${JSON.stringify(answers, null, 1)}`)
-
     if (answers[TO_EDIT] && answers[TO_EDIT].name === DONE) return specsForInstance
 
-    if (answers[EDIT]) return answers[EDIT]
+    if (answers[EDIT]) {
+      // a simple value was provided.  Clearly not a list or set.
+      if (type === 'boolean' && answers[EDIT] === 'true') {
+        return true
+      }
+      if (type === 'boolean' && answers[EDIT] === 'false') {
+        return false
+      }
+
+      return answers[EDIT]
+    }
 
     if (answers[EDIT_OPTIONS]) {
       if (answers[EDIT_OPTIONS] === editOptions.DELETE) {

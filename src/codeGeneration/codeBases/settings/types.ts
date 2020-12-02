@@ -1,6 +1,8 @@
 export const types = {
   LIST: 'list',
   SET: 'set',
+  BOOLEAN: 'boolean',
+  STRING: 'string',
 }
 export const DONE = 'done'
 export const ADD_NEW = 'addNew'
