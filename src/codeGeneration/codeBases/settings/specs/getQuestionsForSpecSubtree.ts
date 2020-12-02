@@ -1,6 +1,6 @@
 import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {ADD_NEW, AnswerValue, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
-import * as chalk from 'chalk'
+import {attention, explanation, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
 
 const pluralize = require('pluralize')
 
@@ -11,14 +11,14 @@ interface SpecChoice {
 }
 
 function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: any) {
-  // console.log(`** in answerForSpecificSubtype for ${name}.  specType = ${JSON.stringify(specType)}.  instanceInfo=${instanceInfo}`)
   const typeOfValue = specType.type
+  const typeDescription = specType.description || ''
   if (!typeOfValue) throw new Error(`problem in config.  The spec type ${name} does not have a proper 'type' value. e.g. 'list' or 'set'.`)
   // console.log(`** in answerForSpecificSubtype for ${name}.  typeOfValue = ${typeOfValue}`)
   if (typeOfValue === types.LIST || typeOfValue === types.SET) {
     const required = specType.required || false
-    let nameShown = `edit ${chalk.blueBright(pluralize(name))}`
-    if (required) nameShown += chalk.red('*')
+    let nameShown = `edit ${menuOption((pluralize(name))} [${typeOfValue} ${explanation(typeDescription)}]`
+    if (required) nameShown += attention('*')
     return {
       name: nameShown,
       value: {name, typeOfValue, required},
@@ -27,8 +27,9 @@ function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: a
   }
   const currentValue = instanceInfo || 'not set...'
   const displayedValue = currentValue.length < 40 ? currentValue : currentValue.substr(0, 35) + '...'
-  let nameShown = `edit ${chalk.blueBright(name)}: value: ${chalk.green(displayedValue)}`
-  if (specType.required) nameShown += chalk.red('*')
+  let nameShown = `edit ${menuOption(name)} [${typeOfValue} ${explanation(typeDescription)}]`
+  if (specType.required) nameShown += attention('*')
+  nameShown += ` value: ${userValue(displayedValue)}`
   return {
     name: nameShown,
     value: {name, typeOfValue},
@@ -52,7 +53,7 @@ function getChoicesForSpecChildren(
         const name = instance.name || 'unnamed'
         const typeOfValue = types.SET
         specChildrenChoices.push({
-          name: `edit ${chalk.blueBright(name)}`,
+          name: `edit ${menuOption((name)}`,
           value: {name, typeOfValue, required: false, index},
           short: name,
         })
@@ -60,12 +61,12 @@ function getChoicesForSpecChildren(
     }
 
     specChildrenChoices.push({
-      name: chalk.greenBright('Add New'),
+      name: progress('Add New'),
       value: {name: ADD_NEW, typeOfValue: '', required: false},
       short: ADD_NEW,
     })
     specChildrenChoices.push({
-      name: chalk.red(DONE),
+      name: attention(DONE),
       value: {name: DONE, typeOfValue: '', required: false},
       short: DONE,
     })
@@ -91,7 +92,7 @@ function getChoicesForSpecChildren(
   }
 
   specChildrenChoices.push({
-    name: chalk.red(DONE),
+    name: attention(DONE),
     value: {name: DONE, typeOfValue: '', required: false},
     short: DONE,
   })
@@ -115,7 +116,7 @@ export function getQuestionsForSpecSubtree(
       {
         type: 'list',
         loop: false,
-        message: `What would you like to edit for ${currentName}? ${chalk.red('[*=required]')}`,
+        message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
         name: TO_EDIT,
         choices: getChoicesForSpecChildren(specsForType.contents, specsForInstance, type),
       },

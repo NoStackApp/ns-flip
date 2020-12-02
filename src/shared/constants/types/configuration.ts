@@ -55,6 +55,7 @@ export interface SpecSet {
 export interface Specs {
   type: string;
   required: boolean;
+  description?: string;
   contents?: SpecSet;
 }
 
