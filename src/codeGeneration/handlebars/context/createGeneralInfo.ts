@@ -12,5 +12,7 @@ export async function createGeneralInfo(nsInfo: NsInfo, codeDir: string) {
     const codePackageJson = await fs.readJson(codePackageJsonPath)
     general.json = codePackageJson
   }
+
+  general.codeDir = codeDir
   return general
 }
