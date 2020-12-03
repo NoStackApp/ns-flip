@@ -2,7 +2,7 @@ import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {getQuestionsForSpecSubtree} from './getQuestionsForSpecSubtree'
 import {ADD_NEW, AnswersForStaticInstanceSpec, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
 import {addNewSpecElement} from './addNewSpecElement'
-import * as chalk from 'chalk'
+import {menuOption} from '../../../../shared/constants/chalkColors'
 
 const inquirer = require('inquirer')
 const editOptions = {
@@ -29,12 +29,19 @@ export async function updateSpecSubtree(
       required)
     const answers: AnswersForStaticInstanceSpec = await inquirer.prompt(questions)
 
-    // console.log(`** questions=${JSON.stringify(questions, null, 1)}`)
-    // console.log(`** answers=${JSON.stringify(answers, null, 1)}`)
-
     if (answers[TO_EDIT] && answers[TO_EDIT].name === DONE) return specsForInstance
 
-    if (answers[EDIT]) return answers[EDIT]
+    if (answers[EDIT]) {
+      // a simple value was provided.  Clearly not a list or set.
+      if (type === 'boolean' && answers[EDIT] === 'true') {
+        return true
+      }
+      if (type === 'boolean' && answers[EDIT] === 'false') {
+        return false
+      }
+
+      return answers[EDIT]
+    }
 
     if (answers[EDIT_OPTIONS]) {
       if (answers[EDIT_OPTIONS] === editOptions.DELETE) {
@@ -45,7 +52,7 @@ export async function updateSpecSubtree(
     if (answers[TO_EDIT].name === ADD_NEW) {
       if (!specsForInstance) specsForInstance = []
       // eslint-disable-next-line no-console
-      console.log(`Answer the following questions to add a new entry to ${chalk.blueBright(currentName)}...`)
+      console.log(`Answer the following questions to add a new entry to ${menuOption(currentName)}...`)
       specsForInstance = await addNewSpecElement(specsForInstance, specsForType)
       continue
     }

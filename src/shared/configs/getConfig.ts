@@ -7,8 +7,8 @@ export async function getConfig(templateDir: string) {
   let config: Configuration
   const configFile = `${templateDir}/config.yml`
   try {
-    const appYaml = fs.readFileSync(configFile, 'utf8')
-    config = await yaml.safeLoad(appYaml)
+    const configYaml = fs.readFileSync(configFile, 'utf8')
+    config = await yaml.safeLoad(configYaml)
   } catch (error) {
     throw new Error(`error finding the config file ${configFile}.
 It may be that the template location is faulty, or that the file does not exist

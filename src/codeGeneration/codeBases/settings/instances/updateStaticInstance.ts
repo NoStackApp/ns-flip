@@ -1,22 +1,15 @@
 import {Configuration} from '../../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../../shared/constants/types/nsInfo'
-import * as chalk from 'chalk'
 import {setNsInfo} from '../../../../shared/nsFiles/setNsInfo'
-// <<<<<<< HEAD
+
 import {updateInstanceSpecs} from '../specs/updateInstanceSpecs'
-// =======
-// import {staticInstanceSpecs} from './staticInstanceSpecs'
-// >>>>>>> staticSpecs
+import {exitOption, menuOption, statusUpdate} from '../../../../shared/constants/chalkColors'
 
 const inquirer = require('inquirer')
 
 const actionTypes = {
   RENAME: 'rename',
-  // <<<<<<< HEAD
   UPDATE_SPECS: 'updateSpecs',
-  // =======
-  //   SPECS: 'specs',
-  // >>>>>>> staticSpecs
   DELETE: 'delete',
   BACK: 'back',
 }
@@ -39,12 +32,6 @@ interface AnswersForUpdateInstance {
   specs: string;
 }
 
-// interface AnswersForUpdateInstance {
-//   [ACTION]: string;
-//   [questionNames.NAME]: string;
-//   [questionNames.SLUG]: string;
-// }
-
 export async function updateStaticInstance(
   staticType: string,
   instanceName: string,
@@ -65,7 +52,12 @@ export async function updateStaticInstance(
       loop: false,
       message: `What would you like to do with ${instanceName}?`,
       name: ACTION,
-      choices: [actionTypes.RENAME, actionTypes.UPDATE_SPECS, actionTypes.DELETE, actionTypes.BACK],
+      choices: [
+        menuOption(actionTypes.RENAME),
+        menuOption(actionTypes.UPDATE_SPECS),
+        menuOption(actionTypes.DELETE),
+        exitOption(actionTypes.BACK),
+      ],
     },
     {
       type: 'input',
@@ -93,7 +85,7 @@ export async function updateStaticInstance(
     const actionType = answers[ACTION]
     if (actionType === actionTypes.BACK) {
       // eslint-disable-next-line no-console
-      console.log(`finished updating ${staticType}...`)
+      console.log(statusUpdate(`finished updating ${staticType}...`))
       return
     }
 
@@ -101,11 +93,10 @@ export async function updateStaticInstance(
       delete nsInfo.static[staticType][instanceName]
       setNsInfo(codeDir, nsInfo)
       // eslint-disable-next-line no-console
-      console.log(chalk.red(`${instanceName} deleted...`))
+      console.log(statusUpdate(`${instanceName} deleted...`))
       return
     }
 
-    // <<<<<<< HEAD
     if (actionType === actionTypes.RENAME) {
       if (instanceName !== answers[NAME]) {
         nsInfo.static[staticType][answers[NAME]] = {...instanceInfo}
@@ -115,22 +106,9 @@ export async function updateStaticInstance(
       nsInfo.static[staticType][answers[NAME]].slug = answers[SLUG]
       setNsInfo(codeDir, nsInfo)
       // eslint-disable-next-line no-console
-      console.log(chalk.red(`${instanceName} updated...`))
+      console.log(statusUpdate(`${instanceName} updated...`))
       return
     }
-    // =======
-    //   if (actionType === actionTypes.SPECS) {
-    //     await staticInstanceSpecs()
-    //     // eslint-disable-next-line no-console
-    //     console.log(chalk.red(`${instanceName} specs updated...`))
-    //   }
-    //
-    //   // perform update
-    //   if (instanceName !== answers[NAME]) {
-    //     nsInfo.static[staticType][answers[NAME]] = {...instanceInfo}
-    //     delete nsInfo.static[staticType][instanceName]
-    //   }
-    // // >>>>>>> staticSpecs
 
     await updateInstanceSpecs(staticType, instanceName, config, nsInfo, codeDir)
     return
