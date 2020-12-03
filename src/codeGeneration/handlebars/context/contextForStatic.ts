@@ -32,7 +32,7 @@ export const contextForStatic = async (
     component: names.component,
   })
 
-  const general = createGeneralInfo(nsInfo, codeDir)
+  const general = await createGeneralInfo(nsInfo, codeDir)
 
   const nsFlipDocumentation = links.DOCUMENTATION
 

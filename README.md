@@ -1,4 +1,4 @@
-#ns-flip
+# ns-flip
 A tool for creating and using *updatable* code templates.  Supports regeneration of code without losing custom changes. Framework agnostic.
 
 <a href="https://spectrum.chat/ns-flip">

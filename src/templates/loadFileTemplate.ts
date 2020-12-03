@@ -30,7 +30,7 @@ Handlebars.registerHelper('end', function (locationName: string) {
 Handlebars.registerHelper('custom', function (locationName: string) {
   return new Handlebars.SafeString(
     magicStrings.OPEN_COMMENT_PLACEHOLDER +
-    ` ns__custom_start ${locationName}` +
+    ` ns__custom_start ${locationName} ` +
     magicStrings.CLOSE_COMMENT_PLACEHOLDER + '\n' +
     magicStrings.OPEN_COMMENT_PLACEHOLDER +
     ` ns__custom_end ${locationName} ` +
