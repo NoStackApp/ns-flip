@@ -66,6 +66,7 @@ export async function updateCustomCode(
         console.log(`***WARNING*** the file ${relativePath} does not exist ` +
                     'but has custom code in your current version.  That probably means ' +
                     'that the file is in the wrong location.')
+        throw new Error(`can't find file for ${filePath}`)
       }
     } catch (error) {
       throw new Error(`couldn't update ${filePath}. rootDir=${rootDir}.`)

@@ -85,6 +85,7 @@ export async function regenerateCode(codeDir: string) {
 
   try {
     const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+    await new Promise(r => setTimeout(r, 2000))
     await insertCustomChanges(codeDir, customCodeDoc, config)
 
     await updatePackageJson(codeDir, starter)
