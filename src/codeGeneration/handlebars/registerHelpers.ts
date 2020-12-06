@@ -30,6 +30,6 @@ export async function registerHelpers(dir: string) {
     },
     ))
   } catch (error) {
-    throw new Error(`error registering heler: ${error}`)
+    throw new Error(`error registering helper: ${error}`)
   }
 }
