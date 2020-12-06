@@ -12,6 +12,7 @@ function registerHelper(path: string, name: string) {
 
 export async function registerHelpers(dir: string) {
   // console.log(`about to list helpers in ${dir}`)
+  if (!await fs.pathExists(dir)) return
   const helpers: [string] = await fs.readdir(dir)
   await Promise.all(helpers.map(async fileName => {
     const filePath = `${dir}/${fileName}`
