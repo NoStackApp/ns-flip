@@ -3,7 +3,7 @@ import {NsInfo} from '../../../../shared/constants/types/nsInfo'
 import {setNsInfo} from '../../../../shared/nsFiles/setNsInfo'
 
 import {updateInstanceSpecs} from '../specs/updateInstanceSpecs'
-import {exitOption, menuOption, statusUpdate} from '../../../../shared/constants/chalkColors'
+import {attention, exitOption, menuOption, statusUpdate} from '../../../../shared/constants/chalkColors'
 
 const inquirer = require('inquirer')
 
@@ -55,7 +55,7 @@ export async function updateStaticInstance(
       choices: [
         menuOption(actionTypes.RENAME),
         menuOption(actionTypes.UPDATE_SPECS),
-        menuOption(actionTypes.DELETE),
+        attention(actionTypes.DELETE),
         exitOption(actionTypes.BACK),
       ],
     },
@@ -89,7 +89,7 @@ export async function updateStaticInstance(
       return
     }
 
-    if (actionType === menuOption(actionTypes.DELETE)) {
+    if (actionType === attention(actionTypes.DELETE)) {
       delete nsInfo.static[staticType][instanceName]
       await setNsInfo(codeDir, nsInfo)
       // eslint-disable-next-line no-console

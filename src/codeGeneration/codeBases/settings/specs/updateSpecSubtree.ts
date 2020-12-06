@@ -1,6 +1,6 @@
 import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {getQuestionsForSpecSubtree} from './getQuestionsForSpecSubtree'
-import {ADD_NEW, AnswersForStaticInstanceSpec, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
+import {ADD_NEW, AnswersForStaticInstanceSpec, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
 import {addNewSpecElement} from './addNewSpecElement'
 import {menuOption} from '../../../../shared/constants/chalkColors'
 
@@ -8,6 +8,64 @@ const inquirer = require('inquirer')
 const editOptions = {
   DELETE: 'delete',
   EDIT: 'edit',
+}
+
+async function updateList(answers: AnswersForStaticInstanceSpec, specsForInstance: any, specsForType: Specs | SpecSet, currentName: string) {
+  // in a list, the index is used rather than the name
+  const {name, index} = answers[TO_EDIT]
+  // @ts-ignore
+  const specsForChildInstance = specsForInstance[index]
+  const specsForChildType = {...specsForType}
+  specsForChildType.type = types.SET
+
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  const newSpecsForChildInstance = await updateSpecSubtree(
+    specsForChildInstance,
+    specsForChildType,
+    types.SET,
+    currentName + '-->' + name,
+    false,
+  )
+
+  if (index) {
+    if (newSpecsForChildInstance)
+      specsForInstance[index] = newSpecsForChildInstance
+    else {
+      specsForInstance.splice(index, 1)
+    }
+  }
+}
+
+async function updateSet(answers: AnswersForStaticInstanceSpec, specsForInstance: any, specsForType: Specs | SpecSet, currentName: string) {
+  const {name, typeOfValue, required} = answers[TO_EDIT]
+
+  const specsForChildInstance = specsForInstance[name]
+  // @ts-ignore
+  const specsForChildType: Specs = specsForType.contents[name]
+
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  specsForInstance[name] = await updateSpecSubtree(
+    specsForChildInstance,
+    specsForChildType,
+    typeOfValue,
+    currentName + '-->' + name,
+    required || false
+  )
+}
+
+function simpleValueEdit(type: string, answers: AnswersForStaticInstanceSpec) {
+  // a simple value was provided.  Clearly not a list or set.
+  if (type === 'boolean' && answers[EDIT] === 'true') {
+    return true
+  }
+  if (type === 'boolean' && answers[EDIT] === 'false') {
+    return false
+  }
+  if (type !== 'string') {=
+    return JSON.parse(answers[EDIT].replace(/'/g, '"'))
+  }
+
+  return answers[EDIT]
 }
 
 export async function updateSpecSubtree(
@@ -30,24 +88,12 @@ export async function updateSpecSubtree(
     const answers: AnswersForStaticInstanceSpec = await inquirer.prompt(questions)
 
     if (answers[TO_EDIT] && answers[TO_EDIT].name === DONE) return specsForInstance
+    if (answers[TO_EDIT] && answers[TO_EDIT].name === DELETE) return undefined
 
-    if (answers[EDIT]) {
-      // a simple value was provided.  Clearly not a list or set.
-      if (type === 'boolean' && answers[EDIT] === 'true') {
-        return true
-      }
-      if (type === 'boolean' && answers[EDIT] === 'false') {
-        return false
-      }
+    if (answers[EDIT]) return simpleValueEdit(type, answers)
 
-      return answers[EDIT]
-    }
-
-    if (answers[EDIT_OPTIONS]) {
-      if (answers[EDIT_OPTIONS] === editOptions.DELETE) {
-        return null
-      }
-    }
+    if (answers[EDIT_OPTIONS] && answers[EDIT_OPTIONS] === editOptions.DELETE)
+      return null
 
     if (answers[TO_EDIT].name === ADD_NEW) {
       if (!specsForInstance) specsForInstance = []
@@ -58,36 +104,11 @@ export async function updateSpecSubtree(
     }
 
     if (answers[TO_EDIT] && type === types.LIST) {
-      const {name, index} = answers[TO_EDIT]
-      // @ts-ignore
-      const specsForChildInstance = specsForInstance[index]
-      const specsForChildType = {...specsForType}
-      specsForChildType.type = types.SET
-
-      specsForInstance[name] = await updateSpecSubtree(
-        specsForChildInstance,
-        specsForChildType,
-        types.SET,
-        currentName + '-->' + name,
-        false,
-      )
+      await updateList(answers, specsForInstance, specsForType, currentName)
     }
 
     if (answers[TO_EDIT] && type === types.SET) {
-      const {name, typeOfValue, required} = answers[TO_EDIT]
-
-      const specsForChildInstance = specsForInstance[name]
-      // @ts-ignore
-      const specsForChildType: Specs = specsForType.contents[name]
-
-      // @ts-ignore
-      specsForInstance[name] = await updateSpecSubtree(
-        specsForChildInstance,
-        specsForChildType,
-        typeOfValue,
-        currentName + '-->' + name,
-        required || false
-      )
+      await updateSet(answers, specsForInstance, specsForType, currentName)
     }
   }
 }

@@ -1,6 +1,6 @@
 import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
-import {ADD_NEW, AnswerValue, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
-import {attention, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
+import {ADD_NEW, AnswerValue, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
+import {attention, exitOption, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
 import {extendedDescription} from './extendedDescription'
 
 const pluralize = require('pluralize')
@@ -68,12 +68,17 @@ function getChoicesForSpecChildren(
     }
 
     specChildrenChoices.push({
-      name: progress('Add New'),
+      name: progress('add new'),
       value: {name: ADD_NEW, typeOfValue: '', required: false},
       short: ADD_NEW,
     })
     specChildrenChoices.push({
-      name: attention(DONE),
+      name: attention('delete'),
+      value: {name: DELETE, typeOfValue: '', required: false},
+      short: DELETE,
+    })
+    specChildrenChoices.push({
+      name: exitOption(DONE),
       value: {name: DONE, typeOfValue: '', required: false},
       short: DONE,
     })
@@ -99,7 +104,13 @@ function getChoicesForSpecChildren(
   }
 
   specChildrenChoices.push({
-    name: attention(DONE),
+    name: attention('delete'),
+    value: {name: DELETE, typeOfValue: '', required: false},
+    short: DELETE,
+  })
+
+  specChildrenChoices.push({
+    name: exitOption(DONE),
     value: {name: DONE, typeOfValue: '', required: false},
     short: DONE,
   })

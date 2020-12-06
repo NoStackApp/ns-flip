@@ -3,7 +3,7 @@ import {NsInfo} from '../../../shared/constants/types/nsInfo'
 import {updateStaticTypeInstances} from './instances/updateStaticTypeInstances'
 import {menuChoices} from '../../../shared/constants'
 import {Choice} from './settingsTypes'
-import {attention, explanation, menuOption, statusUpdate} from '../../../shared/constants/chalkColors'
+import {exitOption, explanation, menuOption, statusUpdate} from '../../../shared/constants/chalkColors'
 
 const chalk = require('chalk')
 const inquirer = require('inquirer')
@@ -43,7 +43,7 @@ export async function chooseStaticType(config: Configuration) {
   // }
 
   const quit = {
-    name: attention(menuChoices.QUIT),
+    name: exitOption(menuChoices.QUIT),
     value: menuChoices.QUIT,
     short: menuChoices.QUIT,
   }

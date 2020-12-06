@@ -9,6 +9,6 @@ export async function setNsInfo(codeDir: string, nsInfo: NsInfo) {
   try {
     if (nsInfo) await fs.outputFile(nsFile, yaml.safeDump(nsInfo))
   } catch (error) {
-    throw new Error(`error updating the nsFile ${nsFile}: ${error}`)
+    throw new Error(`error updating the nsFile ${nsFile}.  Info = ${JSON.stringify(nsInfo, null, 2)}: ${error}`)
   }
 }
