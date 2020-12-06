@@ -65,7 +65,7 @@ export async function updateStaticInstance(
       message: 'What should the name be?',
       default: instanceName,
       when: function (answers: AnswersForUpdateInstance) {
-        return (answers.action === actionTypes.RENAME)
+        return (answers.action === menuOption(actionTypes.RENAME))
       },
     },
     {
@@ -74,7 +74,7 @@ export async function updateStaticInstance(
       message: 'What should the slug be?',
       default: instanceInfo.slug,
       when: function (answers: AnswersForUpdateInstance) {
-        return answers.action === actionTypes.RENAME
+        return answers.action === menuOption(actionTypes.RENAME)
       },
     },
   ]
@@ -83,28 +83,28 @@ export async function updateStaticInstance(
 
   while (answers[ACTION]) {
     const actionType = answers[ACTION]
-    if (actionType === actionTypes.BACK) {
+    if (actionType === exitOption(actionTypes.BACK)) {
       // eslint-disable-next-line no-console
       console.log(statusUpdate(`finished updating ${staticType}...`))
       return
     }
 
-    if (actionType === actionTypes.DELETE) {
+    if (actionType === menuOption(actionTypes.DELETE)) {
       delete nsInfo.static[staticType][instanceName]
-      setNsInfo(codeDir, nsInfo)
+      await setNsInfo(codeDir, nsInfo)
       // eslint-disable-next-line no-console
       console.log(statusUpdate(`${instanceName} deleted...`))
       return
     }
 
-    if (actionType === actionTypes.RENAME) {
+    if (actionType === menuOption(actionTypes.RENAME)) {
       if (instanceName !== answers[NAME]) {
         nsInfo.static[staticType][answers[NAME]] = {...instanceInfo}
         delete nsInfo.static[staticType][instanceName]
       }
 
       nsInfo.static[staticType][answers[NAME]].slug = answers[SLUG]
-      setNsInfo(codeDir, nsInfo)
+      await setNsInfo(codeDir, nsInfo)
       // eslint-disable-next-line no-console
       console.log(statusUpdate(`${instanceName} updated...`))
       return
