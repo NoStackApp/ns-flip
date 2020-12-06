@@ -23,7 +23,7 @@ function staticInstancesFromNsInfo(staticType: string, nsInfo: NsInfo) {
   const staticInstances = staticInfo[staticType]
 
   const addNew = {
-    name: progress(`Add new instance of ${staticType}`),
+    name: progress(`add new instance of ${staticType}`),
     value: ADD_NEW_VALUE,
     short: menuChoices.ADD_NEW,
   }
