@@ -61,7 +61,7 @@ function simpleValueEdit(type: string, answers: AnswersForStaticInstanceSpec) {
   if (type === 'boolean' && answers[EDIT] === 'false') {
     return false
   }
-  if (type !== 'string') {=
+  if (type !== 'string') {
     return JSON.parse(answers[EDIT].replace(/'/g, '"'))
   }
 
