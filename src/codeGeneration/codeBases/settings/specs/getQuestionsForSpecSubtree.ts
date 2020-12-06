@@ -1,12 +1,7 @@
 import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {ADD_NEW, AnswerValue, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
-import {
-  attention,
-  explanation,
-  menuOption,
-  progress,
-  userValue,
-} from '../../../../shared/constants/chalkColors'
+import {attention, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
+import {extendedDescription} from './extendedDescription'
 
 const pluralize = require('pluralize')
 
@@ -15,11 +10,6 @@ interface SpecChoice {
     value: AnswerValue;
     short: string;
 }
-
-const extendedDescription = (type: string, description: string) =>
-  description.length > 0 ?
-    type + ' ' + explanation(description) :
-    type
 
 function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: any) {
   const typeOfValue = specType.type
