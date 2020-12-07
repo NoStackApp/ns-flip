@@ -64,9 +64,12 @@ export async function updateCustomCode(
       } else {
         // eslint-disable-next-line no-console
         console.log(`***WARNING*** the file ${relativePath} does not exist ` +
-                    'but has custom code in your current version.  That probably means ' +
-                    'that the file is in the wrong location.')
-        throw new Error(`can't find file for ${filePath}`)
+                    'but has custom code in your current version.  That could be caused ' +
+          'by changing your settings if you removed something that should have been' +
+          'generated to that file.  Another possibility is that ' +
+          'the file was moved to a wrong location.  That problem would have been caught by ' +
+          'running `check` before running `generate`.')
+        // throw new Error(`can't find file for ${filePath}`)
       }
     } catch (error) {
       throw new Error(`couldn't update ${filePath}. rootDir=${rootDir}.`)
