@@ -14,15 +14,14 @@ const fs = require('fs-extra')
 
 export async function failsTests(codeDir: string) {
   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
+  const starter = `${codeDir}${suffixes.STARTUP_DIR}`
   const testDir = `${codeDir}${suffixes.TEST_DIR}`
   const testMetaDir = `${testDir}/${magicStrings.META_DIR}`
 
   const diffsFile = `${testMetaDir}/${magicStrings.DIFFS}`
   const logFile = `${testMetaDir}/${magicStrings.TESTS_LOG}`
 
-  const nsInfo = await getNsInfo(metaDir)
-
-  const {starter} = nsInfo
+  const nsInfo = await getNsInfo(codeDir)
 
   const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
 
