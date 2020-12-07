@@ -89,9 +89,9 @@ ${error}`)
       config,
     ))
     const finalFileText = replaceCommentDelimiters(pathString, config, fileText)
-    // console.log(`finalFileText for ${pathString}=${finalFileText}`)
     await fs.outputFile(newFileName, finalFileText)
   }))
+
   // const emitter = walk(standardDir)
 
   // emitter.on('file', async function (fileName: any) {

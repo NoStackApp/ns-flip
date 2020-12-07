@@ -49,18 +49,6 @@ export async function generateCode(
     throw new Error(`error in creating configured dirs: ${error}`)
   }
 
-  // console.log(`codeDir=${codeDir}`)
-  // const appName = codeNameFromPath(codeDir)
-  // const configText = await createConfigFile(currentStack, appName, template)
-  // console.log(`configText=${configText}`)
-  // await fs.outputFile(`${srcDir}/config/index.js`, configText)
-
-  // try {
-  //   await createHighestLevelFiles(currentStack, codeDir, userClass, appName)
-  // } catch (error) {
-  //   throw new Error(`error in creating highest level files: ${error}`)
-  // }
-
   // mapObject
   if (units) {
     await dynamicFiles(config, nsInfo, codeDir)

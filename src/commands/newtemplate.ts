@@ -12,8 +12,8 @@ import {setConfig} from '../shared/configs/setConfig'
 import {installDependencies} from '../templates/new/dependencies/installDependencies'
 import {getPreCommands} from '../templates/new/preCommands/getPreCommands'
 import * as chalk from 'chalk'
+import {resolveDir} from '../shared/resolveDir'
 
-const expandTilde = require('expand-tilde')
 const fs = require('fs-extra')
 const path = require('path')
 
@@ -24,8 +24,8 @@ function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
     templateName,
   } = requirements
 
-  const fullNsDir = expandTilde(nsDir)
-  const originalPath = expandTilde(original)
+  const fullNsDir = resolveDir(nsDir)
+  const originalPath = resolveDir(original)
 
   // const originalParsed = path.parse(originalPath)
   // const originalName = originalParsed.name
@@ -76,9 +76,9 @@ export default class Newtemplate extends Command {
         original,
         templateName,
       } = responses
-      const fullNsDir = expandTilde(nsDir)
+      const fullNsDir = resolveDir(nsDir)
 
-      const originalPath = expandTilde(original)
+      const originalPath = resolveDir(original)
 
       const originalParsed = path.parse(originalPath)
       const originalName = originalParsed.name

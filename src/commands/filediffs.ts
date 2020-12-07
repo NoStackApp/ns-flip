@@ -7,8 +7,7 @@ import {getConfig} from '../shared/configs/getConfig'
 import {getIgnoredList} from '../shared/configs/getIgnoredList'
 import * as chalk from 'chalk'
 import {links} from '../shared/constants'
-
-const expandTilde = require('expand-tilde')
+import {resolveDir} from '../shared/resolveDir'
 
 export default class Filediffs extends Command {
   static description = 'compare the files in your sample target code ' +
@@ -40,9 +39,9 @@ export default class Filediffs extends Command {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {flags, args} = this.parse(Filediffs)
 
-    const templateDir = expandTilde(args.templateDir)
-    const code = expandTilde(flags.codeDir)
-    const sample = expandTilde(flags.sampleDir)
+    const templateDir = resolveDir(args.templateDir)
+    const code = resolveDir(flags.codeDir)
+    const sample = resolveDir(flags.sampleDir)
 
     try {
       const config = await getConfig(templateDir)
