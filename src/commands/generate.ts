@@ -41,7 +41,6 @@ export default class Generate extends Command {
 
     const {args, flags} = this.parse(Generate)
     const codeDir = resolveDir(args.codeDir)
-    console.log(`resolved codeDir=${codeDir}`)
 
     // const force = flags.force
     const templateDir = flags.templateDir

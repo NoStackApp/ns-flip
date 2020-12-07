@@ -83,8 +83,6 @@ export async function regenerateCode(codeDir: string) {
     throw new Error(`could not regenerate the code: ${error}`)
   }
 
-  console.log(`await fs.pathExists(metaDir + '/instructions.md) =${await fs.pathExists(metaDir + '/instructions.md')}`)
-
   try {
     const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
     await new Promise(r => setTimeout(r, 2000))
@@ -94,6 +92,4 @@ export async function regenerateCode(codeDir: string) {
   } catch (error) {
     throw new Error(`could not insert custom changes: ${error}`)
   }
-  await new Promise(r => setTimeout(r, 2000))
-  console.log(`await fs.pathExists(metaDir + '/instructions.md) =${await fs.pathExists(metaDir + '/instructions.md')}`)
 }

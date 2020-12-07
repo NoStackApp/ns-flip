@@ -89,10 +89,7 @@ ${error}`)
       config,
     ))
     const finalFileText = replaceCommentDelimiters(pathString, config, fileText)
-    console.log(`now generating ${newFileName}`)
     await fs.outputFile(newFileName, finalFileText)
-    await new Promise(r => setTimeout(r, 2000))
-    console.log(`await fs.pathExists(${newFileName}) =${await fs.pathExists(newFileName)}`)
   }))
 
   // const emitter = walk(standardDir)
