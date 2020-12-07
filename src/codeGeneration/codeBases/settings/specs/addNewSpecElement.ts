@@ -27,6 +27,11 @@ export async function addNewSpecElement(specsForInstance: any, specsForType: any
     }
   })
   const answers = await inquirer.prompt(questions)
+
+  Object.keys(answers).forEach(key => {
+    if (answers[key] === '') delete answers[key]
+  })
+
   specsForInstance.push(answers)
   return specsForInstance
 }
