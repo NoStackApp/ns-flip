@@ -1,4 +1,4 @@
-import {EDIT, types} from '../types'
+import {types} from '../types'
 import {extendedDescription} from './extendedDescription'
 
 const inquirer = require('inquirer')
