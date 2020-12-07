@@ -4,7 +4,7 @@ import {getConfig} from '../shared/configs/getConfig'
 import {magicStrings} from '../shared/constants'
 import {getNsInfo} from '../shared/nsFiles/getNsInfo'
 import {staticSettings} from '../codeGeneration/codeBases/settings/staticSettings'
-const expandTilde = require('expand-tilde')
+import {resolveDir} from '../shared/resolveDir'
 
 export default class Filediffs extends Command {
   static description = 'create new template.'
@@ -33,7 +33,7 @@ export default class Filediffs extends Command {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {flags, args} = this.parse(Filediffs)
 
-    const codeDir = expandTilde(args.codeDir)
+    const codeDir = resolveDir(args.codeDir)
 
     try {
       const config = await getConfig(codeDir +

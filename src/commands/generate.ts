@@ -3,6 +3,7 @@ import {Command, flags} from '@oclif/command'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {links} from '../shared/constants'
 import {createCodeBase} from '../codeGeneration/codeBases/createCodeBase'
+import {resolveDir} from '../shared/resolveDir'
 
 export default class Generate extends Command {
   static description = 'generates code based on a template and an \'ns file\'.  ' +
@@ -39,7 +40,8 @@ export default class Generate extends Command {
     checkForUpdates()
 
     const {args, flags} = this.parse(Generate)
-    const codeDir = args.codeDir
+    const codeDir = resolveDir(args.codeDir)
+    console.log(`resolved codeDir=${codeDir}`)
 
     // const force = flags.force
     const templateDir = flags.templateDir

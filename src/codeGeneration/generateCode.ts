@@ -38,6 +38,8 @@ export async function generateCode(
     console.log(error)
     throw new Error(`error in creating standard files: ${error}`)
   }
+  const fs = require('fs-extra')
+  console.log(`after standard files... await fs.pathExists(metaDir + '/instructions.md) =${await fs.pathExists(metaDir + '/instructions.md')}`)
 
   try {
     if (units) {
@@ -48,6 +50,8 @@ export async function generateCode(
     console.log(error)
     throw new Error(`error in creating configured dirs: ${error}`)
   }
+
+  console.log(`await fs.pathExists(metaDir + '/instructions.md) =${await fs.pathExists(metaDir + '/instructions.md')}`)
 
   // console.log(`codeDir=${codeDir}`)
   // const appName = codeNameFromPath(codeDir)
@@ -96,6 +100,8 @@ export async function generateCode(
     throw error
   }
 
+  console.log(`await fs.pathExists(metaDir + '/instructions.md) =${await fs.pathExists(metaDir + '/instructions.md')}`)
+
   try {
     await staticFiles(
       templateDir,
@@ -107,6 +113,8 @@ export async function generateCode(
   } catch (error) {
     throw error
   }
+
+  console.log(`after static files... await fs.pathExists(metaDir + '/instructions.md) =${await fs.pathExists(metaDir + '/instructions.md')}`)
 
   // // '--end-of-line auto',
   // // '--trailing-comma es5',

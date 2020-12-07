@@ -65,6 +65,8 @@ function simpleValueEdit(type: string, answers: AnswersForStaticInstanceSpec) {
     return JSON.parse(answers[EDIT].replace(/'/g, '"'))
   }
 
+  if (answers[EDIT] === '') return null
+
   return answers[EDIT]
 }
 

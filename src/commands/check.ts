@@ -3,6 +3,7 @@ import {links, magicStrings, suffixes} from '../shared/constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
+import {resolveDir} from '../shared/resolveDir'
 
 const descriptionString = 'Confirms that your custom changes have been entered safely, ' +
   `allowing you to generate with an updated or replaced template, or with a changed '${magicStrings.NS_FILE}' file. ` +
@@ -37,7 +38,7 @@ export default class Check extends Command {
     checkForUpdates()
 
     const {args} = this.parse(Check)
-    const codeDir = args.codeDir
+    const codeDir = resolveDir(args.codeDir)
 
     const testDir = `${codeDir}${suffixes.TEST_DIR}`
     const testMetaDir = `${testDir}/${magicStrings.META_DIR}`
