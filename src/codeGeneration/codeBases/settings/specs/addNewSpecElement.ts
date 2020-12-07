@@ -1,4 +1,4 @@
-import {types} from '../types'
+import {EDIT, types} from '../types'
 import {extendedDescription} from './extendedDescription'
 
 const inquirer = require('inquirer')
@@ -30,6 +30,21 @@ export async function addNewSpecElement(specsForInstance: any, specsForType: any
 
   Object.keys(answers).forEach(key => {
     if (answers[key] === '') delete answers[key]
+  })
+
+  // Object.keys(answers).forEach(key => {
+  //   if (answers[key] === '') delete answers[key]
+  // })
+  subTypes.map((subType: string) => {
+    const subTypeInfo = specsForType.contents[subType]
+    const type = subTypeInfo.type
+    if (answers[subType] === '' || answers[subType] === undefined) {
+      delete answers[subType]
+      return
+    }
+    if (type !== 'string' && type !== 'any') {
+      answers[subType] = JSON.parse(answers[subType].replace(/'/g, '"'))
+    }
   })
 
   specsForInstance.push(answers)
