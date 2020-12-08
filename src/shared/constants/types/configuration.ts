@@ -57,6 +57,9 @@ export interface Specs {
   required: boolean;
   description?: string;
   contents?: SpecSet;
+  default?: string|number|boolean;
+  choices?: string[]|number[];
+
 }
 
 export interface StaticTypeSpec {

@@ -2,6 +2,7 @@ import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {ADD_NEW, AnswerValue, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
 import {attention, exitOption, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
 import {extendedDescription} from './extendedDescription'
+import {askForValue} from './askForValue'
 
 const pluralize = require('pluralize')
 
@@ -142,16 +143,22 @@ export function getQuestionsForSpecSubtree(
     return questions
   }
 
+  let description = ''
+  if (specsForInstance.description) description = specsForInstance.description
+
+  const editQuestion: any = askForValue(
+    specsForInstance,
+    type, currentName,
+    EDIT,
+    specsForInstance,
+    description,
+  )
   if (required) {
-    questions.push(
-      {
-        type: 'input',
-        name: EDIT,
-        message: `What should the value of ${currentName} be?`,
-        default: specsForInstance,
-      },
-    )
+    questions.push(editQuestion)
   } else {
+    editQuestion.when = function (answers: any) {
+      return (answers[EDIT_OPTIONS] === 'edit')
+    }
     questions.push(
       {
         type: 'list',
@@ -163,15 +170,7 @@ export function getQuestionsForSpecSubtree(
           'delete',
         ],
       },
-      {
-        type: 'input',
-        name: EDIT,
-        message: `What should the value of ${currentName} be?`,
-        default: specsForInstance,
-        when: function (answers: any) {
-          return (answers[EDIT_OPTIONS] === 'edit')
-        },
-      },
+      editQuestion,
     )
   }
 

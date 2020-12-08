@@ -6,9 +6,15 @@ const yaml = require('js-yaml')
 
 export async function setNsInfo(codeDir: string, nsInfo: NsInfo) {
   const nsFile = codeDir + `/${magicStrings.META_DIR}/` + magicStrings.NS_FILE
+  let outputContents
   try {
-    if (nsInfo) await fs.outputFile(nsFile, yaml.safeDump(nsInfo))
+    if (nsInfo) {
+      outputContents = yaml.safeDump(nsInfo)
+      await fs.outputFile(nsFile, outputContents)
+    }
   } catch (error) {
-    throw new Error(`error updating the nsFile ${nsFile}.  Info = ${JSON.stringify(nsInfo, null, 2)}: ${error}`)
+    throw new Error(`error updating the nsFile ${nsFile}.
+      Info = ${JSON.stringify(nsInfo, null, 2)}.
+      Output contents = ${outputContents}: ${error}`)
   }
 }
