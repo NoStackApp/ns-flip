@@ -15,11 +15,14 @@ function convertBoolean(value: any) {
 
 export function simpleValueEdit(type: string, value: any) {
   // a simple value was provided.  Clearly not a list or set.
-  if (type === 'boolean') {
+  const typeOfValue = typeof value
+
+  if (type === 'boolean' ||
+    (type === 'any' && typeOfValue === 'boolean')) {
     return convertBoolean(value)
   }
 
-  if (type !== 'string') {
+  if (type === 'string[]') {
     return JSON.parse(value.replace(/'/g, '"'))
   }
 
