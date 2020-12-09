@@ -3,6 +3,7 @@ import {getQuestionsForSpecSubtree} from './getQuestionsForSpecSubtree'
 import {ADD_NEW, AnswersForStaticInstanceSpec, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
 import {addNewSpecElement} from './addNewSpecElement'
 import {menuOption} from '../../../../shared/constants/chalkColors'
+import {simpleValueEdit} from './simpleValueEdit'
 
 const inquirer = require('inquirer')
 const editOptions = {
@@ -53,23 +54,6 @@ async function updateSet(answers: AnswersForStaticInstanceSpec, specsForInstance
   )
 }
 
-function simpleValueEdit(type: string, answers: AnswersForStaticInstanceSpec) {
-  // a simple value was provided.  Clearly not a list or set.
-  if (type === 'boolean' && answers[EDIT] === 'true') {
-    return true
-  }
-  if (type === 'boolean' && answers[EDIT] === 'false') {
-    return false
-  }
-  if (type !== 'string') {
-    return JSON.parse(answers[EDIT].replace(/'/g, '"'))
-  }
-
-  if (answers[EDIT] === '') return null
-
-  return answers[EDIT]
-}
-
 export async function updateSpecSubtree(
   specsForInstance: any,
   specsForType: Specs | SpecSet,
@@ -92,7 +76,7 @@ export async function updateSpecSubtree(
     if (answers[TO_EDIT] && answers[TO_EDIT].name === DONE) return specsForInstance
     if (answers[TO_EDIT] && answers[TO_EDIT].name === DELETE) return undefined
 
-    if (answers[EDIT]) return simpleValueEdit(type, answers)
+    if (answers[EDIT] !== undefined) return simpleValueEdit(type, answers[EDIT])
 
     if (answers[EDIT_OPTIONS] && answers[EDIT_OPTIONS] === editOptions.DELETE)
       return null

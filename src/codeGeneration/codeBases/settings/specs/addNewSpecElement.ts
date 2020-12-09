@@ -1,5 +1,6 @@
 import {types} from '../types'
-import {extendedDescription} from './extendedDescription'
+import {askForValue} from './askForValue'
+import {simpleValueEdit} from './simpleValueEdit'
 
 const inquirer = require('inquirer')
 
@@ -17,13 +18,13 @@ export async function addNewSpecElement(specsForInstance: any, specsForType: any
   subTypes.map((subType: string) => {
     const subTypeInfo = specsForType.contents[subType]
     const type = subTypeInfo.type
-    const typeDescription = subTypeInfo.description
     if (type !== types.SET && type !== types.LIST) {
-      questions.push({
-        type: 'input',
-        name: subType,
-        message: `What is the ${subType} [${extendedDescription(type, typeDescription)}]?`,
-      })
+      questions.push(askForValue(
+        null,
+        subTypeInfo,
+        subType,
+        subType,
+      ))
     }
   })
   const answers = await inquirer.prompt(questions)
@@ -32,9 +33,6 @@ export async function addNewSpecElement(specsForInstance: any, specsForType: any
     if (answers[key] === '') delete answers[key]
   })
 
-  // Object.keys(answers).forEach(key => {
-  //   if (answers[key] === '') delete answers[key]
-  // })
   subTypes.map((subType: string) => {
     const subTypeInfo = specsForType.contents[subType]
     const type = subTypeInfo.type
@@ -42,9 +40,8 @@ export async function addNewSpecElement(specsForInstance: any, specsForType: any
       delete answers[subType]
       return
     }
-    if (type !== 'string' && type !== 'any') {
-      answers[subType] = JSON.parse(answers[subType].replace(/'/g, '"'))
-    }
+
+    answers[subType] = simpleValueEdit(type, answers[subType])
   })
 
   specsForInstance.push(answers)

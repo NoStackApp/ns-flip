@@ -2,6 +2,7 @@ import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {ADD_NEW, AnswerValue, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
 import {attention, exitOption, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
 import {extendedDescription} from './extendedDescription'
+import {askForValue} from './askForValue'
 
 const pluralize = require('pluralize')
 
@@ -20,8 +21,7 @@ function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: a
 
   if (typeOfValue === types.LIST || typeOfValue === types.SET) {
     const required = specType.required || false
-    let nameShown = `edit ${menuOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
-    if (required) nameShown += attention('*')
+    const nameShown = `edit ${menuOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
     return {
       name: nameShown,
       value: {name, typeOfValue, required},
@@ -142,16 +142,19 @@ export function getQuestionsForSpecSubtree(
     return questions
   }
 
+  const editQuestion: any = askForValue(
+    specsForInstance,
+    // @ts-ignore
+    specsForType,
+    currentName,
+    EDIT,
+  )
   if (required) {
-    questions.push(
-      {
-        type: 'input',
-        name: EDIT,
-        message: `What should the value of ${currentName} be?`,
-        default: specsForInstance,
-      },
-    )
+    questions.push(editQuestion)
   } else {
+    editQuestion.when = function (answers: any) {
+      return (answers[EDIT_OPTIONS] === 'edit')
+    }
     questions.push(
       {
         type: 'list',
@@ -163,15 +166,7 @@ export function getQuestionsForSpecSubtree(
           'delete',
         ],
       },
-      {
-        type: 'input',
-        name: EDIT,
-        message: `What should the value of ${currentName} be?`,
-        default: specsForInstance,
-        when: function (answers: any) {
-          return (answers[EDIT_OPTIONS] === 'edit')
-        },
-      },
+      editQuestion,
     )
   }
 
