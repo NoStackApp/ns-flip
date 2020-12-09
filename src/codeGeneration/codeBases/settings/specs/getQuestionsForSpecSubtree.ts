@@ -21,8 +21,7 @@ function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: a
 
   if (typeOfValue === types.LIST || typeOfValue === types.SET) {
     const required = specType.required || false
-    let nameShown = `edit ${menuOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
-    if (required) nameShown += attention('*')
+    const nameShown = `edit ${menuOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
     return {
       name: nameShown,
       value: {name, typeOfValue, required},
@@ -143,15 +142,12 @@ export function getQuestionsForSpecSubtree(
     return questions
   }
 
-  let description = ''
-  if (specsForInstance.description) description = specsForInstance.description
-
   const editQuestion: any = askForValue(
     specsForInstance,
-    type, currentName,
+    // @ts-ignore
+    specsForType,
+    currentName,
     EDIT,
-    specsForInstance,
-    description,
   )
   if (required) {
     questions.push(editQuestion)

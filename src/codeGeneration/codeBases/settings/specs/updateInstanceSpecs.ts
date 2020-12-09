@@ -31,7 +31,7 @@ export async function updateInstanceSpecs(
       )
     await setNsInfo(codeDir, nsInfo)
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     throw new Error(`problem updating specs: ${error}`)
   }
 }

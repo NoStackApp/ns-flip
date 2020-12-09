@@ -1,5 +1,4 @@
 import {types} from '../types'
-import {extendedDescription} from './extendedDescription'
 import {askForValue} from './askForValue'
 import {simpleValueEdit} from './simpleValueEdit'
 
@@ -19,15 +18,12 @@ export async function addNewSpecElement(specsForInstance: any, specsForType: any
   subTypes.map((subType: string) => {
     const subTypeInfo = specsForType.contents[subType]
     const type = subTypeInfo.type
-    const typeDescription = subTypeInfo.description
     if (type !== types.SET && type !== types.LIST) {
       questions.push(askForValue(
-        specsForInstance,
-        type,
+        null,
+        subTypeInfo,
         subType,
         subType,
-        subTypeInfo.default,
-        typeDescription,
       ))
     }
   })
