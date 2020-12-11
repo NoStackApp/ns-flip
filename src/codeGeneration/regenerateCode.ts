@@ -9,6 +9,8 @@ import {moveOverIgnored} from '../testing/moveOverIgnored'
 import {generateCode} from './generateCode'
 import {insertCustomChanges} from './customCode/insertCustomChanges'
 import {updatePackageJson} from './updatePackageJson'
+import {addNewSpecElement} from './codeBases/settings/specs/addNewSpecElement'
+import {setNsInfo} from '../shared/nsFiles/setNsInfo'
 
 const fs = require('fs-extra')
 
@@ -45,6 +47,15 @@ export async function regenerateCode(codeDir: string) {
 
   try {
     checkForUpdates()
+
+    const {general} = config
+    let generalSettings = nsInfo.general || []
+
+    console.log(`general=${JSON.stringify(general, null, 2)}`)
+    generalSettings = await addNewSpecElement(generalSettings, general)
+    console.log(`nsInfo=${JSON.stringify(nsInfo, null, 2)}`)
+    nsInfo.general = generalSettings
+    await setNsInfo(codeDir, nsInfo)
 
     // store added code before generating new code.
     await storeAddedCode(codeDir, config)

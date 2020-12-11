@@ -93,6 +93,7 @@ export interface Configuration {
     dataFunctionTypes: DataFunctionTypes;
     dirs: ConfigurationDirectories;
     setupSequence: SetupSequence;
+    general: SpecSet;
     static: StaticTypesSpecList;
     ignore?: string[];
 }

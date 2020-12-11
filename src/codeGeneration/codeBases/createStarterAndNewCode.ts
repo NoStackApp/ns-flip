@@ -25,7 +25,7 @@ async function checkFolder(starterDir: string) {
   }
 }
 
-export async function createStarter(
+export async function createStarterAndNewCode(
   templateDir: string,
   codeDir: string
 ) {
