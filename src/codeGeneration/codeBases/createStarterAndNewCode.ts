@@ -50,20 +50,6 @@ export async function createStarterAndNewCode(
       },
     },
     {
-      title: 'Install General Packages...',
-      task: async () => {
-        if (!mainInstallation) return
-        return new Listr(installMainPackagesTaskList(mainInstallation, starterDir))
-      },
-    },
-    {
-      title: 'Install Dev Packages...',
-      task: async () => {
-        if (!devInstallation) return
-        return new Listr(installDevPackagesTaskList(devInstallation, starterDir))
-      },
-    },
-    {
       title: 'Add Meta-Data',
       task:
         async () => {
@@ -107,6 +93,21 @@ export async function createStarterAndNewCode(
     await setup.run()
     if (!await fs.pathExists(codeDir)) {
       const newAppTasks = await createNewCode(codeDir, starterDir)// , finalTemplateDir)
+      newAppTasks.push({
+        title: 'Install General Packages...',
+        task: async () => {
+          if (!mainInstallation) return
+          return new Listr(installMainPackagesTaskList(mainInstallation, starterDir))
+        },
+      },
+      {
+        title: 'Install Dev Packages...',
+        task: async () => {
+          if (!devInstallation) return
+          return new Listr(installDevPackagesTaskList(devInstallation, starterDir))
+        },
+      },
+      )
       await newAppTasks.run()
     }
   } catch (error) {

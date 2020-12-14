@@ -1,5 +1,6 @@
 import {CommandSpec} from '../../../shared/constants/types/configuration'
 import {convertCommandArgs} from './convertCommandArgs'
+import {convertCommandOptions} from './convertCommandOptions'
 
 const chalk = require('chalk')
 const execa = require('execa')
@@ -12,7 +13,7 @@ export function preCommandsTaskList(preCommands: CommandSpec[], starterDir: stri
         await execa(
           commandSpec.file,
           convertCommandArgs(commandSpec.arguments, starterDir),
-          commandSpec.options,
+          convertCommandOptions(commandSpec.options, starterDir),
         ).catch(
           (error: any) => {
             throw new Error(`${chalk.red(`error with pre-command ${commandSpec.title}.`)}
