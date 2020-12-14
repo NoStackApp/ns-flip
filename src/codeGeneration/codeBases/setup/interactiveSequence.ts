@@ -1,5 +1,6 @@
 import {CommandSpec} from '../../../shared/constants/types/configuration'
 import {convertCommandArgs} from './convertCommandArgs'
+import {convertCommandOptions} from './convertCommandOptions'
 
 const execa = require('execa')
 
@@ -26,6 +27,7 @@ export async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: 
     commandSpec.arguments = convertCommandArgs(commandSpec.arguments, codeDir)
 
     if (!commandSpec.options) commandSpec.options = {}
+    commandSpec.options = convertCommandOptions(commandSpec.options, codeDir)
     commandSpec.options.stdio = 'inherit'
     await spawnInteractiveChildProcess(commandSpec)
   }

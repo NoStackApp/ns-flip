@@ -30,10 +30,20 @@ export function askForValue(
       default: defaultAnswer,
     }
   }
-  return {
+
+  const questionInfo: any = {
     type: 'input',
     name,
     message: `enter value of ${currentName} ${fullDescription}`,
     default: defaultAnswer,
   }
+
+  if (required)
+    questionInfo.validate = function (value: any) {
+      if (value) {
+        return true
+      }
+      return attention(`${currentName} is required.`) + ' Please enter value:'
+    }
+  return questionInfo
 }

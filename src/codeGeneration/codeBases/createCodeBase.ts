@@ -2,12 +2,11 @@ import {docPages, links, magicStrings} from '../../shared/constants'
 
 import {regenerateCode} from '../regenerateCode'
 import {copyTemplateToMeta} from './copyTemplateToMeta'
-import {createStarter} from './createStarter'
+import {createStarterAndNewCode} from './createStarterAndNewCode'
 
 const fs = require('fs-extra')
 
 export async function createCodeBase(
-  // starterDir: string,
   templateDir: string | undefined,
   codeDir: string,
   noSetup: boolean
@@ -41,7 +40,7 @@ export async function createCodeBase(
   }
 
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {
-    await createStarter(templateDir, codeDir)
+    await createStarterAndNewCode(templateDir, codeDir)
   }
 
   if (templateDir) {

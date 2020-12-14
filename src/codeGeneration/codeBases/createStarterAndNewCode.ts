@@ -25,7 +25,7 @@ async function checkFolder(starterDir: string) {
   }
 }
 
-export async function createStarter(
+export async function createStarterAndNewCode(
   templateDir: string,
   codeDir: string
 ) {
@@ -47,20 +47,6 @@ export async function createStarter(
       task: async () => {
         if (!preCommands) return
         return new Listr(preCommandsTaskList(preCommands, starterDir))
-      },
-    },
-    {
-      title: 'Install General Packages...',
-      task: async () => {
-        if (!mainInstallation) return
-        return new Listr(installMainPackagesTaskList(mainInstallation, starterDir))
-      },
-    },
-    {
-      title: 'Install Dev Packages...',
-      task: async () => {
-        if (!devInstallation) return
-        return new Listr(installDevPackagesTaskList(devInstallation, starterDir))
       },
     },
     {
@@ -101,6 +87,30 @@ export async function createStarter(
         },
     },
   ]
+
+  const dependenciesInstallationTasks = [
+    {
+      title: 'Install General Packages...',
+      task: async () => {
+        if (!mainInstallation) return
+        return new Listr(installMainPackagesTaskList(mainInstallation, starterDir))
+      },
+    },
+    {
+      title: 'Install Dev Packages...',
+      task: async () => {
+        if (!devInstallation) return
+        return new Listr(installDevPackagesTaskList(devInstallation, starterDir))
+      },
+    },
+  ]
+
+  const installDependencies = new Listr(dependenciesInstallationTasks)
+  try {
+    await installDependencies.run()
+  } catch (error) {
+    throw new Error(`cannot install dependencies at ${starterDir}: ${error}`)
+  }
 
   const setup = new Listr(starterCreationTaskList)
   try {

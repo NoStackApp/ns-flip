@@ -49,11 +49,6 @@ export default class Generate extends Command {
 
     try {
       await createCodeBase(templateDir, codeDir, noSetup)
-
-      // const newAppTasks = await createCodeBase(starterDir, templateDir, codeDir, noSetup)
-      // await newAppTasks.run().catch((error: any) => {
-      //   this.error(error)
-      // })
     } catch (error) {
       this.log(error)
       throw new Error(`problem generating code: ${error}`)

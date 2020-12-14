@@ -85,7 +85,7 @@ export async function updateSpecSubtree(
       if (!specsForInstance) specsForInstance = []
       // eslint-disable-next-line no-console
       console.log(`Answer the following questions to add a new entry to ${menuOption(currentName)}...`)
-      specsForInstance = await addNewSpecElement(specsForInstance, specsForType)
+      specsForInstance = await addNewSpecElement(specsForInstance, specsForType.contents)
       continue
     }
 
