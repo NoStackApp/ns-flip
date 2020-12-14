@@ -100,7 +100,6 @@ export async function regenerateCode(codeDir: string) {
     await new Promise(r => setTimeout(r, 2000))
     await insertCustomChanges(codeDir, customCodeDoc, config)
 
-    console.log('inserted...')
     const stackInfo: Schema = await buildSchema(nsInfo, config)
     const packageInfoJson = await getPackageInfoJson(
       templateDir,
@@ -109,7 +108,6 @@ export async function regenerateCode(codeDir: string) {
       stackInfo,
       config,
     )
-    console.log(`packageInfoJson= ${JSON.stringify(packageInfoJson, null, 1)}`)
     await updatePackageJson(codeDir, starter, packageInfoJson)
   } catch (error) {
     throw new Error(`could not insert custom changes: ${error}`)

@@ -64,7 +64,6 @@ export const insertCustomChanges = async (
 
   customCode = await fs.readJson(addedCodeDoc)
   await updateCustomCode(customCode, baseDir, config)
-  console.log(`updated customCode=${JSON.stringify(customCode, null, 1)}`)
 
   if (Object.keys(customCode).length === 0) {
     // no added code to add

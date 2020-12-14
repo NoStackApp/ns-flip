@@ -12,8 +12,6 @@ interface NewSpecElementQuestion {
 }
 
 export async function createSpecElement(specsForTypeContents: any) {
-  console.log(`** in createSpecElement. specsForTypeContents = ${JSON.stringify(specsForTypeContents, null, 2)}`)
-
   const questions: NewSpecElementQuestion[] = []
   const subTypes = Object.keys(specsForTypeContents)
   subTypes.map((subType: string) => {
