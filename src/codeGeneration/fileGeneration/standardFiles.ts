@@ -7,14 +7,11 @@ import {registerHelpers} from '../handlebars/registerHelpers'
 import {registerPartials} from '../handlebars/registerPartials'
 import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 import {getConfig} from '../../shared/configs/getConfig'
+import {fileOptions} from '../../shared/constants/fileOptions'
 
 const fs = require('fs-extra')
 const path = require('path')
 const walk = require('walkdir')
-
-const options = {
-  mode: 0o2775,
-}
 
 export async function standardFiles(
   templateDir: string,
@@ -57,7 +54,7 @@ ${error}`)
 
     if (stat.isDirectory()) {
       try {
-        await fs.ensureDir(newPath, options)
+        await fs.ensureDir(newPath, fileOptions)
       } catch (error) {
         throw error
       }

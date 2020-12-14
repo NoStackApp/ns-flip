@@ -88,26 +88,35 @@ export async function createStarterAndNewCode(
     },
   ]
 
+  const dependenciesInstallationTasks = [
+    {
+      title: 'Install General Packages...',
+      task: async () => {
+        if (!mainInstallation) return
+        return new Listr(installMainPackagesTaskList(mainInstallation, starterDir))
+      },
+    },
+    {
+      title: 'Install Dev Packages...',
+      task: async () => {
+        if (!devInstallation) return
+        return new Listr(installDevPackagesTaskList(devInstallation, starterDir))
+      },
+    },
+  ]
+
+  const installDependencies = new Listr(dependenciesInstallationTasks)
+  try {
+    await installDependencies.run()
+  } catch (error) {
+    throw new Error(`cannot install dependencies at ${starterDir}: ${error}`)
+  }
+
   const setup = new Listr(starterCreationTaskList)
   try {
     await setup.run()
     if (!await fs.pathExists(codeDir)) {
       const newAppTasks = await createNewCode(codeDir, starterDir)// , finalTemplateDir)
-      newAppTasks.push({
-        title: 'Install General Packages...',
-        task: async () => {
-          if (!mainInstallation) return
-          return new Listr(installMainPackagesTaskList(mainInstallation, starterDir))
-        },
-      },
-      {
-        title: 'Install Dev Packages...',
-        task: async () => {
-          if (!devInstallation) return
-          return new Listr(installDevPackagesTaskList(devInstallation, starterDir))
-        },
-      },
-      )
       await newAppTasks.run()
     }
   } catch (error) {

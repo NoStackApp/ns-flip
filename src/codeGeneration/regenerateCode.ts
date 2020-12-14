@@ -8,9 +8,12 @@ import {copyCodeBaseToNewDir} from './customCode/copyCodeBaseToNewDir'
 import {moveOverIgnored} from '../testing/moveOverIgnored'
 import {generateCode} from './generateCode'
 import {insertCustomChanges} from './customCode/insertCustomChanges'
-import {updatePackageJson} from './updatePackageJson'
+import {updatePackageJson} from './packageJson/updatePackageJson'
 import {setNsInfo} from '../shared/nsFiles/setNsInfo'
 import {createSpecElement} from './codeBases/settings/specs/createSpecElement'
+import {getPackageInfoJson} from './packageJson/getPackageInfoJson'
+import {Schema} from '../shared/constants/types/schema'
+import {buildSchema} from './schema/buildSchema'
 
 const fs = require('fs-extra')
 
@@ -52,7 +55,7 @@ export async function regenerateCode(codeDir: string) {
     let generalSettings = nsInfo.general || []
 
     console.log(`general=${JSON.stringify(general, null, 2)}`)
-    generalSettings = await createSpecElement(general)
+    if (!generalSettings) generalSettings = await createSpecElement(general)
     console.log(`nsInfo=${JSON.stringify(nsInfo, null, 2)}`)
     nsInfo.general = generalSettings
     await setNsInfo(codeDir, nsInfo)
@@ -99,7 +102,17 @@ export async function regenerateCode(codeDir: string) {
     await new Promise(r => setTimeout(r, 2000))
     await insertCustomChanges(codeDir, customCodeDoc, config)
 
-    await updatePackageJson(codeDir, starter)
+    console.log('inserted...')
+    const stackInfo: Schema = await buildSchema(nsInfo, config)
+    const packageInfoJson = await getPackageInfoJson(
+      templateDir,
+      codeDir,
+      nsInfo,
+      stackInfo,
+      config,
+    )
+    console.log(`packageInfoJson= ${JSON.stringify(packageInfoJson, null, 1)}`)
+    await updatePackageJson(codeDir, starter, packageInfoJson)
   } catch (error) {
     throw new Error(`could not insert custom changes: ${error}`)
   }

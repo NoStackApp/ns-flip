@@ -1,11 +1,8 @@
 import {unitNameFromSpec} from './unitNameFromSpec'
 import {Configuration} from '../../shared/constants/types/configuration'
+import {fileOptions} from '../../shared/constants/fileOptions'
 
 const fs = require('fs-extra')
-
-const options = {
-  mode: 0o2775,
-}
 
 export async function configuredDirs(
   config: Configuration,
@@ -17,7 +14,7 @@ export async function configuredDirs(
     async name => {
       const dir = `${codeDir}/${dirs[name]}`
       try {
-        await fs.ensureDir(dir, options)
+        await fs.ensureDir(dir, fileOptions)
         // console.log('success creating dirs')
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -31,7 +28,7 @@ export async function configuredDirs(
       const unit = unitNameFromSpec(unitKey)
       const dir = `${codeDir}/${config.dirs.components}/${unit}`
       try {
-        await fs.ensureDir(dir, options)
+        await fs.ensureDir(dir, fileOptions)
       // console.log('success creating dirs')
       } catch (error) {
       // eslint-disable-next-line no-console

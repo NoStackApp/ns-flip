@@ -63,25 +63,13 @@ export const insertCustomChanges = async (
   }
 
   customCode = await fs.readJson(addedCodeDoc)
-  // const customCodeByFile = customCodeToCodeByFile(customCode)
-  // console.log(`customCodeByFile=${JSON.stringify(customCodeByFile)}`)
   await updateCustomCode(customCode, baseDir, config)
+  console.log(`updated customCode=${JSON.stringify(customCode, null, 1)}`)
 
   if (Object.keys(customCode).length === 0) {
     // no added code to add
     return
   }
-
-  // const compsDir = baseDir + '/src/components/'
-  // const files = readdir.sync(compsDir, {deep: true, filter: '**/*.{js,jsx}'})
-  // console.log(`files: ${JSON.stringify(files, null, 2)}`)
-
-  // let i
-  // for (i = 0; i < files.length; i++) {
-  //   const file = compsDir + files[i]
-  //   // eslint-disable-next-line no-await-in-loop
-  //   await insertCustomCodeForFile(file, customCode)
-  // }
 
   await updateRemovedImports(customCode, rootDir)
 

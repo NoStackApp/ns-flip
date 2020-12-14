@@ -7,7 +7,6 @@ import {createStarterAndNewCode} from './createStarterAndNewCode'
 const fs = require('fs-extra')
 
 export async function createCodeBase(
-  // starterDir: string,
   templateDir: string | undefined,
   codeDir: string,
   noSetup: boolean

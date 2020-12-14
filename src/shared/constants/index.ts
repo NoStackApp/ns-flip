@@ -88,6 +88,10 @@ export const magicStrings = {
   README_FILE: 'README.md',
 }
 
+export const fileNames = {
+  PACKAGE_INFO: 'packageInfo.json.hbs',
+}
+
 export const ADD_NEW_VALUE = '__add__'
 
 export const menuChoices = {
