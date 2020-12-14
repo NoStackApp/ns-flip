@@ -8,6 +8,7 @@ interface NewSpecElementQuestion {
   type: string;
   name: string;
   message: string;
+  validate?: Function;
 }
 
 export async function createSpecElement(specsForTypeContents: any) {
@@ -17,7 +18,7 @@ export async function createSpecElement(specsForTypeContents: any) {
   const subTypes = Object.keys(specsForTypeContents)
   subTypes.map((subType: string) => {
     const subTypeInfo = specsForTypeContents[subType]
-    const type = subTypeInfo.type
+    const {type} = subTypeInfo
     if (type !== types.SET && type !== types.LIST) {
       questions.push(askForValue(
         null,

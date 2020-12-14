@@ -52,11 +52,9 @@ export async function regenerateCode(codeDir: string) {
     checkForUpdates()
 
     const {general} = config
-    let generalSettings = nsInfo.general || []
+    let generalSettings = nsInfo.general || {}
 
-    console.log(`general=${JSON.stringify(general, null, 2)}`)
-    if (!generalSettings) generalSettings = await createSpecElement(general)
-    console.log(`nsInfo=${JSON.stringify(nsInfo, null, 2)}`)
+    if (Object.keys(generalSettings).length === 0) generalSettings = await createSpecElement(general)
     nsInfo.general = generalSettings
     await setNsInfo(codeDir, nsInfo)
 
