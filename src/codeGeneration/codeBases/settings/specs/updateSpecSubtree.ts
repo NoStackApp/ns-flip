@@ -2,7 +2,6 @@ import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {getQuestionsForSpecSubtree} from './getQuestionsForSpecSubtree'
 import {ADD_NEW, AnswersForStaticInstanceSpec, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
 import {addNewSpecElement} from './addNewSpecElement'
-import {menuOption} from '../../../../shared/constants/chalkColors'
 import {simpleValueEdit} from './simpleValueEdit'
 
 const inquirer = require('inquirer')
@@ -63,38 +62,42 @@ export async function updateSpecSubtree(
 ) {
   // console.log(`** in updateSpecSubtree specsForType=${JSON.stringify(specsForType)}`)
 
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const questions = getQuestionsForSpecSubtree(
-      specsForInstance,
-      specsForType,
-      type,
-      currentName,
-      required)
-    const answers: AnswersForStaticInstanceSpec = await inquirer.prompt(questions)
+  try {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const questions = getQuestionsForSpecSubtree(
+        specsForInstance,
+        specsForType,
+        type,
+        currentName,
+        required)
+      const answers: AnswersForStaticInstanceSpec = await inquirer.prompt(questions)
 
-    if (answers[TO_EDIT] && answers[TO_EDIT].name === DONE) return specsForInstance
-    if (answers[TO_EDIT] && answers[TO_EDIT].name === DELETE) return undefined
+      if (answers[TO_EDIT] && answers[TO_EDIT].name === DONE) return specsForInstance
+      if (answers[TO_EDIT] && answers[TO_EDIT].name === DELETE) return undefined
 
-    if (answers[EDIT] !== undefined) return simpleValueEdit(type, answers[EDIT])
+      if (answers[EDIT] !== undefined) return simpleValueEdit(type, answers[EDIT])
 
-    if (answers[EDIT_OPTIONS] && answers[EDIT_OPTIONS] === editOptions.DELETE)
-      return null
+      if (answers[EDIT_OPTIONS] && answers[EDIT_OPTIONS] === editOptions.DELETE)
+        return null
 
-    if (answers[TO_EDIT].name === ADD_NEW) {
-      if (!specsForInstance) specsForInstance = []
-      // eslint-disable-next-line no-console
-      console.log(`Answer the following questions to add a new entry to ${menuOption(currentName)}...`)
-      specsForInstance = await addNewSpecElement(specsForInstance, specsForType.contents)
-      continue
+      if (answers[TO_EDIT].name === ADD_NEW) {
+        if (!specsForInstance) specsForInstance = []
+        // eslint-disable-next-line no-console
+        specsForInstance = await addNewSpecElement(specsForInstance, specsForType.contents)
+        continue
+      }
+
+      if (answers[TO_EDIT] && type === types.LIST) {
+        await updateList(answers, specsForInstance, specsForType, currentName)
+      }
+
+      if (answers[TO_EDIT] && type === types.SET) {
+        await updateSet(answers, specsForInstance, specsForType, currentName)
+      }
     }
-
-    if (answers[TO_EDIT] && type === types.LIST) {
-      await updateList(answers, specsForInstance, specsForType, currentName)
-    }
-
-    if (answers[TO_EDIT] && type === types.SET) {
-      await updateSet(answers, specsForInstance, specsForType, currentName)
-    }
+  } catch (error) {
+    // console.error(error)
+    throw new Error(`problem updating the spec subtree: ${error}`)
   }
 }
