@@ -106,15 +106,10 @@ export async function createStarterAndNewCode(
   ]
 
   const installDependencies = new Listr(dependenciesInstallationTasks)
-  try {
-    await installDependencies.run()
-  } catch (error) {
-    throw new Error(`cannot install dependencies at ${starterDir}: ${error}`)
-  }
-
   const setup = new Listr(starterCreationTaskList)
   try {
     await setup.run()
+    await installDependencies.run()
     if (!await fs.pathExists(codeDir)) {
       const newAppTasks = await createNewCode(codeDir, starterDir)// , finalTemplateDir)
       await newAppTasks.run()
