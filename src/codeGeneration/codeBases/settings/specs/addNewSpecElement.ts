@@ -7,5 +7,6 @@ interface NewSpecElementQuestion {
 }
 
 export async function addNewSpecElement(specsForInstance: any, specsForTypeContents: any) {
-  specsForInstance.puch(await createSpecElement(specsForTypeContents))
+  specsForInstance.push(await createSpecElement(specsForTypeContents))
+  return specsForInstance
 }
