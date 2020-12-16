@@ -89,7 +89,6 @@ function getChoicesForSpecChildren(
   if (configSpecsSubtree) {
     const subTypes = Object.keys(configSpecsSubtree)
     specChildrenChoices = subTypes.map((subTypeName: string) => {
-      console.log(`** subTypeName= ${subTypeName}`)
       const configSpecsSubtreeElement = configSpecsSubtree[subTypeName]
       // console.log(`** configSpecsSubtreeElement= ${JSON.stringify(configSpecsSubtreeElement, null, 1)}`)
       const instanceSpecsSubtreeElement = instanceSpecsSubtree[subTypeName]

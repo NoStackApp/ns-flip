@@ -1,9 +1,7 @@
 import {types} from '../types'
-import {askForValue} from './askForValue'
 import {simpleValueEdit} from './simpleValueEdit'
-import {META_DELIMITER} from '../../../../shared/constants'
-import {customLocationNewRegExString} from '../../../../shared/constants/Regex/regExNewCustomLocation'
 import {regExAnswerValueString} from '../../../../shared/constants/Regex/regExAnswerValueString'
+import {askForValue} from './askForValue'
 
 const inquirer = require('inquirer')
 
@@ -16,39 +14,61 @@ interface NewSpecElementQuestion {
   validate?: Function;
 }
 
-function askQuestion(subTypeInfo: any, answers: any) {
+async function askQuestion(subTypeInfo: any, subType: string, answers: any) {
   const subTypeInfoKeys = Object.keys(subTypeInfo)
-  const returned = {...subTypeInfo}
+  const questionKeys = {...subTypeInfo}
   subTypeInfoKeys.map((key: string) => {
     const value = subTypeInfo[key]
     if ((typeof value) !== 'string') return
 
-    returned[key] = value.replace(regExAnswerValueString, function (
+    questionKeys[key] = value.replace(regExAnswerValue, function (
       match: string,
       answerKey: string,
     ) {
-      answers[answerKey]
+      return answers[answerKey]
     })
   })
-  return returned
+  const questions = [
+    askForValue(
+      null,
+      questionKeys,
+      subType,
+      subType,
+    ),
+  ]
+
+  const theseAnswers = await inquirer.prompt(questions)
+  answers = {...answers, ...theseAnswers}
+  return answers
 }
 
 export async function createSpecElement(specsForTypeContents: any) {
-  const questions: NewSpecElementQuestion[] = []
+  // const questions: NewSpecElementQuestion[] = []
   const subTypes = Object.keys(specsForTypeContents)
-  subTypes.map((subType: string) => {
+  // subTypes.map((subType: string) => {
+  //   const subTypeInfo = specsForTypeContents[subType]
+  //   const {type} = subTypeInfo
+  //   if (type !== types.SET && type !== types.LIST) {
+  //     questions.push(askForValue(
+  //       null,
+  //       subTypeInfo,
+  //       subType,
+  //       subType,
+  //     ))
+  //   }
+  // })
+  // const answers = await inquirer.prompt(questions)
+  let answers: any = {}
+  let i
+  for (i = 0; i < subTypes.length; i++) {
+    const subType = subTypes[i]
     const subTypeInfo = specsForTypeContents[subType]
     const {type} = subTypeInfo
     if (type !== types.SET && type !== types.LIST) {
-      questions.push(askForValue(
-        null,
-        subTypeInfo,
-        subType,
-        subType,
-      ))
+      // eslint-disable-next-line require-atomic-updates
+      answers = await askQuestion(subTypeInfo, subType, answers)
     }
-  })
-  const answers = await inquirer.prompt(questions)
+  }
 
   Object.keys(answers).forEach(key => {
     if (answers[key] === '') delete answers[key]

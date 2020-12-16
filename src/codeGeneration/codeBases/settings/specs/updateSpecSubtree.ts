@@ -3,6 +3,7 @@ import {getQuestionsForSpecSubtree} from './getQuestionsForSpecSubtree'
 import {ADD_NEW, AnswersForStaticInstanceSpec, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
 import {addNewSpecElement} from './addNewSpecElement'
 import {simpleValueEdit} from './simpleValueEdit'
+import {createSpecElement} from './createSpecElement'
 
 const inquirer = require('inquirer')
 const editOptions = {
@@ -67,6 +68,9 @@ export async function updateSpecSubtree(
   required: boolean,
 ) {
   try {
+    if (!specsForInstance)
+      specsForInstance = await createSpecElement(specsForType)
+
     // eslint-disable-next-line no-constant-condition
     while (true) {
       const questions = getQuestionsForSpecSubtree(
@@ -76,7 +80,6 @@ export async function updateSpecSubtree(
         currentName,
         required)
       const answers: AnswersForStaticInstanceSpec = await inquirer.prompt(questions)
-      console.log(`** in updateSpecSubtree answers=${JSON.stringify(answers, null, 2)}`)
 
       if (answers[TO_EDIT] && answers[TO_EDIT].name === DONE) return specsForInstance
       if (answers[TO_EDIT] && answers[TO_EDIT].name === DELETE) return undefined
