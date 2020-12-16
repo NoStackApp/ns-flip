@@ -92,7 +92,9 @@ export const fileNames = {
   PACKAGE_INFO: 'packageInfo.json.hbs',
 }
 
-export const ADD_NEW_VALUE = '__add__'
+export const META_DELIMITER = '__'
+
+export const ADD_NEW_VALUE = META_DELIMITER + 'add' + META_DELIMITER
 
 export const menuChoices = {
   QUIT: 'quit',

@@ -33,6 +33,7 @@ export function staticTypesFromConfig(config: Configuration) {
 
 export async function chooseStaticType(config: Configuration) {
   const choiceList: Choice[] = staticTypesFromConfig(config)
+  choiceList.unshift()
 
   // if (choiceList.length === 0) {
   //   return
