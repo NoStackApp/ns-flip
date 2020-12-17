@@ -9,6 +9,7 @@ export interface CommandSpec {
     file: string;
     arguments: string[];
     options?: any;
+    prevent: boolean|Function;
 }
 
 export interface SetupSequence {

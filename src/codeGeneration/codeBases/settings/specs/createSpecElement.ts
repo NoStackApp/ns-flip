@@ -1,11 +1,6 @@
 import {types} from '../types'
 import {simpleValueEdit} from './simpleValueEdit'
-import {regExAnswerValueString} from '../../../../shared/constants/Regex/regExAnswerValueString'
-import {askForValue} from './askForValue'
-
-const inquirer = require('inquirer')
-
-const regExAnswerValue = new RegExp(regExAnswerValueString, 'g')
+import {askQuestion} from './askQuestion'
 
 interface NewSpecElementQuestion {
   type: string;
@@ -14,35 +9,7 @@ interface NewSpecElementQuestion {
   validate?: Function;
 }
 
-async function askQuestion(subTypeInfo: any, subType: string, answers: any) {
-  const subTypeInfoKeys = Object.keys(subTypeInfo)
-  const questionKeys = {...subTypeInfo}
-  subTypeInfoKeys.map((key: string) => {
-    const value = subTypeInfo[key]
-    if ((typeof value) !== 'string') return
-
-    questionKeys[key] = value.replace(regExAnswerValue, function (
-      match: string,
-      answerKey: string,
-    ) {
-      return answers[answerKey]
-    })
-  })
-  const questions = [
-    askForValue(
-      null,
-      questionKeys,
-      subType,
-      subType,
-    ),
-  ]
-
-  const theseAnswers = await inquirer.prompt(questions)
-  answers = {...answers, ...theseAnswers}
-  return answers
-}
-
-export async function createSpecElement(specsForTypeContents: any) {
+export async function createSpecElement(specsForTypeContents: any, session: any = {}) {
   // const questions: NewSpecElementQuestion[] = []
   const subTypes = Object.keys(specsForTypeContents)
   // subTypes.map((subType: string) => {
@@ -66,7 +33,7 @@ export async function createSpecElement(specsForTypeContents: any) {
     const {type} = subTypeInfo
     if (type !== types.SET && type !== types.LIST) {
       // eslint-disable-next-line require-atomic-updates
-      answers = await askQuestion(subTypeInfo, subType, answers)
+      answers = await askQuestion(subTypeInfo, subType, answers, session)
     }
   }
 

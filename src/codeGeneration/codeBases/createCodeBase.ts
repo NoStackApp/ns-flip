@@ -1,4 +1,4 @@
-import {docPages, links, magicStrings} from '../../shared/constants'
+import {commands, docPages, links, magicStrings} from '../../shared/constants'
 
 import {regenerateCode} from '../regenerateCode'
 import {copyTemplateToMeta} from './copyTemplateToMeta'
@@ -14,6 +14,9 @@ export async function createCodeBase(
   const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
   const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
   const existsCodeTemplateDir = await fs.pathExists(codeTemplateDir)
+  let session = {
+    codeDir,
+  }
 
   if (!templateDir && noSetup) {
     throw new Error('the noSetup flag cannot be used unless a template is specified.')
@@ -39,13 +42,22 @@ export async function createCodeBase(
       `See ${links.DOCUMENTATION}/${docPages.BUILDING_CODE_BASE}.`)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+  if (templateDir) {
+    const initFunctionFile = `${templateDir}/general/init.ts`
+    if (await fs.pathExists(initFunctionFile)) {
+      const {init} = require(initFunctionFile)
+      session = await init(commands.GENERATE, codeDir)
+    }
+  }
+
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {
-    await createStarterAndNewCode(templateDir, codeDir)
+    await createStarterAndNewCode(templateDir, codeDir, session)
   }
 
   if (templateDir) {
     await copyTemplateToMeta(codeTemplateDir, templateDir)
   }
 
-  await regenerateCode(codeDir)
+  await regenerateCode(codeDir, session)
 }
