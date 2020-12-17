@@ -94,7 +94,7 @@ export default class Newtemplate extends Command {
       const starterDir = codeDir + suffixes.STARTUP_DIR
       await getPreCommands(config)
 
-      await executePreCommands(config, starterDir)
+      await executePreCommands(config, starterDir, {codeDir})
       fs.ensureDir(starterDir) // if no preCommands created the starterDir, we do so now.
 
       const suggestedDependencies = await setPackagesToSuggestInserting(starterDir, sampleDir)
