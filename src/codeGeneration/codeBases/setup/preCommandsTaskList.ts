@@ -1,12 +1,20 @@
 import {CommandSpec} from '../../../shared/constants/types/configuration'
 import {convertCommandArgs} from './convertCommandArgs'
 import {convertCommandOptions} from './convertCommandOptions'
+import {replaceGlobalValuesInObject} from '../settings/specs/replaceGlobalValuesInObject'
 
 const chalk = require('chalk')
 const execa = require('execa')
 
-export function preCommandsTaskList(preCommands: CommandSpec[], starterDir: string) {
-  return preCommands.map((commandSpec: CommandSpec) => {
+export function preCommandsTaskList(
+  preCommands: CommandSpec[],
+  starterDir: string,
+  session: any
+) {
+  const preCommandsInfo = preCommands.map(
+    object => replaceGlobalValuesInObject(object, session, {})).filter(x => !x.prevent)
+
+  return preCommandsInfo.map((commandSpec: CommandSpec) => {
     return {
       title: commandSpec.title,
       task: async () => {

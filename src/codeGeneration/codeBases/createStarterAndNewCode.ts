@@ -27,7 +27,8 @@ async function checkFolder(starterDir: string) {
 
 export async function createStarterAndNewCode(
   templateDir: string,
-  codeDir: string
+  codeDir: string,
+  session: any,
 ) {
   const starterDir = codeDir + suffixes.STARTUP_DIR
   const config: Configuration = await getConfig(templateDir)
@@ -46,7 +47,8 @@ export async function createStarterAndNewCode(
       title: 'Execute Pre-Commands',
       task: async () => {
         if (!preCommands) return
-        return new Listr(preCommandsTaskList(preCommands, starterDir))
+        const preCommandsTasks = preCommandsTaskList(preCommands, starterDir, session).filter(x => x !== null)
+        return new Listr(preCommandsTasks)
       },
     },
     {

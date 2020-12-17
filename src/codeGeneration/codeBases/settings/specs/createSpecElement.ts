@@ -1,60 +1,12 @@
 import {types} from '../types'
 import {simpleValueEdit} from './simpleValueEdit'
-import {regExObjectValueString} from '../../../../shared/constants/Regex/regExObjectValueString'
-import {askForValue} from './askForValue'
-
-const inquirer = require('inquirer')
-
-const regExObjectValue = new RegExp(regExObjectValueString, 'g')
+import {askQuestion} from './askQuestion'
 
 interface NewSpecElementQuestion {
   type: string;
   name: string;
   message: string;
   validate?: Function;
-}
-
-const globalObjects = {
-  SETTINGS: 'nsInfo',
-  ANSWERS: 'answers',
-  SESSION: 'session',
-  CONFIG: 'config',
-}
-
-async function askQuestion(
-  subTypeInfo: any,
-  subType: string,
-  answers: any,
-  session: any = {},
-) {
-  const subTypeInfoKeys = Object.keys(subTypeInfo)
-  const questionKeys = {...subTypeInfo}
-  subTypeInfoKeys.map((key: string) => {
-    const value = subTypeInfo[key]
-    if ((typeof value) !== 'string') return
-
-    questionKeys[key] = value.replace(regExObjectValue, function (
-      match: string,
-      objectName: string,
-      key: string,
-    ) {
-      if (objectName === globalObjects.ANSWERS) return answers[key]
-      if (objectName === globalObjects.SESSION) return session[key]
-      // if (objectName === globalObjects.SETTINGS) return nsInfo[key]
-    })
-  })
-  const questions = [
-    askForValue(
-      null,
-      questionKeys,
-      subType,
-      subType,
-    ),
-  ]
-
-  const theseAnswers = await inquirer.prompt(questions)
-  answers = {...answers, ...theseAnswers}
-  return answers
 }
 
 export async function createSpecElement(specsForTypeContents: any, session: any = {}) {

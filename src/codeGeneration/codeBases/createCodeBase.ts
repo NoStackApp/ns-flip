@@ -52,7 +52,7 @@ export async function createCodeBase(
   }
 
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {
-    await createStarterAndNewCode(templateDir, codeDir)
+    await createStarterAndNewCode(templateDir, codeDir, session)
   }
 
   if (templateDir) {
