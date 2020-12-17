@@ -3,6 +3,7 @@ import {getQuestionsForSpecSubtree} from './getQuestionsForSpecSubtree'
 import {ADD_NEW, AnswersForStaticInstanceSpec, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
 import {addNewSpecElement} from './addNewSpecElement'
 import {simpleValueEdit} from './simpleValueEdit'
+import {createSpecElement} from './createSpecElement'
 
 const inquirer = require('inquirer')
 const editOptions = {
@@ -36,12 +37,18 @@ async function updateList(answers: AnswersForStaticInstanceSpec, specsForInstanc
   }
 }
 
-async function updateSet(answers: AnswersForStaticInstanceSpec, specsForInstance: any, specsForType: Specs | SpecSet, currentName: string) {
+async function updateSet(
+  answers: AnswersForStaticInstanceSpec,
+  specsForInstance: any,
+  specsForType: Specs | SpecSet,
+  currentName: string,
+  topLevel = false,
+) {
   const {name, typeOfValue, required} = answers[TO_EDIT]
 
   const specsForChildInstance = specsForInstance[name]
   // @ts-ignore
-  const specsForChildType: Specs = specsForType.contents[name]
+  const specsForChildType: Specs = topLevel ? specsForType[name] : specsForType.contents[name]
 
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   specsForInstance[name] = await updateSpecSubtree(
@@ -60,9 +67,10 @@ export async function updateSpecSubtree(
   currentName: string,
   required: boolean,
 ) {
-  // console.log(`** in updateSpecSubtree specsForType=${JSON.stringify(specsForType)}`)
-
   try {
+    if (!specsForInstance)
+      specsForInstance = await createSpecElement(specsForType)
+
     // eslint-disable-next-line no-constant-condition
     while (true) {
       const questions = getQuestionsForSpecSubtree(
@@ -88,12 +96,20 @@ export async function updateSpecSubtree(
         continue
       }
 
+      // otherwise, update the values for the set or list...
+
       if (answers[TO_EDIT] && type === types.LIST) {
         await updateList(answers, specsForInstance, specsForType, currentName)
       }
 
-      if (answers[TO_EDIT] && type === types.SET) {
-        await updateSet(answers, specsForInstance, specsForType, currentName)
+      if (answers[TO_EDIT] && (type === types.SET || type === types.TOP_LEVEL)) {
+        await updateSet(
+          answers,
+          specsForInstance,
+          specsForType,
+          currentName,
+          type === types.TOP_LEVEL
+        )
       }
     }
   } catch (error) {

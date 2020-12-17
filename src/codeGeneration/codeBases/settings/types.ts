@@ -3,6 +3,7 @@ export const types = {
   SET: 'set',
   BOOLEAN: 'boolean',
   STRING: 'string',
+  TOP_LEVEL: 'topLevel',
 }
 export const DONE = 'done'
 export const ADD_NEW = 'addNew'
