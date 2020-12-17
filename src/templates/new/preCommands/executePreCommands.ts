@@ -4,9 +4,9 @@ import {interactiveSequence} from '../../../codeGeneration/codeBases/setup/inter
 
 const Listr = require('listr')
 
-export async function runPreCommands(preCommands: CommandSpec[], starterDir: string) {
+export async function runPreCommands(preCommands: CommandSpec[], starterDir: string, session: any) {
   if (!preCommands) return
-  const commandsListr = new Listr(preCommandsTaskList(preCommands, starterDir))
+  const commandsListr = new Listr(preCommandsTaskList(preCommands, starterDir, session))
   try {
     await commandsListr.run()
   } catch (error) {
@@ -14,13 +14,13 @@ export async function runPreCommands(preCommands: CommandSpec[], starterDir: str
   }
 }
 
-export async function executePreCommands(config: Configuration, starterDir: string) {
+export async function executePreCommands(config: Configuration, starterDir: string, session: any) {
   if (!config.setupSequence) return
   try {
     if (config.setupSequence.interactive)
       await interactiveSequence(config.setupSequence.interactive, starterDir)
     if (config.setupSequence.preCommands)
-      await runPreCommands(config.setupSequence.preCommands, starterDir)
+      await runPreCommands(config.setupSequence.preCommands, starterDir, session)
   } catch (error) {
     // console.error(error)
     throw new Error(`problem with running preCommands: ${error}`)
