@@ -33,7 +33,7 @@ const fs = require('fs-extra')
 //   )
 // }
 
-export async function regenerateCode(codeDir: string) {
+export async function regenerateCode(codeDir: string, session: any) {
   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
   const nsInfo = await getNsInfo(codeDir)
   const starter = `${codeDir}${suffixes.STARTUP_DIR}`
@@ -54,7 +54,7 @@ export async function regenerateCode(codeDir: string) {
     const {general} = config
     let generalSettings = nsInfo.general || {}
 
-    if (Object.keys(generalSettings).length === 0) generalSettings = await createSpecElement(general)
+    if (Object.keys(generalSettings).length === 0) generalSettings = await createSpecElement(general, session)
     nsInfo.general = generalSettings
     await setNsInfo(codeDir, nsInfo)
 

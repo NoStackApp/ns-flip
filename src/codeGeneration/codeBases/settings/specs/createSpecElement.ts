@@ -1,11 +1,11 @@
 import {types} from '../types'
 import {simpleValueEdit} from './simpleValueEdit'
-import {regExAnswerValueString} from '../../../../shared/constants/Regex/regExAnswerValueString'
+import {regExObjectValueString} from '../../../../shared/constants/Regex/regExObjectValueString'
 import {askForValue} from './askForValue'
 
 const inquirer = require('inquirer')
 
-const regExAnswerValue = new RegExp(regExAnswerValueString, 'g')
+const regExObjectValue = new RegExp(regExObjectValueString, 'g')
 
 interface NewSpecElementQuestion {
   type: string;
@@ -14,18 +14,33 @@ interface NewSpecElementQuestion {
   validate?: Function;
 }
 
-async function askQuestion(subTypeInfo: any, subType: string, answers: any) {
+const globalObjects = {
+  SETTINGS: 'nsInfo',
+  ANSWERS: 'answers',
+  SESSION: 'session',
+  CONFIG: 'config',
+}
+
+async function askQuestion(
+  subTypeInfo: any,
+  subType: string,
+  answers: any,
+  session: any = {},
+) {
   const subTypeInfoKeys = Object.keys(subTypeInfo)
   const questionKeys = {...subTypeInfo}
   subTypeInfoKeys.map((key: string) => {
     const value = subTypeInfo[key]
     if ((typeof value) !== 'string') return
 
-    questionKeys[key] = value.replace(regExAnswerValue, function (
+    questionKeys[key] = value.replace(regExObjectValue, function (
       match: string,
-      answerKey: string,
+      objectName: string,
+      key: string,
     ) {
-      return answers[answerKey]
+      if (objectName === globalObjects.ANSWERS) return answers[key]
+      if (objectName === globalObjects.SESSION) return session[key]
+      // if (objectName === globalObjects.SETTINGS) return nsInfo[key]
     })
   })
   const questions = [
@@ -42,7 +57,7 @@ async function askQuestion(subTypeInfo: any, subType: string, answers: any) {
   return answers
 }
 
-export async function createSpecElement(specsForTypeContents: any) {
+export async function createSpecElement(specsForTypeContents: any, session: any = {}) {
   // const questions: NewSpecElementQuestion[] = []
   const subTypes = Object.keys(specsForTypeContents)
   // subTypes.map((subType: string) => {
@@ -66,7 +81,7 @@ export async function createSpecElement(specsForTypeContents: any) {
     const {type} = subTypeInfo
     if (type !== types.SET && type !== types.LIST) {
       // eslint-disable-next-line require-atomic-updates
-      answers = await askQuestion(subTypeInfo, subType, answers)
+      answers = await askQuestion(subTypeInfo, subType, answers, session)
     }
   }
 
