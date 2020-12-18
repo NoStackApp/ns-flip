@@ -19,14 +19,20 @@ export async function addStaticInstance(
       name: 'name',
       message: `What is the name of the new ${staticType}?`,
     },
+  ]
+
+  let answers = await inquirer.prompt(addInstanceQuestions)
+
+  const addSlugQuestion = [
     {
       type: 'input',
       name: 'slug',
       message: "What's the slug?  (It will get inserted into things like file names.)",
+      default: answers.name,
     },
   ]
-
-  const answers = await inquirer.prompt(addInstanceQuestions)
+  const answersForSlug = await inquirer.prompt(addSlugQuestion)
+  answers = {...answers, ...answersForSlug}
 
   if (nsInfo.static) {
     if (!nsInfo.static[staticType]) nsInfo.static[staticType] = {}

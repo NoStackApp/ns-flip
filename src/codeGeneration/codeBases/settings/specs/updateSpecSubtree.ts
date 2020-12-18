@@ -68,8 +68,20 @@ export async function updateSpecSubtree(
   required: boolean,
 ) {
   try {
-    if (!specsForInstance)
+    // if a set or list has no value, create the element
+    if (!specsForInstance && (type in [types.SET, types.LIST, types.TOP_LEVEL])) {
       specsForInstance = await createSpecElement(specsForType)
+    }
+
+    /*
+      This while loop is central to the settings process.  There can be a few
+      levels handled here:
+          (1) a control step, meaning deciding navigation;
+          (2) actually prompting for a value.
+      'TO_EDIT' is set for the first, and 'EDIT' for the second.  They are mutually exclusive,
+      so this is poorly done.
+      TODO: refactor this to have a separate function for each.
+     */
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
@@ -81,10 +93,10 @@ export async function updateSpecSubtree(
         required)
       const answers: AnswersForStaticInstanceSpec = await inquirer.prompt(questions)
 
+      if (answers[EDIT] !== undefined) return simpleValueEdit(type, answers[EDIT])
+
       if (answers[TO_EDIT] && answers[TO_EDIT].name === DONE) return specsForInstance
       if (answers[TO_EDIT] && answers[TO_EDIT].name === DELETE) return undefined
-
-      if (answers[EDIT] !== undefined) return simpleValueEdit(type, answers[EDIT])
 
       if (answers[EDIT_OPTIONS] && answers[EDIT_OPTIONS] === editOptions.DELETE)
         return null
