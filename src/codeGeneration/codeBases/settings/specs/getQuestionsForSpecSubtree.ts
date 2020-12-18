@@ -49,9 +49,6 @@ function getChoicesForSpecChildren(
   instanceSpecsSubtree: any,
   type: string,
 ) {
-  // console.log(`** in getChoicesForSpecChildren, type = ${type}`)
-  // console.log(`** in getChoicesForSpecChildren, configSpecsSubtree = ${JSON.stringify(configSpecsSubtree, null, 2)}`)
-  // console.log(`** in getChoicesForSpecChildren, instanceSpecsSubtree = ${JSON.stringify(instanceSpecsSubtree, null, 2)}`)
   let specChildrenChoices: SpecChoice[] = []
 
   if (type === types.LIST) {
@@ -90,16 +87,13 @@ function getChoicesForSpecChildren(
     const subTypes = Object.keys(configSpecsSubtree)
     specChildrenChoices = subTypes.map((subTypeName: string) => {
       const configSpecsSubtreeElement = configSpecsSubtree[subTypeName]
-      // console.log(`** configSpecsSubtreeElement= ${JSON.stringify(configSpecsSubtreeElement, null, 1)}`)
       const instanceSpecsSubtreeElement = instanceSpecsSubtree[subTypeName]
-      // console.log(`** instanceSpecsSubtreeElement= ${JSON.stringify(instanceSpecsSubtreeElement, null, 1)}`)
       return answerForSpecificSubtype(
         subTypeName,
         configSpecsSubtreeElement,
         instanceSpecsSubtreeElement
       )
     })
-    // console.log(`** specChildrenChoices = ${JSON.stringify(specChildrenChoices, null, 2)}`)
   }
 
   specChildrenChoices.push({
