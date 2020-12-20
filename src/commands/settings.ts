@@ -3,74 +3,30 @@ import {checkForUpdates} from '../shared/checkForUpdates'
 import {getConfig} from '../shared/configs/getConfig'
 import {magicStrings} from '../shared/constants'
 import {getNsInfo} from '../shared/nsFiles/getNsInfo'
-import {staticSettings} from '../codeGeneration/codeBases/settings/staticSettings'
 import {resolveDir} from '../shared/resolveDir'
-import {exitOption, menuOption} from '../shared/constants/chalkColors'
-import {DONE, types} from '../codeGeneration/codeBases/settings/types'
-import {Configuration} from '../shared/constants/types/configuration'
-import {NsInfo} from '../shared/constants/types/nsInfo'
-import {updateSpecSubtree} from '../codeGeneration/codeBases/settings/specs/updateSpecSubtree'
-import {setNsInfo} from '../shared/nsFiles/setNsInfo'
+import {settingsMenu} from '../codeGeneration/codeBases/settings/settingsMenu'
+import {attention} from '../shared/constants/chalkColors'
+import {regenerateCode} from '../codeGeneration/regenerateCode'
 
+const diff = require('deep-object-diff').diff
 const inquirer = require('inquirer')
 
-const settingsTypes =
-  {
-    GENERAL: 'general',
-    STATIC: 'static',
-    DYNAMIC: 'dynamic',
-  }
-
-async function settingsMenu(
-  config: Configuration,
-  nsInfo: NsInfo,
+async function promptToGenerateCode(
   codeDir: string,
 ) {
-  const SETTINGS_TYPE = 'settingsType'
   const questions = [{
-    type: 'list',
-    name: SETTINGS_TYPE,
-    message: 'What settings would you like to change?',
-    choices: [
-      {
-        name: menuOption('General'),
-        value: settingsTypes.GENERAL,
-        short: 'General',
-      },
-      {
-        name: menuOption('Static'),
-        value: settingsTypes.STATIC,
-        short: 'Static',
-      },
-      {
-        name: exitOption('Quit'),
-        value: DONE,
-        short: 'quit',
-      },
-    ],
+    type: 'confirm',
+    name: 'generate',
+    message: 'Your settings have changed. ' +
+      attention('Generate the code now with your changes?') +
+      ' (This is recommended, but is not done by default.)',
+    default: false,
   }]
-
-  try {
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      const answers = await inquirer.prompt(questions)
-      if (answers[SETTINGS_TYPE] === DONE) return
-      if (answers[SETTINGS_TYPE] === settingsTypes.STATIC) await staticSettings(config, nsInfo, codeDir)
-      if (answers[SETTINGS_TYPE] === settingsTypes.GENERAL) {
-        const nsInfoGeneral = await updateSpecSubtree(
-          nsInfo.general,
-          config.general,
-          types.TOP_LEVEL,
-          'general settings',
-          true,
-        )
-
-        nsInfo.general = nsInfoGeneral
-        await setNsInfo(codeDir, nsInfo)
-      }
-    }
-  } catch (error) {
-    throw new Error(`in settings menu: ${error}`)
+  const answers = await inquirer.prompt(questions)
+  if (answers.generate) {
+    await regenerateCode(codeDir, {codeDir})
+    // eslint-disable-next-line no-console
+    console.log(`Your code has been regenerated at ${codeDir}`)
   }
 }
 
@@ -107,16 +63,19 @@ export default class Filediffs extends Command {
       const config = await getConfig(codeDir +
         `/${magicStrings.META_DIR}/${magicStrings.TEMPLATE}`)
       const nsInfo = await getNsInfo(codeDir)
+      const originalSettings = JSON.parse(JSON.stringify(nsInfo))
 
-      // const configStatic = config.static
-      // const nsStatic = nsInfo.static
+      const updatedSettings = await settingsMenu(config, nsInfo, codeDir)
+      if (!updatedSettings) return
 
-      // console.log(`configStatic = ${JSON.stringify(configStatic, null, 2)}`)
-      // console.log(`nsStatic = ${JSON.stringify(nsStatic, null, 2)}`)
-
-      await settingsMenu(config, nsInfo, codeDir)
+      const changedSettings = diff(originalSettings, updatedSettings)
+      if (Object.keys(changedSettings).length > 0) {
+        // there were changes to the settings made
+        await promptToGenerateCode(codeDir)
+      }
     } catch (error) {
       this.error(error)
+      throw new Error(`error with settings: ${error}`)
     }
   }
 }
