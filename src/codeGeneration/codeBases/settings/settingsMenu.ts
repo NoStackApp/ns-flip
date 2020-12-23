@@ -5,28 +5,23 @@ import {DONE, types} from './types'
 import {staticSettings} from './staticSettings'
 import {updateSpecSubtree} from './specs/updateSpecSubtree'
 import {setNsInfo} from '../../../shared/nsFiles/setNsInfo'
+import {answerValues, questionNames} from '../../../shared/constants'
 
 const inquirer = require('inquirer')
-const settingsTypes =
-    {
-      GENERAL: 'general',
-      STATIC: 'static',
-      DYNAMIC: 'dynamic',
-    }
-const SETTINGS_TYPE = 'settingsType'
+
 const questions = [{
   type: 'list',
-  name: SETTINGS_TYPE,
+  name: questionNames.SETTINGS_TYPE,
   message: 'What settings would you like to change?',
   choices: [
     {
       name: menuOption('General'),
-      value: settingsTypes.GENERAL,
+      value: answerValues.settingsTypes.GENERAL,
       short: 'General',
     },
     {
       name: menuOption('Static'),
-      value: settingsTypes.STATIC,
+      value: answerValues.settingsTypes.STATIC,
       short: 'Static',
     },
     {
@@ -46,11 +41,14 @@ export async function settingsMenu(
     // eslint-disable-next-line no-constant-condition
     while (true) {
       const answers = await inquirer.prompt(questions)
-      if (answers[SETTINGS_TYPE] === DONE) {
+      if (answers[questionNames.SETTINGS_TYPE] === DONE) {
         return nsInfo
       }
-      if (answers[SETTINGS_TYPE] === settingsTypes.STATIC) await staticSettings(config, nsInfo, codeDir)
-      if (answers[SETTINGS_TYPE] === settingsTypes.GENERAL) {
+      if (answers[questionNames.SETTINGS_TYPE] === answerValues.settingsTypes.STATIC) {
+        const nsInfoStatic = await staticSettings(config, nsInfo, codeDir)
+        nsInfo.static = nsInfoStatic
+      }
+      if (answers[questionNames.SETTINGS_TYPE] === answerValues.settingsTypes.GENERAL) {
         const nsInfoGeneral = await updateSpecSubtree(
           nsInfo.general,
           config.general,

@@ -150,3 +150,17 @@ export interface Delimiters {
   open: string;
   close: string;
 }
+
+export const questionNames = {
+  SETTINGS_TYPE: 'settingsType',
+}
+
+export const answerValues = {
+  settingsTypes:
+    {
+      GENERAL: 'general',
+      STATIC: 'static',
+      DYNAMIC: 'dynamic',
+    },
+
+}

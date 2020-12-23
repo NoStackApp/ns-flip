@@ -5,6 +5,7 @@ export const types = {
   STRING: 'string',
   TOP_LEVEL: 'topLevel',
 }
+
 export const DONE = 'done'
 export const ADD_NEW = 'addNew'
 export const DELETE = 'delete'

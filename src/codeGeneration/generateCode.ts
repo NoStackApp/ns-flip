@@ -53,21 +53,6 @@ export async function generateCode(
   if (units) {
     await dynamicFiles(config, nsInfo, codeDir)
   }
-  // if (config.dirs.queries) {
-  //   // create query files in the directory specified by the template.
-  //   const queriesDir = config.dirs.queries
-  //   try {
-  //     console.log(`before units: ${JSON.stringify(Object.keys(units), null, 2)}`)
-  //     await Promise.all(Object.keys(units).map(async unit => {
-  //       console.log(`creating query file for unit ${unit}`)
-  //       const unitNameInfo = parseUnitSpecName(unit)
-  //       await createQueryFile(unitNameInfo.name, queriesDir, appInfo, template)
-  //     }))
-  //   } catch (error) {
-  //     console.error(error)
-  //     throw new Error('error in creating query file')
-  //   }
-  // }
 
   const compDir = `${codeDir}/${config.dirs.components}`
 

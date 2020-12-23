@@ -1,0 +1,216 @@
+name: easy-oclif-cli
+version: 1
+category: oclif multi
+dirs:
+  custom: src/custom
+
+general:
+  packageName:
+    type: string
+    required: true
+    description: name of package
+    default: __session.defaultProjectName__
+  binName:
+    type: string
+    required: false
+    description: executable name if different than name
+    default: __answers.packageName__
+  author:
+    type: string
+    required: true
+    description: author of the package
+    default: __session.userName__
+  owner:
+    type: string
+    required: true
+    description: owner of the GitHub repo
+    default: __answers.author__
+  description:
+    type: string
+    required: false
+    description: one liner about what the cli does
+  repositoryName:
+    type: string
+    required: true
+    description: repository on GitHub
+    default: __answers.packageName__
+  license:
+    type: string
+    required: false
+    default: MIT
+    options:
+      - MIT
+    description: license
+
+static:
+  command:
+    description: a command to be executed by your cli
+    files:
+      commandFile:
+        name: __slug__
+        suffix: '.ts'
+        directory: src/commands
+      commandTest:
+        name: __slug__
+        suffix: '.test.ts'
+        directory: test/commands
+    specs:
+      description:
+        type: string
+        required: true
+      args:
+        type: list
+        required: false
+        contents:
+          name:
+            type: string
+            required: true
+          description:
+            type: string
+            required: true
+            description: shown in help
+          required:
+            type: boolean
+            required: false
+            default: true
+            description: is the arg required?
+          default:
+            type: string
+            required: false
+            description: default value
+          options:
+            type: string[]
+            required: false
+            description: limit input to a discrete set
+          hidden:
+            type: boolean
+            required: false
+            description: hide this arg from help
+            default: false
+          parse:
+            type: function
+            required: false
+            description: maps input to new output
+      flags:
+        type: list
+        required: false
+        contents:
+          name:
+            type: string
+            required: true
+          type:
+            type: string
+            required: true
+            description: string (flag has value) or boolean (no value e.g. -f, --force)
+            choices:
+              - string
+              - boolean
+            default: string
+          char:
+            type: string
+            required: true
+            description: shorter flag version
+          description:
+            type: string
+            required: true
+            description: shown in help
+          required:
+            type: boolean
+            required: false
+            default: false
+            description: make flag required
+          default:
+            type: any
+            required: false
+            description: default value
+          options:
+            type: string[]
+            required: false
+            description: limit to a discrete set
+          hidden:
+            type: boolean
+            required: false
+            description: hide from help
+            default: false
+          multiple:
+            type: boolean
+            required: false
+            description: can use flag multiple times?
+            default: false
+          env:
+            type: string
+            required: false
+            description: default to value of environment variable
+          dependsOn:
+            type: string[]
+            required: false
+            description: other flags this one depends upon
+          exclusive:
+            type: string[]
+            required: false
+            description: flags that cannot be called with this one
+          parse:
+            type: function
+            required: false
+            description: maps input to new output
+
+format:
+  customFileFilter: '+(*.{ts,tsx,md}|.eslintrc)'
+  defaultOpenComment: "/*"
+  defaultCloseCOmment: "*/"
+  openComment:
+    .md: "\n[//]: # ("
+  closeComment:
+    .md: ")"
+
+setupSequence:
+  packageJson:
+    name: __name__
+    bin:
+      __binName__: run
+  preCommands:
+    - title: run git
+      file: git
+      arguments:
+        - init
+        - $codeDir
+    - title: package json file
+      file: npm
+      arguments:
+        - init
+        - '-y'
+      options:
+        cwd: $codeDir
+    - title: rimraf
+      file: npm
+      arguments:
+        - i
+        - rimraf
+      options:
+        cwd: $codeDir
+      prevent: __session.notWin__
+  mainInstallation:
+    - '@oclif/config@^1'
+    - '@oclif/command@^1'
+    - '@oclif/plugin-help@^3'
+    - tslib@^1
+  devInstallation:
+    - '@oclif/dev-cli@^1'
+    - '@oclif/test@^1'
+    - globby@^10
+    - mocha@7.1.2
+    - nyc@^14
+    - chai@^4
+    - '@types/node@^10'
+    - typescript@^3.3
+    - ts-node@^8
+    - '@types/chai@^4'
+    - '@types/mocha@^5'
+    - eslint@^5.13
+    - eslint-config-oclif-typescript@^0.1
+
+ignore:
+  - lib
+  - oclif.manifest.json
+  - .nyc_output
+  - test/custom

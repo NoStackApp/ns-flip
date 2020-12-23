@@ -1,0 +1,117 @@
+userClass: user
+codeName: MyApp
+template:
+  dir: /home/yisroel/ns/templates/ns-template-easy-oclif-cli
+  name: easy-oclif-cli
+  version: 1
+static:
+  command:
+    new:
+      slug: new
+      specs:
+        description: Create a new questionnaire
+        args:
+          - name: name
+            description: name of questionnaire
+            required: true
+            hidden: false
+        flags:
+          - name: author
+            type: string
+            char: a
+            description: owner of questionnaire
+            required: false
+            hidden: false
+            multiple: false
+    setQuestion:
+      slug: setQuestion
+      specs:
+        description: >-
+          Create or modify a question in a questionnaire.  Can provide any
+          number of answers.
+        flags:
+          - name: action
+            type: string
+            char: a
+            description: type of action to do with question
+            required: false
+            default: create
+            options:
+              - create
+              - update
+              - delete
+            hidden: false
+            multiple: false
+          - name: questionName
+            type: string
+            char: 'n'
+            description: name for the question
+            required: false
+            hidden: false
+            multiple: false
+          - name: text
+            type: string
+            char: t
+            description: text of the question
+            required: false
+            hidden: false
+            multiple: false
+          - name: type
+            type: string
+            char: 'y'
+            description: type of question
+            required: false
+            default: text
+            options:
+              - text
+              - multiple
+              - checkbox
+            hidden: false
+            multiple: false
+          - name: answer
+            type: string
+            char: a
+            description: answers to the question
+            required: false
+            hidden: false
+            multiple: true
+        args:
+          - name: questionnaire
+            description: questionnaire for the question
+            required: true
+            hidden: false
+    setAnswer:
+      slug: setAnswer
+      specs:
+        description: Create or modify an answer  to a question
+        args:
+          - name: questionnaire
+            description: questionnaire to change
+            required: true
+            hidden: false
+          - name: name
+            description: name of answer to update
+            required: true
+            hidden: false
+          - name: value
+            description: value to set answer to
+            required: true
+            hidden: false
+    fillOut:
+      slug: fillOut
+      specs:
+        description: Be prompted with a questionnaire to fill out
+        args:
+          - name: questionnaire
+            description: name of questionnaire
+            required: true
+            hidden: false
+starter: /home/yisroel/temp/clis/questionnaires.starter
+general:
+  packageName: questionnaires
+  binName: quest
+  author: YizYah
+  owner: YizYah
+  description: create and fill out questionnaires
+  repositoryName: questionnaires
+  license: MIT
