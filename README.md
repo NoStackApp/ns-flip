@@ -1,7 +1,7 @@
 ns-flip
 ------------
 
-A tool for creating and using *updatable* code templates.  Supports regeneration of code without losing custom changes. Framework agnostic.
+Make and use *updatable* project templates.  Regenerate code without losing custom changes. Framework agnostic.
 
 <a href="https://spectrum.chat/ns-flip">
     <img alt="Join our new community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg">
@@ -26,29 +26,31 @@ A tool for creating and using *updatable* code templates.  Supports regeneration
 <!-- tocstop -->
 
 # Why
-After you generate code with a template or tool, you make changes to the code.  But then usually you can't regenerate it without losing your changes.  So you can't apply an updated template or change to another similar template. Keeping your "legacy code" current becomes an expensive pain.  
+After you generate code with a template or tool, you make changes.  But then usually you can't regenerate the code without losing your changes.  So you can't apply an updated template or change to another one supporting the same inputs. Keeping your "legacy code" current becomes an expensive pain.  
 
 # What
-ns-flip is a CLI to support code templates that can be exchanged as easily as WordPress themes.
+ns-flip is a CLI to support creating and using project generators that can be exchanged as easily as WordPress themes. Here is a [sample](https://www.npmjs.com/package/easy-oclif-cli) with [1 minute video](https://www.youtube.com/watch?v=MAVN8hZpcqY).
 
-A template can generate three types of files:
+A "template" can generate any combination of three types of files:
 
 1. standard (appear in every generated code base, e.g. `App.jsx`)
 2. custom static (static, but must be custom specified for each code base, e.g. steps in an input stepper)
 3. custom dynamic (based on queries e.g. components showing query results).
 
-You can create templates with locations designated for custom code.  You can also name regions that can be replaced or removed in the generated code.  Ns-flip stores the custom changes before regenerating and restores them.
+You can create templates with locations designated for custom code within the generated files.  You can also name regions that can be replaced or removed in the generated code. Ns-flip stores the custom changes before regenerating and then restores them.
 
 See some [standard use cases][2].
 
 # How
-A _template_ is a directory with requirements explained in the [documentation][1].  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
+A _template_ is a directory with requirements explained in the [documentation][1].  You can use it privately or distribute it.  
+You will need a basic working knowledge of [Handlebars](https://handlebarsjs.com/guide/) and not much more.
 
 ![ns-flip-commands](images/ns-flip-2.x-commands.png)
 
-1. Build a template from sample code by calling [`ns newtemplate`](#ns-newtemplate).  
-2. Generate or regenerate code from the template : [`ns generate $CODE [-t $TEMPLATE`](#ns-generate-codedir).  All safe changes to $CODE are preserved.  There's also a meta 'ns' file that stores settings for the code base such as custom instances for data types used in the template.
-3. Add custom code.  But periodically run  [`ns check $CODE`](#ns-check-codedir) to be sure or doing it safely.  (Otherwise, some of your changes will not be preserved when `ns generate` is run in the future.)
+1. Build a template from sample code by calling [`ns newtemplate`](#ns-newtemplate) with a sample code base.  
+2. Generate or regenerate code from the template : [`ns generate $CODE [-t $TEMPLATE`](#ns-generate-codedir).  All safe changes to $CODE are preserved.  There's a settings file for the code base that determines what is generated.
+3. Modify your requirements by running [`ns settings $CODE`](#ns-settings-codedir).  Just answer the prompts. 
+4. Add custom code.  But periodically run  [`ns check $CODE`](#ns-check-codedir) to be sure you are doing it safely.  (Otherwise, some of your changes will not be preserved when `ns generate` is run in the future.)
 
 # Help
 
