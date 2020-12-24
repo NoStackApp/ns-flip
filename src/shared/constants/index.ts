@@ -80,16 +80,28 @@ export const magicStrings = {
   OPEN_COMMENT_PLACEHOLDER: '__NS_OPEN__',
   CLOSE_COMMENT_PLACEHOLDER: '__NS_CLOSE__',
   STANDARD_UNIT: 'standard',
-  START_OF_FILE_FILE: 'START_OF_FILE.hbs',
-  FILE_TEMPLATES: 'fileTemplates',
-  GENERIC_FILE: 'generic.hbs',
   CONFIG_FILE: 'config.yml',
   SAMPLE_NS_FILE: 'sample.ns.yml',
-  README_FILE: 'README.md',
+}
+
+export const dirNames = {
+  FILE_TEMPLATES: 'fileTemplates',
+  TEMPLATES: 'templates',
+  SAMPLES: 'samples',
+  GENERAL: 'general',
+  STANDARD: 'standard',
+  PARTIALS: 'partials',
+  HELPERS: 'helpers',
+  STATIC: 'static',
 }
 
 export const fileNames = {
   PACKAGE_INFO: 'packageInfo.json.hbs',
+  README_FILE: 'README.md',
+  GENERIC_FILE: 'generic.hbs',
+  CONFIG_FILE: 'config.yml',
+  SAMPLE_NS_FILE: 'sample.ns.yml',
+  START_OF_FILE_FILE: 'START_OF_FILE.hbs',
 }
 
 export const META_DELIMITER = '__'
