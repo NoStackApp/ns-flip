@@ -55,6 +55,7 @@ Handlebars.registerHelper('customEnd', function (locationName: string) {
 })
 
 export async function loadFileTemplate(pathString: string, noFileInfo = false) {
+  // noFileInfo suppresses generation of a file info tag at the beginning of the template.
   let template = ''
 
   try {

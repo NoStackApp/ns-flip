@@ -42,6 +42,7 @@
     "pluralize": "^8.0.0",
     "prompts": "^2.3.2",
     "read-pkg": "^5.2.0",
+    "resolve-dir-fixed": "^1.0.0",
     "semver": "^7.3.2",
     "sinon": "^9.2.2",
     "sprintf-js": "^1.1.1",

@@ -54,6 +54,11 @@ export default class Newtemplate extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
+    sample: flags.string({
+      char: 's',
+      description: 'directory containing the sample code from which you want to template',
+      required: false,
+    }),
   }
 
   static examples = [
@@ -65,9 +70,10 @@ export default class Newtemplate extends Command {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {flags} = this.parse(Newtemplate)
+    const sample = resolveDir(flags.sample)
 
     try {
-      const responses: TemplateRequirements = await newTemplateQuestions()
+      const responses: TemplateRequirements = await newTemplateQuestions(sample)
       await generateTemplateFiles(responses)
       this.log(printInstructionsForNewTemplate(responses))
 
