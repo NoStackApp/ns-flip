@@ -1,5 +1,5 @@
 import {installDevPackagesTaskList} from './setup/installDevPackagesTaskList'
-import {docPages, links, magicStrings, suffixes} from '../../shared/constants'
+import {dirNames, docPages, fileNames, links, magicStrings, suffixes} from '../../shared/constants'
 import {Configuration} from '../../shared/constants/types/configuration'
 import {getConfig} from '../../shared/configs/getConfig'
 import {CustomCodeRepository} from '../../shared/constants/types/custom'
@@ -112,7 +112,9 @@ export async function createStarterAndNewCode(
   try {
     await setup.run()
     await installDependencies.run()
-    if (!await fs.pathExists(codeDir)) {
+    const nsFilePath = `${codeDir}/${magicStrings.META_DIR}/${magicStrings.NS_FILE}`
+    if (!await fs.pathExists(nsFilePath)) {
+      // if the settings file doesn't exist yet then it's brand new...
       const newAppTasks = await createNewCode(codeDir, starterDir)// , finalTemplateDir)
       await newAppTasks.run()
     }
