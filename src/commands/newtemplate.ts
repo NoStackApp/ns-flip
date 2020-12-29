@@ -15,37 +15,20 @@ import * as chalk from 'chalk'
 import {resolveDir} from '../shared/resolveDir'
 
 const fs = require('fs-extra')
-const path = require('path')
 
 function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
-  const {
-    nsDir,
-    original,
-    templateName,
-  } = requirements
+  const {templateDir} = requirements
 
-  const fullNsDir = resolveDir(nsDir)
-  const originalPath = resolveDir(original)
-
-  // const originalParsed = path.parse(originalPath)
-  // const originalName = originalParsed.name
-  // const templateNameShortened = templateName.replace('ns-template-', '')
-
-  return `Created the template at '${fullNsDir}/templates/ns-template-${templateName}'.
+  return `Created the template at '${templateDir}'.
 See instructions to get it working:
     ${links.DOCUMENTATION}/Creating-Templates.
 
 Paste the following into your browser to set the variables used in the examples there
 (you may want to save the following lines to a file to reuse easily):
 
-NS_DIR=${fullNsDir}
-TEMPLATES=$NS_DIR/templates
-SAMPLES=$NS_DIR/samples
-ORIGINAL=${originalPath}
-
-TEMPLATE=$TEMPLATES/ns-template-${templateName}
-SAMPLE=$SAMPLES/${templateName}-code.sample
-CODE=$SAMPLES/${templateName}-code
+TEMPLATE=${templateDir}
+SAMPLE=${templateDir}-code.sample
+CODE=${templateDir}-code
 `
 }
 
@@ -59,10 +42,16 @@ export default class Newtemplate extends Command {
       description: 'directory containing the sample code from which you want to template',
       required: false,
     }),
+    templateDir: flags.string({
+      char: 't',
+      description: 'directory for the template',
+      required: false,
+    }),
+
   }
 
   static examples = [
-    '$ ns newtemplate',
+    '$ ns newtemplate -s $SAMPLE -t $TEMPLATE ',
   ]
 
   async run() {
@@ -71,31 +60,22 @@ export default class Newtemplate extends Command {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {flags} = this.parse(Newtemplate)
     const sample = resolveDir(flags.sample)
+    const defaultTemplateDir = resolveDir(flags.templateDir)
 
     try {
-      const responses: TemplateRequirements = await newTemplateQuestions(sample)
+      const defaults = {
+        sample,
+        templateDir: defaultTemplateDir || '',
+      }
+      const responses: TemplateRequirements = await newTemplateQuestions(defaults)
       await generateTemplateFiles(responses)
       this.log(printInstructionsForNewTemplate(responses))
 
-      const {
-        nsDir,
-        original,
-        templateName,
-      } = responses
-      const fullNsDir = resolveDir(nsDir)
+      const {templateDir} = responses
 
-      const originalPath = resolveDir(original)
-
-      const originalParsed = path.parse(originalPath)
-      const originalName = originalParsed.name
-
-      const templates = `${fullNsDir}/templates`
-      const samples = `${fullNsDir}/samples`
-
-      const templateDir = `${templates}/ns-template-${templateName}`
       const config = await getConfig(templateDir)
-      const sampleDir = `${samples}/${originalName}`
-      const codeDir = `${samples}/${templateName}-code`
+      const sampleDir = `${templateDir}-code${suffixes.SAMPLE_DIR}`
+      const codeDir = `${templateDir}-code`
 
       const starterDir = codeDir + suffixes.STARTUP_DIR
       await getPreCommands(config)
@@ -112,7 +92,7 @@ export default class Newtemplate extends Command {
       // console.log(`config = ${JSON.stringify(config, null, 2)}`)
       await setConfig(templateDir, config)
 
-      this.log(chalk.green(`\nYour template has been created at ${templateDir}.` +
+      this.log(chalk.green(`\nYour template has been created at ${templateDir}. ` +
         `See documentation at ${links.DOCUMENTATION}`))
     } catch (error) {
       this.log(error)

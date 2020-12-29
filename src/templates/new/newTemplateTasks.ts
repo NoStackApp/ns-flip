@@ -41,31 +41,23 @@ async function createSampleAndTemplate(sample: string, originalPath: string, tem
 
 export async function newTemplateTasks(requirements: TemplateRequirements) {
   const {
-    nsDir,
+    templateDir,
     original,
-    templateName,
   } = requirements
 
-  const fullNsDir = expandTilde(nsDir)
   const originalPath = expandTilde(original)
 
   // const originalParsed = path.parse(originalPath)
   // const originalName = originalParsed.name
 
-  const templatesDir = `${fullNsDir}/${dirNames.TEMPLATES}`
-  const samplesDir = `${fullNsDir}/${dirNames.SAMPLES}`
-  const sample = `${samplesDir}/${templateName}-code${suffixes.SAMPLE_DIR}`
-  const template = `${templatesDir}/ns-template-${templateName}`
+  const sample = `${templateDir}-code${suffixes.SAMPLE_DIR}`
 
   const newTemplateTasklist = [
     {
       title: 'Set up Recommended Directories',
       task: async () => {
         try {
-          await ensureDirectory(fullNsDir)
-          await ensureDirectory(templatesDir)
-          // await ensureDirectory(startersDir)
-          await ensureDirectory(samplesDir)
+          await ensureDirectory(templateDir)
         } catch (error) {
           throw new Error(`${chalk.red('error creating recommended directories:')}
           ${error}`)
@@ -75,13 +67,13 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
     {
       title: 'Create SAMPLE and TEMPLATE',
       task: async () => {
-        await createSampleAndTemplate(sample, originalPath, template)
+        await createSampleAndTemplate(sample, originalPath, templateDir)
       },
     },
     {
       title: 'Generate Files',
       task: async () => {
-        createTemplateFiles(requirements)
+        await createTemplateFiles(requirements)
       },
     },
   ]

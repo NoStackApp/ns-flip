@@ -4,27 +4,21 @@ import {TemplateRequirements} from './TemplateRequirements'
 
 export const chalk = require('chalk')
 export const fs = require('fs-extra')
-const expandTilde = require('expand-tilde')
 
 export async function createTemplateFiles(requirements: TemplateRequirements) {
   const {
-    nsDir,
+    templateDir,
     templateName,
     category,
     customDir,
     fileFilter,
   } = requirements
 
-  const fullNsDir = expandTilde(nsDir)
-  const templatesDir = `${fullNsDir}/${dirNames.TEMPLATES}`
-  const generalDir = `${fullNsDir}/${dirNames.GENERAL}`
-  const template = `${templatesDir}/ns-template-${templateName}`
-
   const context = {
     templateName,
     category,
     nsFlipDocumentation: links.DOCUMENTATION,
-    templateDirectory: template,
+    templateDirectory: templateDir,
     customDir,
     fileFilter,
   }
@@ -34,10 +28,11 @@ export async function createTemplateFiles(requirements: TemplateRequirements) {
   async function outputTemplateFile(fileName: string) {
     const fileTemplateName = `${fileTemplatesDir}/${fileName}.hbs`
     const templateName = await loadFileTemplate(fileTemplateName, true)
-    await fs.outputFile(`${template}/${fileName}`, templateName(context))
+    await fs.outputFile(`${templateDir}/${fileName}`, templateName(context))
   }
 
   const generic = `${fileTemplatesDir}/${fileNames.GENERIC_FILE}`
+  const generalDir = `${templateDir}/${dirNames.GENERAL}`
 
   try {
     await fs.copy(generic, `${generalDir}/${fileNames.GENERIC_FILE}`)
