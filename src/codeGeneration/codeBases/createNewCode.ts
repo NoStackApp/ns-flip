@@ -1,7 +1,5 @@
 import {getCodeDir} from '../../inputs/getCodeDir'
 import {errorMessage} from '../../shared/errorMessage'
-// import {magicStrings} from '../constants'
-// import {copyTemplateToMeta} from './copyTemplateToMeta'
 
 const chalk = require('chalk')
 const fs = require('fs-extra')

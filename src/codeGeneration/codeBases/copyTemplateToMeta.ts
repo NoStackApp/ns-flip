@@ -1,4 +1,4 @@
-// import execa = require('execa');
+import execa = require('execa');
 
 const chalk = require('chalk')
 const fs = require('fs-extra')
@@ -10,6 +10,14 @@ export async function copyTemplateToMeta(codeTemplateDir: string, templateDir: s
     await fs.emptyDir(codeTemplateDir)
     // copyProjectDirectory(templateDir, codeTemplateDir)
     await fs.copy(templateDir, codeTemplateDir)
+    const templatePackageJsonPath = `${codeTemplateDir}/package.json`
+    if (await fs.pathExists(templatePackageJsonPath)) {
+      await execa(
+        'npm',
+        ['install'],
+        {cwd: codeTemplateDir}
+      )
+    }
     // , {
     //   filter: function (path: any) {
     //     return path.indexOf('node_modules') <= -1
