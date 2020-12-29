@@ -44,7 +44,8 @@ export async function createCodeBase(
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
   if (templateDir) {
-    const initFunctionFile = `${templateDir}/general/init.ts`
+    await copyTemplateToMeta(codeTemplateDir, templateDir)
+    const initFunctionFile = `${codeTemplateDir}/general/init.ts`
     if (await fs.pathExists(initFunctionFile)) {
       const {init} = require(initFunctionFile)
       session = await init(commands.GENERATE, codeDir)
@@ -53,10 +54,6 @@ export async function createCodeBase(
 
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {
     await createStarterAndNewCode(templateDir, codeDir, session)
-  }
-
-  if (templateDir) {
-    await copyTemplateToMeta(codeTemplateDir, templateDir)
   }
 
   await regenerateCode(codeDir, session)

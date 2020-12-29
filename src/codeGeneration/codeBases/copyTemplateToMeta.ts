@@ -6,6 +6,7 @@ const fs = require('fs-extra')
 export async function copyTemplateToMeta(codeTemplateDir: string, templateDir: string) {
   if (codeTemplateDir === templateDir) return
   try {
+    await fs.ensureDir(codeTemplateDir)
     await fs.emptyDir(codeTemplateDir)
     // copyProjectDirectory(templateDir, codeTemplateDir)
     await fs.copy(templateDir, codeTemplateDir)
