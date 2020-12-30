@@ -41,9 +41,8 @@ async function createNewTemplate(model: string, defaultTemplateDir: string) {
 
   if (suggestedDependencies) await setupDependencies(suggestedDependencies, config)
   await setConfig(templateDir, config)
-  await installDependencies(config, starterDir)
 
-  // console.log(`config = ${JSON.stringify(config, null, 2)}`)
+  await installDependencies(config, starterDir)
   await setConfig(templateDir, config)
 
   return templateDir
