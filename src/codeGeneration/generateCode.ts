@@ -26,7 +26,7 @@ export async function generateCode(
   // console.log(`stacklocation=${codeDir}/stack.json`)
   // const stackInfo: Schema = await fs.readJSON(jsonPath) // await generateJSON.bind(this)(template, codeDir)
 
-  const metaDir = `${codeDir}/${dirNames.META_DIR}`
+  const metaDir = `${codeDir}/${dirNames.META}`
   const templateDir = `${metaDir}/${dirNames.TEMPLATE}`
 
   try {

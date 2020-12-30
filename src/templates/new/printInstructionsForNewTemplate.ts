@@ -1,6 +1,6 @@
 import {links, suffixes} from '../../shared/constants'
 import * as chalk from 'chalk'
-import {attention, menuOption} from '../../shared/constants/chalkColors'
+import {attention, generalOption} from '../../shared/constants/chalkColors'
 
 export function printInstructionsForNewTemplate(templateDir: string) {
   return `Your template has been created at ${templateDir}. ` +
@@ -14,6 +14,6 @@ MODEL=${templateDir}${suffixes.MODEL_DIR}
 CODE=${templateDir}${suffixes.SAMPLE_DIR}
 
 ` +
-    'You can now call ' + menuOption('ns filediffs $TEMPLATE') +
+    'You can now call ' + generalOption('ns filediffs $TEMPLATE') +
     ' to be guided through the next steps for creating a complete template.'
 }

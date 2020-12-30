@@ -1,7 +1,6 @@
 import {dirNames, fileNames, suffixes} from '../shared/constants'
 import {getNsInfo} from '../shared/nsFiles/getNsInfo'
 import {getConfig} from '../shared/configs/getConfig'
-import {checkForUpdates} from '../shared/checkForUpdates'
 import {storeAddedCode} from './customCode/storeAddedCode'
 import {copyCodeBaseToNewDir} from './customCode/copyCodeBaseToNewDir'
 // import {ensureIgnoredExist} from '../testing/ensureIgnoredExist'
@@ -34,7 +33,7 @@ const fs = require('fs-extra')
 // }
 
 export async function regenerateCode(codeDir: string, session: any) {
-  const metaDir = `${codeDir}/${dirNames.META_DIR}`
+  const metaDir = `${codeDir}/${dirNames.META}`
   const nsInfo = await getNsInfo(codeDir)
   const starter = `${codeDir}${suffixes.STARTUP_DIR}`
 
@@ -49,7 +48,7 @@ export async function regenerateCode(codeDir: string, session: any) {
         'You need a starter to generate code.')
 
   try {
-    checkForUpdates()
+    // checkForUpdates()
 
     const {general} = config
     let generalSettings = nsInfo.general || {}
@@ -57,16 +56,13 @@ export async function regenerateCode(codeDir: string, session: any) {
     if (Object.keys(generalSettings).length === 0) generalSettings = await createSpecElement(general, session)
     nsInfo.general = generalSettings
     await setNsInfo(codeDir, nsInfo)
-
-    // store added code before generating new code.
     await storeAddedCode(codeDir, config)
 
     // replace the backup
     await fs.remove(backupDir)
     await copyCodeBaseToNewDir(codeDir, backupDir)
-    await fs.remove(codeDir)
   } catch (error) {
-    throw new Error(`could not replace the backup: ${error}`)
+    throw new Error(`could not generate the code: ${error}`)
   }
 
   // regenerate the code
@@ -75,13 +71,6 @@ export async function regenerateCode(codeDir: string, session: any) {
   } catch (error) {
     throw new Error(`could not copy code base: ${error}`)
   }
-
-  // try {
-  //   await restoreMetaDir(codeDir)
-  // } catch (error) {
-  //   console.error(JSON.stringify(error))
-  //   throw new Error(`could not restore meta dir: ${error}`)
-  // }
 
   try {
     await moveOverIgnored(backupDir, codeDir, config)

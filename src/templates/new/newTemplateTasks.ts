@@ -1,43 +1,11 @@
-import {dirNames, suffixes} from '../../shared/constants'
+import {suffixes} from '../../shared/constants'
 import {TemplateRequirements} from './TemplateRequirements'
-// import {help} from '@oclif/command/lib/flags'
 import {ensureDirectory} from '../../shared/ensureDirectory'
 import {createTemplateFiles} from './createTemplateFiles'
+import {chalk, createSampleAndTemplate} from './createSampleAndTemplate'
 
-const chalk = require('chalk')
-const fs = require('fs-extra')
-
-// const execa = require('execa')
 const expandTilde = require('expand-tilde')
 const Listr = require('listr')
-// const path = require('path')
-
-async function createSampleAndTemplate(sample: string, originalPath: string, template: string) {
-  const createTemplateDirectory = async (dirName: string) =>
-    ensureDirectory(`${template}/${dirName}`)
-
-  try {
-    // if (await fs.pathExists(sample))
-    //   throw new Error(`a sample file ${sample} already exists.` +
-    //   '  Please move that directory or create a new project name.')
-    await fs.remove(sample)
-    await fs.copy(originalPath, sample)
-  } catch (error) {
-    throw new Error(`${chalk.red(`error copying ${originalPath} to SAMPLE`)}
-          ${error}`)
-  }
-
-  try {
-    await ensureDirectory(template)
-    await createTemplateDirectory(dirNames.STANDARD)
-    await createTemplateDirectory(dirNames.PARTIALS)
-    await createTemplateDirectory(dirNames.HELPERS)
-    await createTemplateDirectory(dirNames.STATIC)
-  } catch (error) {
-    throw new Error(`${chalk.red('error creating recommended TEMPLATE directories:')}
-          ${error}`)
-  }
-}
 
 export async function newTemplateTasks(requirements: TemplateRequirements) {
   const {
@@ -45,12 +13,8 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
     original,
   } = requirements
 
-  const originalPath = expandTilde(original)
-
-  // const originalParsed = path.parse(originalPath)
-  // const originalName = originalParsed.name
-
-  const sample = `${templateDir}-code${suffixes.SAMPLE_DIR}`
+  const modelPath = expandTilde(original)
+  const samplePath = `${templateDir}${suffixes.SAMPLE_DIR}`
 
   const newTemplateTasklist = [
     {
@@ -65,9 +29,9 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
       },
     },
     {
-      title: 'Create SAMPLE and TEMPLATE',
+      title: 'Create SAMPLE and TEMPLATE folders',
       task: async () => {
-        await createSampleAndTemplate(sample, originalPath, templateDir)
+        await createSampleAndTemplate(samplePath, modelPath, templateDir)
       },
     },
     {

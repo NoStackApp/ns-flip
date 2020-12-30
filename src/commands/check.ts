@@ -1,5 +1,5 @@
 import {Command, flags} from '@oclif/command'
-import {links, dirNames, fileNames, suffixes, magicStrings} from '../shared/constants'
+import {links, dirNames, fileNames, suffixes} from '../shared/constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
@@ -41,7 +41,7 @@ export default class Check extends Command {
     const codeDir = resolveDir(args.codeDir)
 
     const testDir = `${codeDir}${suffixes.TEST_DIR}`
-    const testMetaDir = `${testDir}/${dirNames.META_DIR}`
+    const testMetaDir = `${testDir}/${dirNames.META}`
 
     const diffsFile = `${testMetaDir}/${fileNames.DIFFS}`
     const logFile = `${testMetaDir}/${fileNames.TESTS_LOG}`
@@ -50,7 +50,7 @@ export default class Check extends Command {
 
     let logMessage = `
 You will find all files showing discrepancies in the file ${diffsFile}.
-Any discrepancy shown is a problem. See ${links.NS_RULES} for more info
+Any discrepancy shown is a problem. See ${links.SAFE_CODE_RULES} for more info
 about NoStack compatible code.  For specific instructions to resolve
 discrepancies, see ${links.TEST_RESULTS}. `
     if (problemsFound) {
@@ -63,7 +63,7 @@ See the log file ${logFile} or the above messages for more information.`)
 :( The app did not pass the tests. :(`, false)
       await logEntry(logFile, logMessage, true)
 
-      this.log(`For documentation: ${links.DOCUMENTATION}/${magicStrings.TEST_RESULTS_DOCUMENTATION}`)
+      this.log(`For documentation: ${links.TEST_RESULTS}`)
 
       return 1
     }

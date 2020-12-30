@@ -7,12 +7,6 @@ export async function copyCodeBaseToNewDir(codeDir: string, newDir: string) {
     throw new Error(`the directory ${codeDir} does not exist. Please confirm it or create it separately`)
   }
 
-  // try {
-  //   await copyProjectDirectory(codeDir, newDir)
-  // } catch (error) {
-  //   console.error(error)
-  //   throw new Error(`could not copy ${codeDir} to ${newDir}`)
-  // }
   try {
     await fs.emptyDir(newDir)
     await fs.copy(codeDir, newDir)

@@ -62,15 +62,21 @@ const domains = {
   NS_FLIP_DOMAIN: 'https://ns-flip.nostack.net/',
 }
 
+export const docSubjects = {
+  ADD_FILES: 'Add-Files-For-Customization',
+  TEST_RESULTS_DOCUMENTATION: 'Understanding-Test-Results',
+  SAFE_CODE: 'Safe-Custom-Code',
+}
 export const links = {
   DOCUMENTATION: domains.NS_FLIP_DOMAIN,
-  TEST_RESULTS: `${domains.NS_FLIP_DOMAIN}/Understanding-Test-Results`,
-  NS_RULES: `${domains.NS_FLIP_DOMAIN}/Safe-Custom-Code`,
+  TEST_RESULTS: `${domains.NS_FLIP_DOMAIN}/${docSubjects.TEST_RESULTS_DOCUMENTATION}`,
+  SAFE_CODE_RULES: `${domains.NS_FLIP_DOMAIN}/${docSubjects.SAFE_CODE}`,
+  ADDING_CUSTOM_FILES: `${domains.NS_FLIP_DOMAIN}/${docSubjects.ADD_FILES}`,
 }
 
 export const magicStrings = {
   STANDARD_UNIT: 'standard',
-  TEST_RESULTS_DOCUMENTATION: 'Understanding-Test-Results',
+  DEFAULT_EXCLUDED_FOLDERS: 'node_modules,lib,.idea',
 }
 
 export const placeholders = {
@@ -83,7 +89,7 @@ export const dirNames = {
   FILE_TEMPLATES: 'fileTemplates',
   GENERAL: 'general',
   HELPERS: 'helpers',
-  META_DIR: 'meta',
+  META: 'meta',
   PARTIALS: 'partials',
   SAMPLES: 'samples',
   STANDARD: 'standard',

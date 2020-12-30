@@ -11,7 +11,7 @@ export async function createCodeBase(
   codeDir: string,
   noSetup: boolean
 ) {
-  const codeMetaDir = `${codeDir}/${dirNames.META_DIR}`
+  const codeMetaDir = `${codeDir}/${dirNames.META}`
   const codeTemplateDir = `${codeMetaDir}/${dirNames.TEMPLATE}`
   const existsCodeTemplateDir = await fs.pathExists(codeTemplateDir)
   let session = {

@@ -13,10 +13,10 @@ import {moveOverIgnored} from './moveOverIgnored'
 const fs = require('fs-extra')
 
 export async function failsTests(codeDir: string) {
-  const metaDir = `${codeDir}/${dirNames.META_DIR}`
+  const metaDir = `${codeDir}/${dirNames.META}`
   const starter = `${codeDir}${suffixes.STARTUP_DIR}`
   const testDir = `${codeDir}${suffixes.TEST_DIR}`
-  const testMetaDir = `${testDir}/${dirNames.META_DIR}`
+  const testMetaDir = `${testDir}/${dirNames.META}`
 
   const diffsFile = `${testMetaDir}/${fileNames.DIFFS}`
   const logFile = `${testMetaDir}/${fileNames.TESTS_LOG}`

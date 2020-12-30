@@ -61,7 +61,7 @@ export default class Filediffs extends Command {
 
     try {
       const config = await getConfig(codeDir +
-        `/${dirNames.META_DIR}/${dirNames.TEMPLATE}`)
+        `/${dirNames.META}/${dirNames.TEMPLATE}`)
       const nsInfo = await getNsInfo(codeDir)
       const originalSettings = JSON.parse(JSON.stringify(nsInfo))
 

@@ -46,7 +46,8 @@ async function storeCustomCodeRegions(
 
 export const storeAddedCode = async (rootDir: string, config: Configuration) => {
   // const compsDir = `${rootDir}/src/${names.COMP_DIR}`
-  const metaDir = `${rootDir}/${dirNames.META_DIR}`
+  if (!await fs.pathExists(rootDir)) return
+  const metaDir = `${rootDir}/${dirNames.META}`
   const customCodeFile = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
 
   const customCode: CustomCodeRepository = {
@@ -55,5 +56,9 @@ export const storeAddedCode = async (rootDir: string, config: Configuration) => 
     removedCode: {},
   }
 
-  return storeCustomCodeRegions(rootDir, customCode, customCodeFile, config)
+  try {
+    return storeCustomCodeRegions(rootDir, customCode, customCodeFile, config)
+  } catch (error) {
+    throw new Error(`can't store custom code: ${error}`)
+  }
 }

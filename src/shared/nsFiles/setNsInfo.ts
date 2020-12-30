@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 const yaml = require('js-yaml')
 
 export async function setNsInfo(codeDir: string, nsInfo: NsInfo) {
-  const nsFile = codeDir + `/${dirNames.META_DIR}/` + fileNames.NS_FILE
+  const nsFile = codeDir + `/${dirNames.META}/` + fileNames.NS_FILE
   let outputContents
   try {
     if (nsInfo) {

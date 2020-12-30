@@ -55,7 +55,7 @@ export async function createStarterAndNewCode(
       title: 'Add Meta-Data',
       task:
         async () => {
-          const metaDir = `${starterDir}/${dirNames.META_DIR}`
+          const metaDir = `${starterDir}/${dirNames.META}`
           const customCode = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
 
           let nsInfo: NsInfo
@@ -112,7 +112,7 @@ export async function createStarterAndNewCode(
   try {
     await setup.run()
     await installDependencies.run()
-    const nsFilePath = `${codeDir}/${dirNames.META_DIR}/${fileNames.NS_FILE}`
+    const nsFilePath = `${codeDir}/${dirNames.META}/${fileNames.NS_FILE}`
     if (!await fs.pathExists(nsFilePath)) {
       // if the settings file doesn't exist yet then it's brand new...
       const newAppTasks = await createNewCode(codeDir, starterDir)// , finalTemplateDir)

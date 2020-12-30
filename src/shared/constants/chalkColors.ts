@@ -2,7 +2,7 @@ import * as chalk from 'chalk'
 
 // emphasized (bright)
 export const attention = (text: string) => chalk.redBright(text)
-export const menuOption = (text: string) => chalk.blueBright(text)
+export const generalOption = (text: string) => chalk.blueBright(text)
 export const exitOption = (text: string) => chalk.yellowBright(text)
 export const progress = (text: string) => chalk.greenBright(text)
 

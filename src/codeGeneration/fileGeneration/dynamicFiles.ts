@@ -24,7 +24,7 @@ export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDi
   const queriesDir = `${codeDir}/${config.dirs.queries}`
 
   // WARNING: breaking change from 1.6.8!!
-  const metaDir = `${codeDir}/${dirNames.META_DIR}`
+  const metaDir = `${codeDir}/${dirNames.META}`
   const templateDir = `${metaDir}/${dirNames.TEMPLATE}`
 
   const queryFileTemplate = await loadFileTemplate(`${templateDir}/query.hbs`)

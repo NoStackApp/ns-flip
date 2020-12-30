@@ -2,6 +2,7 @@ import * as chalk from 'chalk'
 import {Result} from 'dir-compare'
 import {getConfig} from '../../../shared/configs/getConfig'
 import {setConfig} from '../../../shared/configs/setConfig'
+import {progress} from '../../../shared/constants/chalkColors'
 
 const inquirer = require('inquirer')
 const fs = require('fs-extra')
@@ -24,7 +25,7 @@ function getNewFileQuestions(fileName: string) {
 
 async function copyFileToSample(relativePath: string, codeDir: string, sampleDir: string) {
   try {
-    fs.copy(codeDir + '/' + relativePath, sampleDir + '/' + relativePath)
+    await fs.copy(codeDir + '/' + relativePath, sampleDir + '/' + relativePath)
   } catch (error) {
     throw new Error(`cannot copy ${relativePath} from ${codeDir} to ${sampleDir}: ${error}`)
   }
@@ -34,7 +35,7 @@ export async function handleNewFiles(
   res: Result,
   templateDir: string,
   code: string,
-  sample: string
+  model: string
 ) {
   if (res.diffSet) {
     const newFileInfo = res.diffSet.filter((file: any) => (file.type2 === 'missing'))
@@ -48,7 +49,7 @@ export async function handleNewFiles(
     const newFilesForPrompt: string[] = []
     newFiles.map(relativeFilePath => {
       if (relativeFilePath.startsWith('meta')) {
-        copyFileToSample(relativeFilePath, code, sample)
+        copyFileToSample(relativeFilePath, code, model)
       } else {
         newFilesForPrompt.push(relativeFilePath)
       }
@@ -71,7 +72,9 @@ export async function handleNewFiles(
         await setConfig(templateDir, config)
       }
       if (newFileTreatment === newFileOptions.COPY) {
-        await copyFileToSample(newFileTreatment, code, sample)
+        await copyFileToSample(newFileName, code, model)
+        // eslint-disable-next-line no-console
+        console.log(progress(`copied ${newFileName} to model from code...`))
       }
     }
   }

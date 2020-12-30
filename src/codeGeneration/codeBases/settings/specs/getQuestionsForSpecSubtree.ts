@@ -1,6 +1,6 @@
 import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {ADD_NEW, AnswerValue, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
-import {attention, exitOption, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
+import {attention, exitOption, generalOption, progress, userValue} from '../../../../shared/constants/chalkColors'
 import {extendedDescription} from './extendedDescription'
 import {askForValue} from './askForValue'
 
@@ -21,7 +21,7 @@ function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: a
 
   if (typeOfValue === types.LIST || typeOfValue === types.SET) {
     const required = specType.required || false
-    const nameShown = `edit ${menuOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
+    const nameShown = `edit ${generalOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
     return {
       name: nameShown,
       value: {name, typeOfValue, required},
@@ -34,7 +34,7 @@ function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: a
     displayedValue = currentValue.length < 40 ?
       currentValue :
       currentValue.substr(0, 35) + '...'
-  let nameShown = `edit ${menuOption(name)} [${extendedDescription(typeOfValue, typeDescription)}]`
+  let nameShown = `edit ${generalOption(name)} [${extendedDescription(typeOfValue, typeDescription)}]`
   if (specType.required) nameShown += attention('*')
   nameShown += ` value: ${userValue(displayedValue)}`
   return {
@@ -57,7 +57,7 @@ function getChoicesForSpecChildren(
         const name = instance.name || 'unnamed'
         const typeOfValue = types.SET
         specChildrenChoices.push({
-          name: `edit ${menuOption(name)}`,
+          name: `edit ${generalOption(name)}`,
           value: {name, typeOfValue, required: false, index},
           short: name,
         })

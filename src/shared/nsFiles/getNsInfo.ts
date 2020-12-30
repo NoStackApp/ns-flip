@@ -6,7 +6,7 @@ const yaml = require('js-yaml')
 
 export async function getNsInfo(codeDir: string) {
   let nsInfo: NsInfo
-  const nsFile = codeDir + `/${dirNames.META_DIR}/` + fileNames.NS_FILE
+  const nsFile = codeDir + `/${dirNames.META}/` + fileNames.NS_FILE
   try {
     const nsYml = fs.readFileSync(nsFile, 'utf8')
     nsInfo = await yaml.safeLoad(nsYml)
