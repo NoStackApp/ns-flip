@@ -1,5 +1,5 @@
 import {Command, flags} from '@oclif/command'
-import {links, dirNames, fileNames, suffixes} from '../shared/constants'
+import {links, dirNames, fileNames, suffixes, magicStrings} from '../shared/constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
@@ -63,7 +63,7 @@ See the log file ${logFile} or the above messages for more information.`)
 :( The app did not pass the tests. :(`, false)
       await logEntry(logFile, logMessage, true)
 
-      this.log(`For documentation: ${links.DOCUMENTATION}/Understanding-Test-Results`)
+      this.log(`For documentation: ${links.DOCUMENTATION}/${magicStrings.TEST_RESULTS_DOCUMENTATION}`)
 
       return 1
     }

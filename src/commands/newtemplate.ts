@@ -1,52 +1,8 @@
 import {Command, flags} from '@oclif/command'
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {newTemplateQuestions} from '../templates/new/newTemplateQuestions'
-import {TemplateRequirements} from '../templates/new/TemplateRequirements'
-import {generateTemplateFiles} from '../templates/new/generateTemplateFiles'
-import {links, suffixes} from '../shared/constants'
-import {setupDependencies} from '../templates/new/dependencies/setupDependencies'
-import {getConfig} from '../shared/configs/getConfig'
-import {executePreCommands} from '../templates/new/preCommands/executePreCommands'
-import {setPackagesToSuggestInserting} from '../templates/new/dependencies/setPackagesToSuggestInserting'
-import {setConfig} from '../shared/configs/setConfig'
-import {installDependencies} from '../templates/new/dependencies/installDependencies'
-import {getPreCommands} from '../templates/new/preCommands/getPreCommands'
-import * as chalk from 'chalk'
 import {resolveDir} from '../shared/resolveDir'
 import {printInstructionsForNewTemplate} from '../templates/new/printInstructionsForNewTemplate'
-
-const fs = require('fs-extra')
-
-async function createNewTemplate(model: string, defaultTemplateDir: string) {
-  const defaults = {
-    model,
-    templateDir: defaultTemplateDir || '',
-  }
-  const responses: TemplateRequirements = await newTemplateQuestions(defaults)
-  await generateTemplateFiles(responses)
-
-  const {templateDir} = responses
-
-  const config = await getConfig(templateDir)
-  const modelDir = `${templateDir}${suffixes.MODEL_DIR}`
-  const codeDir = `${templateDir}${suffixes.SAMPLE_DIR}`
-
-  const starterDir = codeDir + suffixes.STARTUP_DIR
-  await getPreCommands(config)
-
-  await executePreCommands(config, starterDir, {codeDir})
-  fs.ensureDir(starterDir) // if no preCommands created the starterDir, we do so now.
-
-  const suggestedDependencies = await setPackagesToSuggestInserting(starterDir, modelDir)
-
-  if (suggestedDependencies) await setupDependencies(suggestedDependencies, config)
-  await setConfig(templateDir, config)
-
-  await installDependencies(config, starterDir)
-  await setConfig(templateDir, config)
-
-  return templateDir
-}
+import {createNewTemplate} from '../templates/new/createNewTemplate'
 
 export default class Newtemplate extends Command {
   static description = 'create new template.'

@@ -70,6 +70,7 @@ export const links = {
 
 export const magicStrings = {
   STANDARD_UNIT: 'standard',
+  TEST_RESULTS_DOCUMENTATION: 'Understanding-Test-Results',
 }
 
 export const placeholders = {
