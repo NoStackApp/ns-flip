@@ -44,6 +44,8 @@ export default class Filediffs extends Command {
     const sample = resolveDir(flags.sampleDir)
 
     try {
+      const finalCode = code || templateDir + '.code'
+      const finalSample = sample || templateDir + '.code-sample'
       const config = await getConfig(templateDir)
       const allIgnored = getIgnoredList(config).map(dir => {
         if (dir.includes('/')) return '/' + dir
@@ -53,7 +55,7 @@ export default class Filediffs extends Command {
       if (excludeFilter.length > 0) excludeFilter += ','
       excludeFilter += 'node_modules,lib,.idea'
 
-      const res: Result = compareSync(code, sample, {
+      const res: Result = compareSync(finalCode, finalSample, {
         excludeFilter,
         compareContent: true,
       })

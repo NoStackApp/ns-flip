@@ -1,11 +1,11 @@
 import {Configuration} from '../constants/types/configuration'
-import {magicStrings} from '../constants'
+import {fileNames} from '../constants'
 
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
 
 export async function setConfig(templateDir: string, config: Configuration) {
-  const configFile = templateDir + '/' + magicStrings.CONFIG_FILE
+  const configFile = templateDir + '/' + fileNames.CONFIG_FILE
   try {
     if (config) await fs.outputFile(configFile, yaml.safeDump(config))
   } catch (error) {

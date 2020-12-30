@@ -2,7 +2,7 @@ import {copyCodeBaseToNewDir} from '../codeGeneration/customCode/copyCodeBaseToN
 import {generateCode} from '../codeGeneration/generateCode'
 import {insertCustomChanges} from '../codeGeneration/customCode/insertCustomChanges'
 import {storeAddedCode} from '../codeGeneration/customCode/storeAddedCode'
-import {magicStrings, suffixes} from '../shared/constants'
+import {dirNames, fileNames, suffixes} from '../shared/constants'
 import {getNsInfo} from '../shared/nsFiles/getNsInfo'
 import {getConfig} from '../shared/configs/getConfig'
 import {checkDirForDiscrepancies} from './checkDirForDiscrepancies'
@@ -13,24 +13,24 @@ import {moveOverIgnored} from './moveOverIgnored'
 const fs = require('fs-extra')
 
 export async function failsTests(codeDir: string) {
-  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
+  const metaDir = `${codeDir}/${dirNames.META_DIR}`
   const starter = `${codeDir}${suffixes.STARTUP_DIR}`
   const testDir = `${codeDir}${suffixes.TEST_DIR}`
-  const testMetaDir = `${testDir}/${magicStrings.META_DIR}`
+  const testMetaDir = `${testDir}/${dirNames.META_DIR}`
 
-  const diffsFile = `${testMetaDir}/${magicStrings.DIFFS}`
-  const logFile = `${testMetaDir}/${magicStrings.TESTS_LOG}`
+  const diffsFile = `${testMetaDir}/${fileNames.DIFFS}`
+  const logFile = `${testMetaDir}/${fileNames.TESTS_LOG}`
 
   const nsInfo = await getNsInfo(codeDir)
 
-  const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
+  const templateDir = `${metaDir}/${dirNames.TEMPLATE}`
 
   // WARNING: breaking change from 1.6.8!!
   // const config = await getConfiguration(template.dir)
   const config = await getConfig(templateDir)
 
   let problemsFound = false
-  if (!starter) throw new Error(`the '${magicStrings.NS_FILE}' file contains no starter.  ` +
+  if (!starter) throw new Error(`the '${fileNames.NS_FILE}' file contains no starter.  ` +
     'You need a starter to test the code.')
 
   // store added code before generating new code.
@@ -45,7 +45,7 @@ export async function failsTests(codeDir: string) {
 
     await generateCode(testDir, nsInfo, config)
 
-    const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+    const customCodeDoc = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
     await insertCustomChanges(testDir, customCodeDoc, config)
   } catch (error) {
     throw error

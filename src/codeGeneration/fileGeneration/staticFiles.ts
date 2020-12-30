@@ -4,7 +4,7 @@ import {loadFileTemplate} from '../../templates/loadFileTemplate'
 import {registerHelpers} from '../handlebars/registerHelpers'
 import {registerPartials} from '../handlebars/registerPartials'
 import {Configuration} from '../../shared/constants/types/configuration'
-import {magicStrings} from '../../shared/constants'
+import {placeholders} from '../../shared/constants'
 import {contextForStatic} from '../handlebars/context/contextForStatic'
 import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 
@@ -80,7 +80,7 @@ ${error}`)
           const fileTemplate = await loadFileTemplate(pathString)
 
           const {slug, specs} = instanceInfo
-          const fileName = name.replace(magicStrings.SLUG_PLACEHOLDER, slug) + suffix
+          const fileName = name.replace(placeholders.SLUG, slug) + suffix
           const fullFilePath = `${codeDir}/${directory}/${fileName}`
 
           const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config, codeDir)

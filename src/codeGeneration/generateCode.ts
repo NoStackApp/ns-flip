@@ -1,4 +1,4 @@
-import {magicStrings} from '../shared/constants'
+import {dirNames, fileNames} from '../shared/constants'
 import {NsInfo} from '../shared/constants/types/nsInfo'
 import {Schema} from '../shared/constants/types/schema'
 import {configuredDirs} from './fileGeneration/configuredDirs'
@@ -18,7 +18,7 @@ export async function generateCode(
   // jsonPath: string,
 ) {
   const {userClass, units, starter} = nsInfo
-  if (!starter) throw new Error(`the '${magicStrings.NS_FILE}' file contains no starter.  ` +
+  if (!starter) throw new Error(`the '${fileNames.NS_FILE}' file contains no starter.  ` +
     'You need a starter to generate code.')
 
   const stackInfo: Schema = await buildSchema(nsInfo, config)
@@ -26,8 +26,8 @@ export async function generateCode(
   // console.log(`stacklocation=${codeDir}/stack.json`)
   // const stackInfo: Schema = await fs.readJSON(jsonPath) // await generateJSON.bind(this)(template, codeDir)
 
-  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
-  const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
+  const metaDir = `${codeDir}/${dirNames.META_DIR}`
+  const templateDir = `${metaDir}/${dirNames.TEMPLATE}`
 
   try {
     // WARNING: breaking change from 1.6.8!!

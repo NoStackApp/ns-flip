@@ -1,12 +1,12 @@
 import {Command, flags} from '@oclif/command'
-import {links, magicStrings, suffixes} from '../shared/constants'
+import {links, dirNames, fileNames, suffixes} from '../shared/constants'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {failsTests} from '../testing/failsTests'
 import {logEntry} from '../testing/logEntry'
 import {resolveDir} from '../shared/resolveDir'
 
 const descriptionString = 'Confirms that your custom changes have been entered safely, ' +
-  `allowing you to generate with an updated or replaced template, or with a changed '${magicStrings.NS_FILE}' file. ` +
+  `allowing you to generate with an updated or replaced template, or with a changed '${fileNames.NS_FILE}' file. ` +
   'Essentially, generates a new version of the code ' +
   'and then simply compares it against your current version.  ' +
   'If there are differences, then there is a problem with your code.' +
@@ -41,10 +41,10 @@ export default class Check extends Command {
     const codeDir = resolveDir(args.codeDir)
 
     const testDir = `${codeDir}${suffixes.TEST_DIR}`
-    const testMetaDir = `${testDir}/${magicStrings.META_DIR}`
+    const testMetaDir = `${testDir}/${dirNames.META_DIR}`
 
-    const diffsFile = `${testMetaDir}/${magicStrings.DIFFS}`
-    const logFile = `${testMetaDir}/${magicStrings.TESTS_LOG}`
+    const diffsFile = `${testMetaDir}/${fileNames.DIFFS}`
+    const logFile = `${testMetaDir}/${fileNames.TESTS_LOG}`
 
     const problemsFound = await failsTests(codeDir)
 

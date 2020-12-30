@@ -1,4 +1,4 @@
-import {magicStrings, suffixes} from '../shared/constants'
+import {dirNames, fileNames, suffixes} from '../shared/constants'
 import {getNsInfo} from '../shared/nsFiles/getNsInfo'
 import {getConfig} from '../shared/configs/getConfig'
 import {checkForUpdates} from '../shared/checkForUpdates'
@@ -19,8 +19,8 @@ const fs = require('fs-extra')
 
 // async function restoreMetaDir(codeDir: string) {
 //   const backupDir = `${codeDir}${suffixes.BACKUP_DIR}`
-//   const backupMetaDir = `${backupDir}/${magicStrings.META_DIR}`
-//   const metaDir = `${codeDir}/${magicStrings.META_DIR}`
+//   const backupMetaDir = `${backupDir}/${dirNames.META_DIR}`
+//   const metaDir = `${codeDir}/${dirNames.META_DIR}`
 //   await fs.remove(metaDir)
 //
 //   await execa(
@@ -28,24 +28,24 @@ const fs = require('fs-extra')
 //     ['-r', backupMetaDir, metaDir],
 //   ).catch(
 //     (error: any) => {
-//       throw new Error(`error restoring ${magicStrings.META_DIR} from ${backupMetaDir}: ${error}`)
+//       throw new Error(`error restoring ${dirNames.META_DIR} from ${backupMetaDir}: ${error}`)
 //     },
 //   )
 // }
 
 export async function regenerateCode(codeDir: string, session: any) {
-  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
+  const metaDir = `${codeDir}/${dirNames.META_DIR}`
   const nsInfo = await getNsInfo(codeDir)
   const starter = `${codeDir}${suffixes.STARTUP_DIR}`
 
   // WARNING: breaking change from 1.6.8!!
   // const config = await getConfiguration(template.dir)
-  const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
+  const templateDir = `${metaDir}/${dirNames.TEMPLATE}`
   const config = await getConfig(templateDir)
 
   const backupDir = `${codeDir}${suffixes.BACKUP_DIR}`
 
-  if (!starter) throw new Error(`the '${magicStrings.NS_FILE}' file contains no starter.  ` +
+  if (!starter) throw new Error(`the '${fileNames.NS_FILE}' file contains no starter.  ` +
         'You need a starter to generate code.')
 
   try {
@@ -96,7 +96,7 @@ export async function regenerateCode(codeDir: string, session: any) {
   }
 
   try {
-    const customCodeDoc = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+    const customCodeDoc = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
     await new Promise(r => setTimeout(r, 2000))
     await insertCustomChanges(codeDir, customCodeDoc, config)
 

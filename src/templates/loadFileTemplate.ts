@@ -1,5 +1,5 @@
 import {expandNsAbbreviations} from './expandNsbbreviations'
-import {magicStrings} from '../shared/constants'
+import {placeholders} from '../shared/constants'
 
 const fs = require('fs-extra')
 const Handlebars = require('handlebars')
@@ -13,44 +13,44 @@ Handlebars.registerHelper('safe', function (text: string) {
 })
 
 Handlebars.registerHelper('start', function (locationName: string) {
-  return new Handlebars.SafeString(magicStrings.OPEN_COMMENT_PLACEHOLDER +
+  return new Handlebars.SafeString(placeholders.OPEN_COMMENT +
     ` ns__start_section ${locationName} ` +
-    magicStrings.CLOSE_COMMENT_PLACEHOLDER
+    placeholders.CLOSE_COMMENT
   )
 })
 
 Handlebars.registerHelper('end', function (locationName: string) {
   return new Handlebars.SafeString(
-    magicStrings.OPEN_COMMENT_PLACEHOLDER +
+    placeholders.OPEN_COMMENT +
     ` ns__end_section ${locationName} ` +
-    magicStrings.CLOSE_COMMENT_PLACEHOLDER
+    placeholders.CLOSE_COMMENT
   )
 })
 
 Handlebars.registerHelper('custom', function (locationName: string) {
   return new Handlebars.SafeString(
-    magicStrings.OPEN_COMMENT_PLACEHOLDER +
+    placeholders.OPEN_COMMENT +
     ` ns__custom_start ${locationName} ` +
-    magicStrings.CLOSE_COMMENT_PLACEHOLDER + '\n' +
-    magicStrings.OPEN_COMMENT_PLACEHOLDER +
+    placeholders.CLOSE_COMMENT + '\n' +
+    placeholders.OPEN_COMMENT +
     ` ns__custom_end ${locationName} ` +
-    magicStrings.CLOSE_COMMENT_PLACEHOLDER
+    placeholders.CLOSE_COMMENT
   )
 })
 
 Handlebars.registerHelper('customStart', function (locationName: string) {
   return new Handlebars.SafeString(
-    magicStrings.OPEN_COMMENT_PLACEHOLDER +
+    placeholders.OPEN_COMMENT +
     ` ns__custom_start ${locationName} ` +
-    magicStrings.CLOSE_COMMENT_PLACEHOLDER
+    placeholders.CLOSE_COMMENT
   )
 })
 
 Handlebars.registerHelper('customEnd', function (locationName: string) {
   return new Handlebars.SafeString(
-    magicStrings.OPEN_COMMENT_PLACEHOLDER +
+    placeholders.OPEN_COMMENT +
     ` ns__custom_end ${locationName} ` +
-    magicStrings.CLOSE_COMMENT_PLACEHOLDER
+    placeholders.CLOSE_COMMENT
   )
 })
 

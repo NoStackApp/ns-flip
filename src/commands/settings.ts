@@ -1,7 +1,7 @@
 import {Command, flags} from '@oclif/command'
 import {checkForUpdates} from '../shared/checkForUpdates'
 import {getConfig} from '../shared/configs/getConfig'
-import {magicStrings} from '../shared/constants'
+import {dirNames} from '../shared/constants'
 import {getNsInfo} from '../shared/nsFiles/getNsInfo'
 import {resolveDir} from '../shared/resolveDir'
 import {settingsMenu} from '../codeGeneration/codeBases/settings/settingsMenu'
@@ -61,7 +61,7 @@ export default class Filediffs extends Command {
 
     try {
       const config = await getConfig(codeDir +
-        `/${magicStrings.META_DIR}/${magicStrings.TEMPLATE}`)
+        `/${dirNames.META_DIR}/${dirNames.TEMPLATE}`)
       const nsInfo = await getNsInfo(codeDir)
       const originalSettings = JSON.parse(JSON.stringify(nsInfo))
 

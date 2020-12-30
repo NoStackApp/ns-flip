@@ -1,4 +1,4 @@
-import {magicStrings} from '../../shared/constants'
+import {dirNames, fileNames} from '../../shared/constants'
 // const findInFiles = require('find-in-files')
 // import {regExFileInfo} from '../constants/Regex/regExFileInfo'
 import {CustomCodeRepository} from '../../shared/constants/types/custom'
@@ -46,8 +46,8 @@ async function storeCustomCodeRegions(
 
 export const storeAddedCode = async (rootDir: string, config: Configuration) => {
   // const compsDir = `${rootDir}/src/${names.COMP_DIR}`
-  const metaDir = `${rootDir}/${magicStrings.META_DIR}`
-  const customCodeFile = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+  const metaDir = `${rootDir}/${dirNames.META_DIR}`
+  const customCodeFile = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
 
   const customCode: CustomCodeRepository = {
     addedCode: {},

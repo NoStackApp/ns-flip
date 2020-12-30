@@ -1,4 +1,4 @@
-import {commands, docPages, links, magicStrings} from '../../shared/constants'
+import {commands, dirNames, docPages, links} from '../../shared/constants'
 
 import {regenerateCode} from '../regenerateCode'
 import {copyTemplateToMeta} from './copyTemplateToMeta'
@@ -11,8 +11,8 @@ export async function createCodeBase(
   codeDir: string,
   noSetup: boolean
 ) {
-  const codeMetaDir = `${codeDir}/${magicStrings.META_DIR}`
-  const codeTemplateDir = `${codeMetaDir}/${magicStrings.TEMPLATE}`
+  const codeMetaDir = `${codeDir}/${dirNames.META_DIR}`
+  const codeTemplateDir = `${codeMetaDir}/${dirNames.TEMPLATE}`
   const existsCodeTemplateDir = await fs.pathExists(codeTemplateDir)
   let session = {
     codeDir,

@@ -7,7 +7,7 @@ import {allCaps} from '../../shared/inflections'
 import {loadFileTemplate} from '../../templates/loadFileTemplate'
 import {parseSpecName} from '../../shared/constants/parseSpecName'
 import {unitNameFromSpec} from './unitNameFromSpec'
-import {magicStrings} from '../../shared/constants'
+import {dirNames} from '../../shared/constants'
 import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 
 export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDir: string) {
@@ -24,8 +24,8 @@ export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDi
   const queriesDir = `${codeDir}/${config.dirs.queries}`
 
   // WARNING: breaking change from 1.6.8!!
-  const metaDir = `${codeDir}/${magicStrings.META_DIR}`
-  const templateDir = `${metaDir}/${magicStrings.TEMPLATE}`
+  const metaDir = `${codeDir}/${dirNames.META_DIR}`
+  const templateDir = `${metaDir}/${dirNames.TEMPLATE}`
 
   const queryFileTemplate = await loadFileTemplate(`${templateDir}/query.hbs`)
   try {

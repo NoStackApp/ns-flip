@@ -1,11 +1,11 @@
-import {magicStrings} from '../constants'
+import {dirNames, fileNames} from '../constants'
 import {NsInfo} from '../constants/types/nsInfo'
 
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
 
 export async function setNsInfo(codeDir: string, nsInfo: NsInfo) {
-  const nsFile = codeDir + `/${magicStrings.META_DIR}/` + magicStrings.NS_FILE
+  const nsFile = codeDir + `/${dirNames.META_DIR}/` + fileNames.NS_FILE
   let outputContents
   try {
     if (nsInfo) {
