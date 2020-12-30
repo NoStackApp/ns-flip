@@ -2,7 +2,7 @@ const inquirer = require('inquirer')
 const path = require('path')
 
 interface TemplateDefaults {
-  sample?: string;
+  model?: string;
   templateDir?: string;
   templateName?: string;
   category?: string;
@@ -11,7 +11,7 @@ interface TemplateDefaults {
 }
 
 export async function newTemplateQuestions(defaults: TemplateDefaults) {
-  const {sample, templateDir, category, customDir, fileFilter} = defaults
+  const {model, templateDir, category, customDir, fileFilter} = defaults
   let templateName = defaults.templateName
   if (!templateName && templateDir)
     templateName = path.basename(templateDir)
@@ -27,9 +27,9 @@ export async function newTemplateQuestions(defaults: TemplateDefaults) {
     {
       type: 'input',
       name: 'original',
-      message: 'Please enter the full path to a directory of a sample code base' +
+      message: 'Please enter the full path to a directory of your sample code base' +
         ' to serve as a model for your template',
-      when: () => !sample,
+      when: () => !model,
 
       // default: '~/projects/myApp',
     },
@@ -82,7 +82,7 @@ export async function newTemplateQuestions(defaults: TemplateDefaults) {
     throw new Error(`problem asking question: ${error}`)
   }
 
-  if (sample) response.original = sample
+  if (model) response.original = model
   const returned = {...response, ...defaults}
   return returned
 }

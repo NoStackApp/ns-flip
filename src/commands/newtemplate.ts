@@ -13,23 +13,40 @@ import {installDependencies} from '../templates/new/dependencies/installDependen
 import {getPreCommands} from '../templates/new/preCommands/getPreCommands'
 import * as chalk from 'chalk'
 import {resolveDir} from '../shared/resolveDir'
+import {printInstructionsForNewTemplate} from '../templates/new/printInstructionsForNewTemplate'
 
 const fs = require('fs-extra')
 
-function printInstructionsForNewTemplate(requirements: TemplateRequirements) {
-  const {templateDir} = requirements
+async function createNewTemplate(model: string, defaultTemplateDir: string) {
+  const defaults = {
+    model,
+    templateDir: defaultTemplateDir || '',
+  }
+  const responses: TemplateRequirements = await newTemplateQuestions(defaults)
+  await generateTemplateFiles(responses)
 
-  return `Created the template at '${templateDir}'.
-See instructions to get it working:
-    ${links.DOCUMENTATION}/Creating-Templates.
+  const {templateDir} = responses
 
-Paste the following into your browser to set the variables used in the examples there
-(you may want to save the following lines to a file to reuse easily):
+  const config = await getConfig(templateDir)
+  const modelDir = `${templateDir}${suffixes.MODEL_DIR}`
+  const codeDir = `${templateDir}${suffixes.SAMPLE_DIR}`
 
-TEMPLATE=${templateDir}
-SAMPLE=${templateDir}-code.sample
-CODE=${templateDir}-code
-`
+  const starterDir = codeDir + suffixes.STARTUP_DIR
+  await getPreCommands(config)
+
+  await executePreCommands(config, starterDir, {codeDir})
+  fs.ensureDir(starterDir) // if no preCommands created the starterDir, we do so now.
+
+  const suggestedDependencies = await setPackagesToSuggestInserting(starterDir, modelDir)
+
+  if (suggestedDependencies) await setupDependencies(suggestedDependencies, config)
+  await setConfig(templateDir, config)
+  await installDependencies(config, starterDir)
+
+  // console.log(`config = ${JSON.stringify(config, null, 2)}`)
+  await setConfig(templateDir, config)
+
+  return templateDir
 }
 
 export default class Newtemplate extends Command {
@@ -37,9 +54,9 @@ export default class Newtemplate extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
-    sample: flags.string({
-      char: 's',
-      description: 'directory containing the sample code from which you want to template',
+    model: flags.string({
+      char: 'm',
+      description: 'directory containing the model code base from which you want to template',
       required: false,
     }),
     templateDir: flags.string({
@@ -51,7 +68,7 @@ export default class Newtemplate extends Command {
   }
 
   static examples = [
-    '$ ns newtemplate -s $SAMPLE -t $TEMPLATE ',
+    '$ ns newtemplate -m $MODEL -t $TEMPLATE ',
   ]
 
   async run() {
@@ -59,41 +76,12 @@ export default class Newtemplate extends Command {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {flags} = this.parse(Newtemplate)
-    const sample = resolveDir(flags.sample)
+    const model = resolveDir(flags.model)
     const defaultTemplateDir = resolveDir(flags.templateDir)
 
     try {
-      const defaults = {
-        sample,
-        templateDir: defaultTemplateDir || '',
-      }
-      const responses: TemplateRequirements = await newTemplateQuestions(defaults)
-      await generateTemplateFiles(responses)
-      this.log(printInstructionsForNewTemplate(responses))
-
-      const {templateDir} = responses
-
-      const config = await getConfig(templateDir)
-      const sampleDir = `${templateDir}-code${suffixes.SAMPLE_DIR}`
-      const codeDir = `${templateDir}-code`
-
-      const starterDir = codeDir + suffixes.STARTUP_DIR
-      await getPreCommands(config)
-
-      await executePreCommands(config, starterDir, {codeDir})
-      fs.ensureDir(starterDir) // if no preCommands created the starterDir, we do so now.
-
-      const suggestedDependencies = await setPackagesToSuggestInserting(starterDir, sampleDir)
-
-      if (suggestedDependencies) await setupDependencies(suggestedDependencies, config)
-      await setConfig(templateDir, config)
-      await installDependencies(config, starterDir)
-
-      // console.log(`config = ${JSON.stringify(config, null, 2)}`)
-      await setConfig(templateDir, config)
-
-      this.log(chalk.green(`\nYour template has been created at ${templateDir}. ` +
-        `See documentation at ${links.DOCUMENTATION}`))
+      const templateDir = await createNewTemplate(model, defaultTemplateDir)
+      this.log(printInstructionsForNewTemplate(templateDir))
     } catch (error) {
       this.log(error)
       throw new Error(`Problem creating template: ${error}`)

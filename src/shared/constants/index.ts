@@ -132,6 +132,7 @@ export const suffixes = {
   TEST_DIR: '.test',
   STARTUP_DIR: '.starter',
   SAMPLE_DIR: '.sample',
+  MODEL_DIR: '.model',
 }
 
 export const docPages = {
