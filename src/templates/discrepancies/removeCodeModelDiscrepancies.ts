@@ -5,6 +5,7 @@ import {handleNewFiles} from '../new/files/handleNewFiles'
 import {compareSync, Result} from 'dir-compare'
 import * as chalk from 'chalk'
 import {getIgnoredList} from '../../shared/configs/getIgnoredList'
+import {handleUniqueModelFiles} from './handleUniqueModelFiles'
 
 async function getDiscrepantFiles(config: Configuration, codeDir: string, modelDir: string) {
   const allIgnored = getIgnoredList(config).map(dir => {
@@ -22,7 +23,7 @@ async function getDiscrepantFiles(config: Configuration, codeDir: string, modelD
   return res
 }
 
-function displayUniqueOldFiles(res: Result) {
+function displayModifiedFiles(res: Result) {
   if (!res || !res.diffSet) return
   const modifiedFileInfo = res.diffSet.filter((file: any) => (file.state === 'distinct'))
   const modifiedFiles = modifiedFileInfo.map((file: any) => {
@@ -41,25 +42,6 @@ function displayUniqueOldFiles(res: Result) {
   modifiedFiles.map(fileName => console.log(`\t${fileName}`))
 }
 
-function displayUniqueNewFiles(res: Result) {
-  if (!res || !res.diffSet) return
-  const nonGeneratedFileInfo = res.diffSet.filter((file: any) => (file.type1 === 'missing'))
-  const nonGeneratedFiles = nonGeneratedFileInfo.map((file: any) => {
-    return file.relativePath.substring(1) + '/' + file.name2
-  })
-
-  if (nonGeneratedFiles.length === 0) {
-    // eslint-disable-next-line no-console
-    console.log(chalk.red('No files in the model code are not being generated.'))
-    return
-  }
-
-  // eslint-disable-next-line no-console
-  console.log(chalk.red('Files in the model code not being generated:'))
-  // eslint-disable-next-line no-console
-  nonGeneratedFiles.map(fileName => console.log(`\t${fileName}`))
-}
-
 export async function removeCodeModelDiscrepancies(templateDir: string, code: string, model: string) {
   const finalCode = code || templateDir + suffixes.SAMPLE_DIR
   const finalModel = model || templateDir + suffixes.MODEL_DIR
@@ -70,10 +52,10 @@ export async function removeCodeModelDiscrepancies(templateDir: string, code: st
   await handleNewFiles(res, templateDir, finalCode, finalModel)
 
   if (res.diffSet) {
-    displayUniqueNewFiles(res)
+    await handleUniqueModelFiles(res, templateDir, finalModel, config)
   }
 
   if (res.diffSet) {
-    displayUniqueOldFiles(res)
+    displayModifiedFiles(res)
   }
 }

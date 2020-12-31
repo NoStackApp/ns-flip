@@ -54,9 +54,9 @@ export async function handleNewFiles(
         newFilesForPrompt.push(relativeFilePath)
       }
     })
-    let i = 0
+    let i
     for (i = 0; i < newFilesForPrompt.length; i++) {
-      const newFileName = newFilesForPrompt[0]
+      const newFileName = newFilesForPrompt[i]
       const newFileQuestions = getNewFileQuestions(newFileName)
       const answers = await inquirer.prompt(newFileQuestions)
       const {newFileTreatment} = answers
