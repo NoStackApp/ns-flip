@@ -31,7 +31,7 @@ export async function createNewTemplate(model: string, defaultTemplateDir: strin
   const modelDir = `${templateDir}${suffixes.MODEL_DIR}` // model is the original.  modelDir is a copy
 
   const starterDir = codeDir + suffixes.STARTUP_DIR
-  // await getPreCommands(config)
+  await getPreCommands(config)
   // await executePreCommands(config, starterDir, {codeDir})
   fs.ensureDir(starterDir) // if no preCommands created the starterDir, we do so now.
 
@@ -44,7 +44,9 @@ export async function createNewTemplate(model: string, defaultTemplateDir: strin
   // await installDependencies(config, starterDir)
   // await setConfig(templateDir, config)
 
-  await createCodeBase(templateDir, codeDir, false)
+  await createCodeBase(
+    templateDir, codeDir, false
+  )
 
   return templateDir
 }

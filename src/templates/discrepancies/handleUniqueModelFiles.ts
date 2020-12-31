@@ -4,6 +4,7 @@ import {setConfig} from '../../shared/configs/setConfig'
 import {attention, progress} from '../../shared/constants/chalkColors'
 import {Configuration} from '../../shared/constants/types/configuration'
 import {commentDelimiters} from '../commentDelimiters'
+import {fileMatchesCustomFileFilter} from '../../shared/fileMatchesCustomFileFilter'
 
 const fs = require('fs-extra')
 const inquirer = require('inquirer')
@@ -13,7 +14,7 @@ const prependFile = require('prepend-file')
 const oldFileOptions = {
   ADD: 'Add it into the template',
   MOVE: 'Move it into the custom directory',
-  IGNORE: 'Add it to the template ignore',
+  IGNORE: 'Add it to the list of ignored files in the template',
   NOTHING: 'Nothing.  I am not sure.',
 }
 
@@ -46,11 +47,6 @@ const customFileOptions = [
     value: customFileTypes.DYNAMIC,
     short: customFileTypes.DYNAMIC,
     name: customFileTexts.DYNAMIC,
-  },
-  {
-    value: customFileTypes.UNKNOWN,
-    short: customFileTypes.UNKNOWN,
-    name: customFileTexts.UNKNOWN,
   },
   {
     value: customFileTypes.UNKNOWN,
@@ -103,14 +99,12 @@ async function handleIgnoringFile(
 
 function getCommentDelimitersForFile(fileName: string, config: Configuration) {
   const ext = path.extname(fileName)
-  console.log(`in getCommentDelimitersForFile, fileName=${fileName} ext=${ext}`)
-  console.log(`commentDelimiters(ext, config)=${JSON.stringify(commentDelimiters(ext, config))}`)
   return commentDelimiters(ext, config)
 }
 
 function standardFileInfoLine(fileName: string, config: Configuration) {
   const delimiters = getCommentDelimitersForFile(fileName, config)
-  return `${delimiters.open} unit: standard, comp: ${fileName}${delimiters.close}`
+  return `${delimiters.open} ns__file unit: standard, comp: ${fileName} ${delimiters.close}\n`
 }
 
 async function handleAddingFile(
@@ -135,8 +129,10 @@ async function handleAddingFile(
 
     try {
       // prepend file info line to original file to avoid a discrepancy
-      const fileInfoLine = standardFileInfoLine(fileName, config)
-      await prependFile(originalFilePath, fileInfoLine)
+      if (fileMatchesCustomFileFilter(fileName, config)) {
+        const fileInfoLine = standardFileInfoLine(fileName, config)
+        await prependFile(originalFilePath, fileInfoLine)
+      }
     } catch (error) {
       throw new Error(`copying to standard directory: ${error}`)
     }
@@ -160,7 +156,7 @@ export async function handleUniqueModelFiles(
 
   if (nonGeneratedFiles.length === 0) {
     // eslint-disable-next-line no-console
-    console.log(chalk.red('No files in the model code are not being generated.'))
+    console.log(chalk.red('All files in the model code are being generated properly.'))
     return
   }
 

@@ -51,15 +51,19 @@ ${error}`)
         const pathString = `${templateDir}/static/${fileType}.hbs`
 
         try {
-          const fileTemplate = await loadFileTemplate(pathString)
+          const fileTemplate = await loadFileTemplate(pathString, config)
 
           const {slug, specs} = instanceInfo
           const fileName = name.replace(placeholders.SLUG, slug) + suffix
           const fullFilePath = `${codeDir}/${directory}/${fileName}`
 
-          const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config, codeDir)
+          const context = await contextForStatic(
+            staticType, specs, slug, instance, fileName, nsInfo, config, codeDir
+          )
           const fileText = await fileTemplate(context)
-          const finalFileText = replaceCommentDelimiters(pathString, config, fileText)
+          const finalFileText = replaceCommentDelimiters(
+            pathString, config, fileText
+          )
 
           await fs.outputFile(fullFilePath, finalFileText)
         } catch (error) {

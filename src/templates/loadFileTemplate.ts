@@ -1,5 +1,7 @@
 import {expandNsAbbreviations} from './expandNsbbreviations'
 import {placeholders} from '../shared/constants'
+import {fileMatchesCustomFileFilter} from '../shared/fileMatchesCustomFileFilter'
+import {Configuration} from '../shared/constants/types/configuration'
 
 const fs = require('fs-extra')
 const Handlebars = require('handlebars')
@@ -15,52 +17,45 @@ Handlebars.registerHelper('safe', function (text: string) {
 Handlebars.registerHelper('start', function (locationName: string) {
   return new Handlebars.SafeString(placeholders.OPEN_COMMENT +
     ` ns__start_section ${locationName} ` +
-    placeholders.CLOSE_COMMENT
-  )
+    placeholders.CLOSE_COMMENT)
 })
 
 Handlebars.registerHelper('end', function (locationName: string) {
-  return new Handlebars.SafeString(
-    placeholders.OPEN_COMMENT +
+  return new Handlebars.SafeString(placeholders.OPEN_COMMENT +
     ` ns__end_section ${locationName} ` +
-    placeholders.CLOSE_COMMENT
-  )
+    placeholders.CLOSE_COMMENT)
 })
 
 Handlebars.registerHelper('custom', function (locationName: string) {
-  return new Handlebars.SafeString(
-    placeholders.OPEN_COMMENT +
+  return new Handlebars.SafeString(placeholders.OPEN_COMMENT +
     ` ns__custom_start ${locationName} ` +
     placeholders.CLOSE_COMMENT + '\n' +
     placeholders.OPEN_COMMENT +
     ` ns__custom_end ${locationName} ` +
-    placeholders.CLOSE_COMMENT
-  )
+    placeholders.CLOSE_COMMENT)
 })
 
 Handlebars.registerHelper('customStart', function (locationName: string) {
-  return new Handlebars.SafeString(
-    placeholders.OPEN_COMMENT +
+  return new Handlebars.SafeString(placeholders.OPEN_COMMENT +
     ` ns__custom_start ${locationName} ` +
-    placeholders.CLOSE_COMMENT
-  )
+    placeholders.CLOSE_COMMENT)
 })
 
 Handlebars.registerHelper('customEnd', function (locationName: string) {
-  return new Handlebars.SafeString(
-    placeholders.OPEN_COMMENT +
+  return new Handlebars.SafeString(placeholders.OPEN_COMMENT +
     ` ns__custom_end ${locationName} ` +
-    placeholders.CLOSE_COMMENT
-  )
+    placeholders.CLOSE_COMMENT)
 })
 
-export async function loadFileTemplate(pathString: string, noFileInfo = false) {
+export async function loadFileTemplate(
+  pathString: string, config: Configuration, noFileInfo = false
+) {
   // noFileInfo suppresses generation of a file info tag at the beginning of the template.
   let template = ''
 
   try {
     template = await fs.readFile(pathString, 'utf-8')
-    if (!noFileInfo) {
+    if (!noFileInfo && fileMatchesCustomFileFilter(pathString.slice(0, -4), config)) {
       template = '{{nsFile}}\n' + template // add file info automatically.
     }
 

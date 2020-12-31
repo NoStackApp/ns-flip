@@ -66,12 +66,14 @@ export const docSubjects = {
   ADD_FILES: 'Add-Files-For-Customization',
   TEST_RESULTS_DOCUMENTATION: 'Understanding-Test-Results',
   SAFE_CODE: 'Safe-Custom-Code',
+  MAKING_FILES_CUSTOMIZABLE: 'Making-Files-Customizable',
 }
 export const links = {
   DOCUMENTATION: domains.NS_FLIP_DOMAIN,
   TEST_RESULTS: `${domains.NS_FLIP_DOMAIN}/${docSubjects.TEST_RESULTS_DOCUMENTATION}`,
   SAFE_CODE_RULES: `${domains.NS_FLIP_DOMAIN}/${docSubjects.SAFE_CODE}`,
   ADDING_CUSTOM_FILES: `${domains.NS_FLIP_DOMAIN}/${docSubjects.ADD_FILES}`,
+  MAKING_FILES_CUSTOMIZABLE: `${domains.NS_FLIP_DOMAIN}/${docSubjects.MAKING_FILES_CUSTOMIZABLE}`,
 }
 
 export const magicStrings = {

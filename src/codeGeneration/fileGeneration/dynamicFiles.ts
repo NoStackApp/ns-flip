@@ -10,7 +10,9 @@ import {unitNameFromSpec} from './unitNameFromSpec'
 import {dirNames} from '../../shared/constants'
 import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 
-export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDir: string) {
+export async function dynamicFiles(
+  config: Configuration, nsInfo: NsInfo, codeDir: string
+) {
   if (!nsInfo.backend ||
     !nsInfo.backend.queries ||
     !config.dirs.queries
@@ -27,7 +29,7 @@ export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDi
   const metaDir = `${codeDir}/${dirNames.META}`
   const templateDir = `${metaDir}/${dirNames.TEMPLATE}`
 
-  const queryFileTemplate = await loadFileTemplate(`${templateDir}/query.hbs`)
+  const queryFileTemplate = await loadFileTemplate(`${templateDir}/query.hbs`, config)
   try {
     await Promise.all(Object.keys(units).map(async unitKey => {
       const unit = unitNameFromSpec(unitKey)
@@ -47,7 +49,9 @@ export async function dynamicFiles(config: Configuration, nsInfo: NsInfo, codeDi
 
       const pathString = `${queriesDir}/${unit}.js`
       try {
-        const finalFileText = replaceCommentDelimiters(pathString, config, queryFileText)
+        const finalFileText = replaceCommentDelimiters(
+          pathString, config, queryFileText
+        )
         // console.log(`finalFileText for ${pathString}=${finalFileText}`)
         await fs.outputFile(pathString, finalFileText)
       } catch (error) {

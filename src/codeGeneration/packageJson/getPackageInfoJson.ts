@@ -40,7 +40,9 @@ correctly specified:
 ${error}`)
   }
 
-  const fileTemplate = await loadFileTemplate(packageInfoJsonFile, true)
+  const fileTemplate = await loadFileTemplate(
+    packageInfoJsonFile, config, true
+  )
 
   const fileText = await fileTemplate(await contextForStandard(
     nsInfo,

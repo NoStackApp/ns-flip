@@ -74,7 +74,7 @@ ${error}`)
       return
     }
 
-    const fileTemplate = await loadFileTemplate(pathString)
+    const fileTemplate = await loadFileTemplate(pathString, config)
     const newFileName = path.join(parsed.dir, parsed.name)
     const newLocalFileName = newFileName.replace(codeDir + '/', '')
 
@@ -85,7 +85,9 @@ ${error}`)
       codeDir,
       config,
     ))
-    const finalFileText = replaceCommentDelimiters(pathString, config, fileText)
+    const finalFileText = replaceCommentDelimiters(
+      pathString, config, fileText
+    )
     await fs.outputFile(newFileName, finalFileText)
   }))
 

@@ -41,10 +41,9 @@ export default class Filediffs extends Command {
     const model = resolveDir(flags.modelDir)
 
     try {
-      await removeCodeModelDiscrepancies(templateDir, code, model)
-
-      this.log(generalOption(`See ${links.ADDING_CUSTOM_FILES}` +
-      ' for how to remove these discrepancies.'))
+      await removeCodeModelDiscrepancies(
+        templateDir, code, model
+      )
     } catch (error) {
       this.log(error)
       this.error(`cannot compare directories: ${error}`)

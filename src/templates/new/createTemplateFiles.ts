@@ -27,7 +27,9 @@ export async function createTemplateFiles(requirements: TemplateRequirements) {
 
   async function outputTemplateFile(fileName: string) {
     const fileTemplateName = `${fileTemplatesDir}/${fileName}.hbs`
-    const templateName = await loadFileTemplate(fileTemplateName, true)
+    const templateName = await loadFileTemplate(
+      fileTemplateName, null, true
+    )
     await fs.outputFile(`${templateDir}/${fileName}`, templateName(context))
   }
 
