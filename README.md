@@ -67,7 +67,7 @@ $ npm install -g ns-flip
 $ ns COMMAND
 running command...
 $ ns (-v|--version|version)
-ns-flip/2.4.11 linux-x64 node-v14.9.0
+ns-flip/2.5.0 linux-x64 node-v14.9.0
 $ ns --help [COMMAND]
 USAGE
   $ ns COMMAND
@@ -103,7 +103,7 @@ EXAMPLE
   $ ns check ~/projects/myapp
 ```
 
-_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.4.11/lib/commands/check.js)_
+_See code: [lib/commands/check.js](https://github.com/NoStackApp/ns-flip/blob/v2.5.0/lib/commands/check.js)_
 
 ## `ns contact [MESSAGE]`
 
@@ -125,7 +125,7 @@ EXAMPLES
   $ ns contact "generate is breaking when I add handlers."
 ```
 
-_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.4.11/lib/commands/contact.js)_
+_See code: [lib/commands/contact.js](https://github.com/NoStackApp/ns-flip/blob/v2.5.0/lib/commands/contact.js)_
 
 ## `ns filediffs TEMPLATEDIR`
 
@@ -139,15 +139,16 @@ ARGUMENTS
   TEMPLATEDIR  directory containing the template
 
 OPTIONS
-  -c, --codeDir=codeDir      code directory.  Will override the default
-  -h, --help                 show CLI help
-  -s, --sampleDir=sampleDir  sample directory.  Will override the default
+  -c, --codeDir=codeDir    code directory.  Will override the default
+  -h, --help               show CLI help
+  -s, --modelDir=modelDir  model directory.  Will override the default
 
-EXAMPLE
-  $ ns filediffs $TEMPLATE -c $CODE -s $SAMPLE
+EXAMPLES
+  $ ns filediffs $TEMPLATE
+  $ ns filediffs $TEMPLATE -c $CODE -m $MODEL
 ```
 
-_See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.4.11/lib/commands/filediffs.js)_
+_See code: [lib/commands/filediffs.js](https://github.com/NoStackApp/ns-flip/blob/v2.5.0/lib/commands/filediffs.js)_
 
 ## `ns generate CODEDIR`
 
@@ -175,7 +176,7 @@ EXAMPLES
   $ ns generate $CODE
 ```
 
-_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.4.11/lib/commands/generate.js)_
+_See code: [lib/commands/generate.js](https://github.com/NoStackApp/ns-flip/blob/v2.5.0/lib/commands/generate.js)_
 
 ## `ns help [COMMAND]`
 
@@ -204,14 +205,14 @@ USAGE
 
 OPTIONS
   -h, --help                     show CLI help
-  -s, --sample=sample            directory containing the sample code from which you want to template
+  -m, --model=model              directory containing the model code base from which you want to template
   -t, --templateDir=templateDir  directory for the template
 
 EXAMPLE
-  $ ns newtemplate -s $SAMPLE -t $TEMPLATE
+  $ ns newtemplate -m $MODEL -t $TEMPLATE
 ```
 
-_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.4.11/lib/commands/newtemplate.js)_
+_See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.5.0/lib/commands/newtemplate.js)_
 
 ## `ns settings CODEDIR`
 
@@ -231,7 +232,7 @@ EXAMPLE
   $ ns settings $CODE
 ```
 
-_See code: [lib/commands/settings.js](https://github.com/NoStackApp/ns-flip/blob/v2.4.11/lib/commands/settings.js)_
+_See code: [lib/commands/settings.js](https://github.com/NoStackApp/ns-flip/blob/v2.5.0/lib/commands/settings.js)_
 <!-- commandsstop -->
 
 
