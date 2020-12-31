@@ -40,6 +40,7 @@
     "listr": "^0.14.3",
     "moment": "^2.22.0",
     "pluralize": "^8.0.0",
+    "prepend-file": "^2.0.0",
     "prompts": "^2.3.2",
     "read-pkg": "^5.2.0",
     "resolve-dir-fixed": "^1.0.0",

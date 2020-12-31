@@ -3,9 +3,12 @@ import * as chalk from 'chalk'
 import {setConfig} from '../../shared/configs/setConfig'
 import {attention, progress} from '../../shared/constants/chalkColors'
 import {Configuration} from '../../shared/constants/types/configuration'
+import {commentDelimiters} from '../commentDelimiters'
 
 const fs = require('fs-extra')
 const inquirer = require('inquirer')
+const path = require('path')
+const prependFile = require('prepend-file')
 
 const oldFileOptions = {
   ADD: 'Add it into the template',
@@ -84,7 +87,9 @@ function stripLeadingForwardSlash(fileName: string) {
   return fileName
 }
 
-async function handleIgnoringFile(fileName: string, templateDir: string, config: Configuration) {
+async function handleIgnoringFile(
+  fileName: string, templateDir: string, config: Configuration
+) {
   const {ignore} = config
   if (ignore)
     config.ignore?.push(fileName)
@@ -96,18 +101,42 @@ async function handleIgnoringFile(fileName: string, templateDir: string, config:
   return config
 }
 
-async function handleAddingFile(fileName: string, templateDir: string, modelDir: string) {
+function getCommentDelimitersForFile(fileName: string, config: Configuration) {
+  const ext = path.extname(fileName)
+  console.log(`in getCommentDelimitersForFile, fileName=${fileName} ext=${ext}`)
+  console.log(`commentDelimiters(ext, config)=${JSON.stringify(commentDelimiters(ext, config))}`)
+  return commentDelimiters(ext, config)
+}
+
+function standardFileInfoLine(fileName: string, config: Configuration) {
+  const delimiters = getCommentDelimitersForFile(fileName, config)
+  return `${delimiters.open} unit: standard, comp: ${fileName}${delimiters.close}`
+}
+
+async function handleAddingFile(
+  fileName: string,
+  templateDir: string,
+  modelDir: string,
+  config: Configuration
+) {
   const classificationAnswers = await inquirer.prompt(getCustomTypeQuestions(fileName))
   const {fileClassification} = classificationAnswers
 
   if (fileClassification === customFileTypes.STANDARD) {
+    const originalFilePath = modelDir + '/' + fileName
+    const finalPath = `${templateDir}/standard/${fileName}.hbs`
+
     try {
-      const originalFilePath = modelDir + '/' + fileName
-      const finalPath = `${templateDir}/standard/${fileName}.hbs`
-      await fs.copy(
-        originalFilePath,
-        finalPath,
-      )
+      await fs.copy(originalFilePath,
+        finalPath,)
+    } catch (error) {
+      throw new Error(`copying to standard directory: ${error}`)
+    }
+
+    try {
+      // prepend file info line to original file to avoid a discrepancy
+      const fileInfoLine = standardFileInfoLine(fileName, config)
+      await prependFile(originalFilePath, fileInfoLine)
     } catch (error) {
       throw new Error(`copying to standard directory: ${error}`)
     }
@@ -148,10 +177,16 @@ export async function handleUniqueModelFiles(
     const answers = await inquirer.prompt(getOldFileQuestions(newFileName))
     const {newFileTreatment} = answers
     if (newFileTreatment === oldFileOptions.ADD) {
-      await handleAddingFile(finalFileName, templateDir, modelDir)
+      await handleAddingFile(
+        finalFileName, templateDir, modelDir, config
+      )
     }
     if (newFileTreatment === oldFileOptions.IGNORE) {
-      await handleIgnoringFile(finalFileName, templateDir, config)
+      await handleIgnoringFile(
+        finalFileName,
+        templateDir,
+        config
+      )
     }
     if (newFileTreatment === oldFileOptions.MOVE) {
       // eslint-disable-next-line no-console

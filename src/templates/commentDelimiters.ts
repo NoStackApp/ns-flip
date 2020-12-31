@@ -5,11 +5,9 @@ const globalDefaultClose = '*/'
 
 export function commentDelimiters(ext: string, config: Configuration) {
   const {format} = config
-  const defaultOpen = format.defaultOpenComment || globalDefaultOpen
-  const defaultClose = format.defaultCloseComment || globalDefaultClose
 
-  let open = defaultOpen
-  let close = defaultClose
+  let open = format.defaultOpenComment || globalDefaultOpen
+  let close = format.defaultCloseComment || globalDefaultClose
 
   if (format.openComment && format.openComment[ext]) {
     open = format.openComment[ext]

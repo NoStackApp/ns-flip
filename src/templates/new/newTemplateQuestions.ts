@@ -63,7 +63,7 @@ export async function newTemplateQuestions(defaults: TemplateDefaults) {
       name: 'fileFilter',
       message: 'What would you like for your intial glob file filter, to describe the files that your users' +
         'will be able to modify?  You can have more than one pattern like this: \'+(*.{js,jsx,md}|.eslintrc)\'',
-      default: '*.{ts,tsx,md}',
+      default: '*.{js,jsx,ts,tsx,md,yml}',
       when: () => !fileFilter,
     },
   ]

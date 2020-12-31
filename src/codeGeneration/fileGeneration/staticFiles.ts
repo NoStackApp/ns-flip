@@ -10,28 +10,6 @@ import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 
 const fs = require('fs-extra')
 
-// const options = {
-//   mode: 0o2775,
-// }
-
-// async function createStaticFile (filename: any, path: string) {
-//   // const fileTemplate = await loadFileTemplate(filename)
-//   // const localPath = filename.replace(standardDir, '')
-//   // const newPath = `${codeDir}${localPath}`
-//   // const parsed = path.parse(newPath)
-//   // const newFileName = path +
-//   // const {ext} = parsed.ext
-//   // if (ext !== '.hbs') {
-//   //   throw new Error(`the file ${filename} in the template standard dir
-//   //   does not end with the .hbs extension.  The only files permitted must have
-//   //   the .hbs extension.`)
-//   // }
-//
-//   // const fileText = await fileTemplate(contextForStandard(appInfo, stackInfo, parsed.name))
-//   // await fs.outputFile(newFileName, fileText)
-// }
-//
-
 export async function staticFiles(
   templateDir: string,
   codeDir: string,
@@ -39,10 +17,6 @@ export async function staticFiles(
   stackInfo: Schema,
   config: Configuration,
 ) {
-  // const staticDirLocalPath = config.dirs.static
-  // if (!staticDirLocalPath) return
-  // const staticDir = `${codeDir}/${staticDirLocalPath}`
-
   const staticInfo = nsInfo.static
   if (!staticInfo) return
   const staticTypesWithFiles = Object.keys(staticInfo)
