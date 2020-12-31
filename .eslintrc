@@ -12,7 +12,6 @@
     "max-params": "off",
     "no-warning-comments": "off",
     "no-await-in-loop": "off",
-    "function-paren-newline": ["error", { "minItems": 3 }],
-    "function-call-argument-newline": ["error", "consistent"]
+    "function-paren-newline": ["error", { "minItems": 3 }]
   }
 }

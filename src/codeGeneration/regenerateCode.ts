@@ -73,13 +73,17 @@ export async function regenerateCode(codeDir: string, session: any) {
   }
 
   try {
-    await moveOverIgnored(backupDir, codeDir, config)
+    await moveOverIgnored(
+      backupDir, codeDir, config
+    )
   } catch (error) {
     throw new Error(`could not move over ignored: ${error}`)
   }
 
   try {
-    await generateCode(codeDir, nsInfo, config)
+    await generateCode(
+      codeDir, nsInfo, config
+    )
   } catch (error) {
     throw new Error(`could not regenerate the code: ${error}`)
   }
@@ -87,7 +91,9 @@ export async function regenerateCode(codeDir: string, session: any) {
   try {
     const customCodeDoc = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
     await new Promise(r => setTimeout(r, 2000))
-    await insertCustomChanges(codeDir, customCodeDoc, config)
+    await insertCustomChanges(
+      codeDir, customCodeDoc, config
+    )
 
     const stackInfo: Schema = await buildSchema(nsInfo, config)
     const packageInfoJson = await getPackageInfoJson(
@@ -97,7 +103,9 @@ export async function regenerateCode(codeDir: string, session: any) {
       stackInfo,
       config,
     )
-    await updatePackageJson(codeDir, starter, packageInfoJson)
+    await updatePackageJson(
+      codeDir, starter, packageInfoJson
+    )
   } catch (error) {
     throw new Error(`could not insert custom changes: ${error}`)
   }

@@ -32,7 +32,9 @@ async function storeCustomCodeRegions(
   for (i = 0; i < files.length; i++) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      customCode = await storeCustomCodeForFile(files[i], customCode, rootDir, config)
+      customCode = await storeCustomCodeForFile(
+        files[i], customCode, rootDir, config
+      )
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)
@@ -40,7 +42,9 @@ async function storeCustomCodeRegions(
     }
   }
 
-  await fs.writeJson(customCodeFile, customCode, {spaces: 2})
+  await fs.writeJson(
+    customCodeFile, customCode, {spaces: 2}
+  )
   return customCode
 }
 
@@ -57,7 +61,9 @@ export const storeAddedCode = async (rootDir: string, config: Configuration) => 
   }
 
   try {
-    return storeCustomCodeRegions(rootDir, customCode, customCodeFile, config)
+    return storeCustomCodeRegions(
+      rootDir, customCode, customCodeFile, config
+    )
   } catch (error) {
     throw new Error(`can't store custom code: ${error}`)
   }

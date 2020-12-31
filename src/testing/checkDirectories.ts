@@ -65,11 +65,12 @@ You have the following files or directories that should not be found:
 \t${extraFiles.join('\n\t')}
 If you have extra code, it belongs in the custom directory.  Code specific to
 state can be stored in the context directory.****`
-      await logEntry(logFile, logMessage, true)
+      await logEntry(
+        logFile, logMessage, true
+      )
     }
 
-    const extraComponentFiles = diff(
-      diff(compDirContents, testCompDirContents),
+    const extraComponentFiles = diff(diff(compDirContents, testCompDirContents),
       permittedCompDirectories)
 
     if (extraComponentFiles.length > 0) {
@@ -80,7 +81,9 @@ You have the following files or directories that should not be found:
 \t${extraComponentFiles.join('\n\t')}
 If you have extra code, it belongs in the custom directory.  Code specific to
 state can be stored in the context directory.****`
-      await logEntry(logFile, logMessage, true)
+      await logEntry(
+        logFile, logMessage, true
+      )
     }
   } catch (error) {
     throw error

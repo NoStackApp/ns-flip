@@ -24,7 +24,9 @@ export const setSelectionRoots = (stack: Schema) => {
     }
     // console.log(`&& selectedTree = ${JSON.stringify(selectedTree)}`)
     if (!unitInfo.root) throw new Error(`no root for unit ${unitKeys[i]}`)
-    unitInfo = buildSelectionTree(unitInfo.root, highestLevel, unitInfo)
+    unitInfo = buildSelectionTree(
+      unitInfo.root, highestLevel, unitInfo
+    )
     unitInfo = createSelectedRoot(unitInfo)
   }
 

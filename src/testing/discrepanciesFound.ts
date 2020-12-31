@@ -26,7 +26,9 @@ export async function discrepanciesFound(
 ${chalk.red(links.TEST_RESULTS)} for how to resolve them. ***
 `
     try {
-      await logEntry(logFile, logMessage, true)
+      await logEntry(
+        logFile, logMessage, true
+      )
     } catch (error) {
       throw error
     }

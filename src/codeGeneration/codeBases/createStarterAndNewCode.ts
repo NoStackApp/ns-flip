@@ -47,7 +47,9 @@ export async function createStarterAndNewCode(
       title: 'Execute Pre-Commands',
       task: async () => {
         if (!preCommands) return
-        const preCommandsTasks = preCommandsTaskList(preCommands, starterDir, session).filter(x => x !== null)
+        const preCommandsTasks = preCommandsTaskList(
+          preCommands, starterDir, session
+        ).filter(x => x !== null)
         return new Listr(preCommandsTasks)
       },
     },

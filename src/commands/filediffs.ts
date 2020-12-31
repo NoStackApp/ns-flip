@@ -1,9 +1,7 @@
 import {Command, flags} from '@oclif/command'
 import {checkForUpdates} from '../shared/checkForUpdates'
-import {links} from '../shared/constants'
 import {resolveDir} from '../shared/resolveDir'
 import {removeCodeModelDiscrepancies} from '../templates/discrepancies/removeCodeModelDiscrepancies'
-import {generalOption} from '../shared/constants/chalkColors'
 
 export default class Filediffs extends Command {
   static description = 'compare the files in your sample target code ' +

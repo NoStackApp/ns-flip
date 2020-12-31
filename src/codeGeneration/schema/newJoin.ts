@@ -19,7 +19,9 @@ import {parseSpecName} from '../../shared/constants/parseSpecName'
 //     return node;
 // };
 
-export const newJoin = (schema: Schema, joinString: string, joinInfo: NsJoinInfo) => {
+export const newJoin = (
+  schema: Schema, joinString: string, joinInfo: NsJoinInfo
+) => {
   // console.log(`in newJoin (joinName=${joinString})`)
   // console.log(`in newJoin (joinInfo=${JSON.stringify(joinInfo)})`)
   // console.log(`in newJoin (stack=${JSON.stringify(stack)})`);
@@ -51,8 +53,7 @@ export const newJoin = (schema: Schema, joinString: string, joinInfo: NsJoinInfo
   if (fromUnitInfo && !fromUnitInfo.joins)
     fromUnitInfo.joins = {}
 
-  if (!fromUnitInfo.joins) throw new Error(
-    `joins is undefined for unit ${fromUnit}.
+  if (!fromUnitInfo.joins) throw new Error(`joins is undefined for unit ${fromUnit}.
     This should not happen.  Please open an issue if you see this. `)
   fromUnitInfo.joins[joinName] = {
     fromUnit,

@@ -12,12 +12,13 @@ interface SpecChoice {
     short: string;
 }
 
-function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: any) {
+function answerForSpecificSubtype(
+  name: string, specType: Specs, instanceInfo: any
+) {
   const typeOfValue = specType.type
   const typeDescription = specType.description || ''
   if (!typeOfValue)
-    throw new Error(
-      `problem in config.  The spec type ${name} does not have a proper 'type' value. e.g. 'list' or 'set'.`)
+    throw new Error(`problem in config.  The spec type ${name} does not have a proper 'type' value. e.g. 'list' or 'set'.`)
 
   if (typeOfValue === types.LIST || typeOfValue === types.SET) {
     const required = specType.required || false
@@ -124,28 +125,28 @@ export function getQuestionsForSpecSubtree(
 
   if (type === types.TOP_LEVEL) {
     // there is no "contents" for a top level set
-    questions.push(
-      {
-        type: 'list',
-        loop: false,
-        message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
-        name: TO_EDIT,
-        choices: getChoicesForSpecChildren(specsForType, specsForInstance, type),
-      },
-    )
+    questions.push({
+      type: 'list',
+      loop: false,
+      message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
+      name: TO_EDIT,
+      choices: getChoicesForSpecChildren(
+        specsForType, specsForInstance, type
+      ),
+    },)
     return questions
   }
 
   if (type === types.LIST || type === types.SET) {
-    questions.push(
-      {
-        type: 'list',
-        loop: false,
-        message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
-        name: TO_EDIT,
-        choices: getChoicesForSpecChildren(specsForType.contents, specsForInstance, type),
-      },
-    )
+    questions.push({
+      type: 'list',
+      loop: false,
+      message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
+      name: TO_EDIT,
+      choices: getChoicesForSpecChildren(
+        specsForType.contents, specsForInstance, type
+      ),
+    },)
     return questions
   }
 
@@ -162,19 +163,17 @@ export function getQuestionsForSpecSubtree(
     editQuestion.when = function (answers: any) {
       return (answers[EDIT_OPTIONS] === 'edit')
     }
-    questions.push(
-      {
-        type: 'list',
-        loop: false,
-        message: `What would you like to do for ${currentName}?`,
-        name: EDIT_OPTIONS,
-        choices: [
-          'edit',
-          'delete',
-        ],
-      },
-      editQuestion,
-    )
+    questions.push({
+      type: 'list',
+      loop: false,
+      message: `What would you like to do for ${currentName}?`,
+      name: EDIT_OPTIONS,
+      choices: [
+        'edit',
+        'delete',
+      ],
+    },
+    editQuestion,)
   }
 
   return questions

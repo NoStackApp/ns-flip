@@ -110,7 +110,9 @@ export async function updateStaticInstance(
       return
     }
 
-    await updateInstanceSpecs(staticType, instanceName, config, nsInfo, codeDir)
+    await updateInstanceSpecs(
+      staticType, instanceName, config, nsInfo, codeDir
+    )
     return
   }
 }

@@ -48,14 +48,17 @@ Handlebars.registerHelper('customEnd', function (locationName: string) {
 })
 
 export async function loadFileTemplate(
-  pathString: string, config: Configuration, noFileInfo = false
+  pathString: string, config: Configuration|null, noFileInfo = false
 ) {
   // noFileInfo suppresses generation of a file info tag at the beginning of the template.
   let template = ''
 
   try {
     template = await fs.readFile(pathString, 'utf-8')
-    if (!noFileInfo && fileMatchesCustomFileFilter(pathString.slice(0, -4), config)) {
+    if (!noFileInfo &&
+      config &&
+      fileMatchesCustomFileFilter(pathString.slice(0, -4), config)
+    ) {
       template = '{{nsFile}}\n' + template // add file info automatically.
     }
 

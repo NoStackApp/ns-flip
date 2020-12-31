@@ -14,7 +14,9 @@ export async function setNsInfo(codeDir: string, nsInfo: NsInfo) {
     }
   } catch (error) {
     throw new Error(`error updating the nsFile ${nsFile}.
-      Info = ${JSON.stringify(nsInfo, null, 2)}.
+      Info = ${JSON.stringify(
+    nsInfo, null, 2
+  )}.
       Output contents = ${outputContents}: ${error}`)
   }
 }

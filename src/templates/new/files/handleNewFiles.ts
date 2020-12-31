@@ -23,7 +23,9 @@ function getNewFileQuestions(fileName: string) {
   ]
 }
 
-async function copyFileToSample(relativePath: string, codeDir: string, sampleDir: string) {
+async function copyFileToSample(
+  relativePath: string, codeDir: string, sampleDir: string
+) {
   try {
     await fs.copy(codeDir + '/' + relativePath, sampleDir + '/' + relativePath)
   } catch (error) {
@@ -49,7 +51,9 @@ export async function handleNewFiles(
     const newFilesForPrompt: string[] = []
     newFiles.map(relativeFilePath => {
       if (relativeFilePath.startsWith('meta')) {
-        copyFileToSample(relativeFilePath, code, model)
+        copyFileToSample(
+          relativeFilePath, code, model
+        )
       } else {
         newFilesForPrompt.push(relativeFilePath)
       }
@@ -72,7 +76,9 @@ export async function handleNewFiles(
         await setConfig(templateDir, config)
       }
       if (newFileTreatment === newFileOptions.COPY) {
-        await copyFileToSample(newFileName, code, model)
+        await copyFileToSample(
+          newFileName, code, model
+        )
         // eslint-disable-next-line no-console
         console.log(progress(`copied ${newFileName} to model from code...`))
       }

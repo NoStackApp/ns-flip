@@ -11,9 +11,7 @@ import {regenerateCode} from '../codeGeneration/regenerateCode'
 const diff = require('deep-object-diff').diff
 const inquirer = require('inquirer')
 
-async function promptToGenerateCode(
-  codeDir: string,
-) {
+async function promptToGenerateCode(codeDir: string,) {
   const questions = [{
     type: 'confirm',
     name: 'generate',
@@ -65,7 +63,9 @@ export default class Filediffs extends Command {
       const nsInfo = await getNsInfo(codeDir)
       const originalSettings = JSON.parse(JSON.stringify(nsInfo))
 
-      const updatedSettings = await settingsMenu(config, nsInfo, codeDir)
+      const updatedSettings = await settingsMenu(
+        config, nsInfo, codeDir
+      )
       if (!updatedSettings) return
 
       const changedSettings = diff(originalSettings, updatedSettings)

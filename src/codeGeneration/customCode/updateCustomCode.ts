@@ -36,9 +36,15 @@ function moveOverCodeSections(
 function customCodeToCodeByFile(customCodeRepository: CustomCodeRepository) {
   const {addedCode, replacedCode, removedCode} = customCodeRepository
   let customCodeByFile: CustomCodeByFile = {}
-  customCodeByFile = moveOverCodeSections(addedCode, customCodeByFile, 'addedCode')
-  customCodeByFile = moveOverCodeSections(replacedCode, customCodeByFile, 'replacedCode')
-  customCodeByFile = moveOverCodeSections(removedCode, customCodeByFile, 'removedCode')
+  customCodeByFile = moveOverCodeSections(
+    addedCode, customCodeByFile, 'addedCode'
+  )
+  customCodeByFile = moveOverCodeSections(
+    replacedCode, customCodeByFile, 'replacedCode'
+  )
+  customCodeByFile = moveOverCodeSections(
+    removedCode, customCodeByFile, 'removedCode'
+  )
 
   return customCodeByFile
 }
@@ -60,7 +66,9 @@ export async function updateCustomCode(
     const filePath = `${rootDir}/${relativePath}`
     try {
       if (await fs.pathExists(filePath)) {
-        await updateCustomCodeForFile(filePath, customCodeByFile[relativePath], config)
+        await updateCustomCodeForFile(
+          filePath, customCodeByFile[relativePath], config
+        )
       } else {
         // eslint-disable-next-line no-console
         console.log(`***WARNING*** the file ${relativePath} does not exist ` +

@@ -39,14 +39,20 @@ export async function failsTests(codeDir: string) {
   try {
     await fs.remove(testDir)
     await copyCodeBaseToNewDir(starter, testDir)
-    await moveOverIgnored(codeDir, testDir, config)
+    await moveOverIgnored(
+      codeDir, testDir, config
+    )
     // const mergedJson = await mergePackageJsons(starter, codeDir)
     // await writePackage(`${testDir}/package.json`, mergedJson)
 
-    await generateCode(testDir, nsInfo, config)
+    await generateCode(
+      testDir, nsInfo, config
+    )
 
     const customCodeDoc = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
-    await insertCustomChanges(testDir, customCodeDoc, config)
+    await insertCustomChanges(
+      testDir, customCodeDoc, config
+    )
   } catch (error) {
     throw error
   }

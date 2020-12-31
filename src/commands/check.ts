@@ -58,10 +58,14 @@ discrepancies, see ${links.TEST_RESULTS}. `
 
 :( The app did not pass the tests. :(
 See the log file ${logFile} or the above messages for more information.`)
-      await logEntry(logFile, `
+      await logEntry(
+        logFile, `
 
-:( The app did not pass the tests. :(`, false)
-      await logEntry(logFile, logMessage, true)
+:( The app did not pass the tests. :(`, false
+      )
+      await logEntry(
+        logFile, logMessage, true
+      )
 
       this.log(`For documentation: ${links.TEST_RESULTS}`)
 
@@ -70,7 +74,9 @@ See the log file ${logFile} or the above messages for more information.`)
 
     logMessage = `
 :) The app is passing all tests! :)`
-    await logEntry(logFile, logMessage, true)
+    await logEntry(
+      logFile, logMessage, true
+    )
 
     this.log(`Finished the test.  For documentation: ${links.DOCUMENTATION}`)
 

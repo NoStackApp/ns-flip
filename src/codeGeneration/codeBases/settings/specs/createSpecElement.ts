@@ -20,7 +20,9 @@ export async function createSpecElement(specsForTypeContents: any, session: any 
     const {type} = subTypeInfo
     if (type !== types.SET && type !== types.LIST) {
       // eslint-disable-next-line require-atomic-updates
-      answers = await askQuestion(subTypeInfo, subType, answers, session)
+      answers = await askQuestion(
+        subTypeInfo, subType, answers, session
+      )
     }
   }
 

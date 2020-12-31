@@ -57,7 +57,9 @@ describe('static settings exits properly', async () => {
     const originalSettings = JSON.parse(JSON.stringify(nsInfo))
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-    const output = await staticSettings(config, nsInfo, '')
+    const output = await staticSettings(
+      config, nsInfo, ''
+    )
     expect(output).to.deep.equal(originalSettings.static)
   })
 
@@ -69,7 +71,9 @@ describe('static settings exits properly', async () => {
     const originalSettings = JSON.parse(JSON.stringify(nsInfo))
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-    const output = await staticSettings(config, nsInfo, '')
+    const output = await staticSettings(
+      config, nsInfo, ''
+    )
     expect(output).to.not.equal(originalSettings.static)
 
     // check that an existing old command still exists

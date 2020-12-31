@@ -4,7 +4,9 @@ import {dirNames} from '../../shared/constants'
 export const chalk = require('chalk')
 const fs = require('fs-extra')
 
-export async function createSampleAndTemplate(samplePath: string, originalPath: string, template: string) {
+export async function createSampleAndTemplate(
+  samplePath: string, originalPath: string, template: string
+) {
   const createTemplateDirectory = async (dirName: string) =>
     ensureDirectory(`${template}/${dirName}`)
 

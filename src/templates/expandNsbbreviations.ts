@@ -7,6 +7,5 @@ export function expandNsAbbreviations(template: string) {
   .replace('{{nsFile}}',
     placeholders.OPEN_COMMENT +
     ' ns__file {{fileInfo}} ' +
-    placeholders.CLOSE_COMMENT
-  )
+    placeholders.CLOSE_COMMENT)
 }

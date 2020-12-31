@@ -48,7 +48,9 @@ export default class Generate extends Command {
     // const starterDir = codeDir + suffixes.STARTUP_DIR
 
     try {
-      await createCodeBase(templateDir, codeDir, noSetup)
+      await createCodeBase(
+        templateDir, codeDir, noSetup
+      )
     } catch (error) {
       this.log(error)
       throw new Error(`problem generating code: ${error}`)

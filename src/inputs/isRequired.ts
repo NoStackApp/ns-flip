@@ -1,4 +1,6 @@
-export const isRequired = (paramName: string, commandName: string, flag: string) => {
+export const isRequired = (
+  paramName: string, commandName: string, flag: string
+) => {
   //   this.log("param ${paramName} is required for this creation)
   //   return
 

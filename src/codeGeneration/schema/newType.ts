@@ -15,8 +15,7 @@ function handleParentOfAssn(
 ) {
   if (!schema.sources[unit].tree[parentType]) {
     throw new Error(`In the declaration of new type ${name} in the unit ${unit}:
-  the parent ${parentType} is not already in the source`
-    )
+  the parent ${parentType} is not already in the source`)
   }
 
   const parentTypeSourceInfo = schema.types[parentType].sources[unit]
@@ -67,9 +66,7 @@ export const newType = (
 
   // console.log(`in traverse, typeName=${typeName}, assnType=${assnType}`)
   if (assnType === 'undefined') {
-    throw new Error(
-      `bad prefix '${typePrefix}' for type '${typeName}' in unit ${unitName}`
-    )
+    throw new Error(`bad prefix '${typePrefix}' for type '${typeName}' in unit ${unitName}`)
   }
 
   let sourceUnit
@@ -112,23 +109,17 @@ export const newType = (
   // console.log(`in newType (parentType=${parentType}, name=${typeName}, unit=${unitName}, typePrefix=${typePrefix})`)
 
   if (typePrefix === 'create' && typeof schema.types[typeName] !== 'undefined') {
-    throw new Error(
-      `redeclaration of existing creatable type called '${typeName}' in unit '${unitName}'`
-    )
+    throw new Error(`redeclaration of existing creatable type called '${typeName}' in unit '${unitName}'`)
   }
 
   if (parentType) {
     // if (Object.keys(stack.sources[unit].tree).length !== 0) {
     if (!schema.types[parentType]) {
-      throw new Error(
-        `You declared a new unit '${typeName}' for a nonexistent parentType '${parentType}'`
-      )
+      throw new Error(`You declared a new unit '${typeName}' for a nonexistent parentType '${parentType}'`)
     }
     if (schema.types[parentType].sources[unitName] === null) {
-      throw new Error(
-        `You declared a new type '${typeName}' for a parentType '${parentType}'
-            that does not exist in the unit '${unitName}'`
-      )
+      throw new Error(`You declared a new type '${typeName}' for a parentType '${parentType}'
+            that does not exist in the unit '${unitName}'`)
     }
     // }
   }

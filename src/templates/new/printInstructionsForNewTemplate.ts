@@ -1,5 +1,4 @@
 import {links, suffixes} from '../../shared/constants'
-import * as chalk from 'chalk'
 import {attention, generalOption} from '../../shared/constants/chalkColors'
 
 export function printInstructionsForNewTemplate(templateDir: string) {

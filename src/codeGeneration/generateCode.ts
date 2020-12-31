@@ -32,7 +32,9 @@ export async function generateCode(
   try {
     // WARNING: breaking change from 1.6.8!!
     // await standardFiles(template.dir, codeDir, nsInfo, stackInfo)
-    await standardFiles(templateDir, codeDir, nsInfo, stackInfo)
+    await standardFiles(
+      templateDir, codeDir, nsInfo, stackInfo
+    )
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
@@ -41,7 +43,9 @@ export async function generateCode(
 
   try {
     if (units) {
-      await configuredDirs(config, codeDir, Object.keys(units))
+      await configuredDirs(
+        config, codeDir, Object.keys(units)
+      )
     }
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -51,7 +55,9 @@ export async function generateCode(
 
   // mapObject
   if (units) {
-    await dynamicFiles(config, nsInfo, codeDir)
+    await dynamicFiles(
+      config, nsInfo, codeDir
+    )
   }
 
   const compDir = `${codeDir}/${config.dirs.components}`

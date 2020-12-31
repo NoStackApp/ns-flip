@@ -3,7 +3,9 @@ import {removeNpmDependencyPrefix} from '../../shared/removeNpmDependencyPrefix'
 const fs = require('fs-extra')
 const semverGt = require('semver/functions/gt')
 
-export async function updatePackageJson(codeDir: string, starter: string, packageInfoJson: any) {
+export async function updatePackageJson(
+  codeDir: string, starter: string, packageInfoJson: any
+) {
   const codePackageJsonPath = `${codeDir}/package.json`
   if (await fs.pathExists(codePackageJsonPath)) {
     const codePackageJson = await fs.readJson(codePackageJsonPath)
@@ -34,6 +36,8 @@ export async function updatePackageJson(codeDir: string, starter: string, packag
     })
 
     const finalPackageJson = {...codePackageJson, ...packageInfoJson}
-    await fs.writeJson(codePackageJsonPath, finalPackageJson, {spaces: 2})
+    await fs.writeJson(
+      codePackageJsonPath, finalPackageJson, {spaces: 2}
+    )
   }
 }

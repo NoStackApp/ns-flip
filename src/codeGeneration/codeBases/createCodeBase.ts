@@ -53,7 +53,9 @@ export async function createCodeBase(
   }
 
   if (templateDir && (!existsCodeTemplateDir || !noSetup)) {
-    await createStarterAndNewCode(templateDir, codeDir, session)
+    await createStarterAndNewCode(
+      templateDir, codeDir, session
+    )
   }
 
   await regenerateCode(codeDir, session)

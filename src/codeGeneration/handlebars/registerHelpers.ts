@@ -27,8 +27,7 @@ export async function registerHelpers(dir: string) {
         const helperName = path.parse(filePath).name
         registerHelper(filePath, helperName)
       }
-    },
-    ))
+    },))
   } catch (error) {
     throw new Error(`error registering helper: ${error}`)
   }

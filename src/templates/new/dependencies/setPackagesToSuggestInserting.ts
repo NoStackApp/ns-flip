@@ -34,8 +34,7 @@ export async function setPackagesToSuggestInserting(starterDir: string, sampleDi
       const sampleDependencies = samplePackageJson.dependencies
       Object.keys(sampleDependencies).map(dependencyPackage => {
         const sampleDependency =
-          removeNpmDependencyPrefix(
-            sampleDependencies[dependencyPackage])
+          removeNpmDependencyPrefix(sampleDependencies[dependencyPackage])
 
         if (!starterDependencies) {
           if (sampleDependency)
@@ -44,8 +43,7 @@ export async function setPackagesToSuggestInserting(starterDir: string, sampleDi
         }
 
         const starterDependency =
-          removeNpmDependencyPrefix(
-            starterDependencies[dependencyPackage])
+          removeNpmDependencyPrefix(starterDependencies[dependencyPackage])
         if (starterDependency === '*') return
         if (!starterDependency || semverGt(sampleDependency, starterDependency)) {
           if (sampleDependency)

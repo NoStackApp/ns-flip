@@ -8,11 +8,11 @@ See ${links.DOCUMENTATION} for more info.
 -------------------------------------------------------------------------------
 `
 
-export async function initializeLogFile(
-  logFile: string,
-) {
+export async function initializeLogFile(logFile: string,) {
   try {
-    await logEntry(logFile, initializedTestMessage, false)
+    await logEntry(
+      logFile, initializedTestMessage, false
+    )
   } catch (error) {
     throw error
   }

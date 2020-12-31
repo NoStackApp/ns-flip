@@ -31,7 +31,9 @@ export async function newTemplateTasks(requirements: TemplateRequirements) {
     {
       title: 'Create SAMPLE and TEMPLATE folders',
       task: async () => {
-        await createSampleAndTemplate(samplePath, modelPath, templateDir)
+        await createSampleAndTemplate(
+          samplePath, modelPath, templateDir
+        )
       },
     },
     {

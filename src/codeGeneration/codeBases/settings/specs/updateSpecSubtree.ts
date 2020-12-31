@@ -11,7 +11,9 @@ const editOptions = {
   EDIT: 'edit',
 }
 
-async function updateList(answers: AnswersForStaticInstanceSpec, specsForInstance: any, specsForType: Specs | SpecSet, currentName: string) {
+async function updateList(
+  answers: AnswersForStaticInstanceSpec, specsForInstance: any, specsForType: Specs | SpecSet, currentName: string
+) {
   // in a list, the index is used rather than the name
   const {name, index} = answers[TO_EDIT]
   // @ts-ignore
@@ -90,7 +92,8 @@ export async function updateSpecSubtree(
         specsForType,
         type,
         currentName,
-        required)
+        required
+      )
       const answers: AnswersForStaticInstanceSpec = await inquirer.prompt(questions)
 
       if (answers[EDIT] !== undefined) return simpleValueEdit(type, answers[EDIT])
@@ -111,7 +114,9 @@ export async function updateSpecSubtree(
       // otherwise, update the values for the set or list...
 
       if (answers[TO_EDIT] && type === types.LIST) {
-        await updateList(answers, specsForInstance, specsForType, currentName)
+        await updateList(
+          answers, specsForInstance, specsForType, currentName
+        )
       }
 
       if (answers[TO_EDIT] && (type === types.SET || type === types.TOP_LEVEL)) {

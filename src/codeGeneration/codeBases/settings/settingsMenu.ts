@@ -45,7 +45,9 @@ export async function settingsMenu(
         return nsInfo
       }
       if (answers[questionNames.SETTINGS_TYPE] === answerValues.settingsTypes.STATIC) {
-        const nsInfoStatic = await staticSettings(config, nsInfo, codeDir)
+        const nsInfoStatic = await staticSettings(
+          config, nsInfo, codeDir
+        )
         nsInfo.static = nsInfoStatic
       }
       if (answers[questionNames.SETTINGS_TYPE] === answerValues.settingsTypes.GENERAL) {
