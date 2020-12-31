@@ -38,7 +38,9 @@ export default class Contact extends Command {
     const email = flags.email
 
     try {
-      await sendRequest('Message', 'Sent from contact', message, email)
+      await sendRequest(
+        'Message', 'Sent from contact', message, email
+      )
       // this.log(`result = ${JSON.stringify(result)}`)
     } catch (error) {
       this.error(`there was a problem sending your message: ${error}`)

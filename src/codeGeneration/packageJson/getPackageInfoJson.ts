@@ -7,6 +7,8 @@ import {NsInfo} from '../../shared/constants/types/nsInfo'
 import {Schema} from '../../shared/constants/types/schema'
 import {Configuration} from '../../shared/constants/types/configuration'
 
+const fs = require('fs-extra')
+
 export async function getPackageInfoJson(
   templateDir: string,
   codeDir: string,
@@ -15,6 +17,7 @@ export async function getPackageInfoJson(
   config: Configuration,
 ) {
   const packageInfoJsonFile = `${templateDir}/general/${fileNames.PACKAGE_INFO}`
+  if (!await fs.pathExists(packageInfoJsonFile)) return {}
   try {
     await registerPartials(`${templateDir}/partials`)
   } catch (error) {
@@ -37,7 +40,9 @@ correctly specified:
 ${error}`)
   }
 
-  const fileTemplate = await loadFileTemplate(packageInfoJsonFile, true)
+  const fileTemplate = await loadFileTemplate(
+    packageInfoJsonFile, config, true
+  )
 
   const fileText = await fileTemplate(await contextForStandard(
     nsInfo,

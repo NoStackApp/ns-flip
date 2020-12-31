@@ -203,11 +203,12 @@ USAGE
   $ ns newtemplate
 
 OPTIONS
-  -h, --help           show CLI help
-  -s, --sample=sample  directory containing the sample code from which you want to template
+  -h, --help                     show CLI help
+  -s, --sample=sample            directory containing the sample code from which you want to template
+  -t, --templateDir=templateDir  directory for the template
 
 EXAMPLE
-  $ ns newtemplate
+  $ ns newtemplate -s $SAMPLE -t $TEMPLATE
 ```
 
 _See code: [lib/commands/newtemplate.js](https://github.com/NoStackApp/ns-flip/blob/v2.4.11/lib/commands/newtemplate.js)_

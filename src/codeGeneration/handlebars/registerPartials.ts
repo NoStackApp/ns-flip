@@ -32,6 +32,5 @@ export async function registerPartials(dir: string) {
       const partialName = path.parse(filePath).name
       await registerPartial(filePath, partialName)
     }
-  },
-  ))
+  },))
 }

@@ -9,18 +9,14 @@ export async function installDependencies(config: Configuration, starterDir: str
 
   try {
     if (config.setupSequence.mainInstallation) {
-      const mainListr = new Listr(installMainPackagesTaskList(
-        config.setupSequence.mainInstallation,
-        starterDir
-      ))
+      const mainListr = new Listr(installMainPackagesTaskList(config.setupSequence.mainInstallation,
+        starterDir))
       await mainListr.run()
     }
 
     if (config.setupSequence.devInstallation) {
-      const devListr = new Listr(installDevPackagesTaskList(
-        config.setupSequence.devInstallation,
-        starterDir
-      ))
+      const devListr = new Listr(installDevPackagesTaskList(config.setupSequence.devInstallation,
+        starterDir))
       await devListr.run()
     }
   } catch (error) {

@@ -45,7 +45,6 @@ const questionsForPreCommands = [
     when: function (answers: AnswersForPreCommands) {
       return (answers.command !== '')
     },
-
   },
 ]
 

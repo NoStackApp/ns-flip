@@ -43,7 +43,8 @@ export async function checkStaticFiles(
       originalUnit,
       generatedUnit,
       logFile,
-      problemsFound)
+      problemsFound
+    )
     problemsFound = problemsFound || problemsFoundLocally
   }))
   return problemsFound

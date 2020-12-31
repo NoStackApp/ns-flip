@@ -9,7 +9,9 @@ export async function askQuestion(
   answers: any,
   session: any = {},
 ) {
-  const questionKeys = replaceGlobalValuesInObject(subTypeInfo, session, answers)
+  const questionKeys = replaceGlobalValuesInObject(
+    subTypeInfo, session, answers
+  )
   const questions = [
     askForValue(
       null,

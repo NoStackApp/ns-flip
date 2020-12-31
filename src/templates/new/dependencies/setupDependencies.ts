@@ -52,8 +52,7 @@ export async function setupDependencies(suggestedDependencies: DependencySet, co
           ' logic of your current sample). If you\'re not sure, don\'t check something!',
       name: 'mainPackages',
       choices: dependencyChoices,
-    },
-    )
+    },)
   }
 
   if (devDependencyChoices.length > 0) {

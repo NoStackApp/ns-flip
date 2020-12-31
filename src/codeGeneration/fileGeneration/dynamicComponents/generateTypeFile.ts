@@ -52,7 +52,7 @@ ${error}`)
   }
 
   // console.log(`here's a list of helpers: ${JSON.stringify(Handlebars.helpers, null, 2)}`)
-  const genericTemplate = await loadFileTemplate(`${templateDir}/generic.hbs`)
+  const genericTemplate = await loadFileTemplate(`${templateDir}/generic.hbs`, config)
 
   const path = `${compDir}/${singularName(source)}/${dir}`
   const dirList = [
@@ -76,7 +76,9 @@ ${error}`)
   try {
     const fileText = await genericTemplate(tags)
     const finalPath = `${path}/index.jsx`
-    const finalFileText = replaceCommentDelimiters(finalPath, config, fileText)
+    const finalFileText = replaceCommentDelimiters(
+      finalPath, config, fileText
+    )
     await fs.outputFile(finalPath, finalFileText)
   } catch (error) {
     throw new Error(`error with generateFromBoilerPlate: ${error}`)

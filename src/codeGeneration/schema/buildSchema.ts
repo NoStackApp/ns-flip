@@ -44,8 +44,7 @@ export const buildSchema = async (nsInfo: NsInfo, config: Configuration) => {
                 [actionId]: {actionId, actionConst},
               },
             }
-          }
-          )
+          })
         })
       })
     }
@@ -56,7 +55,9 @@ export const buildSchema = async (nsInfo: NsInfo, config: Configuration) => {
   const {units, userClass, joins} = nsInfo
   schema = addUserClass(schema, userClass)
 
-  schema = addUnits(units, schema, config)
+  schema = addUnits(
+    units, schema, config
+  )
   if (joins) {
     schema = addJoins(joins, schema)
   }

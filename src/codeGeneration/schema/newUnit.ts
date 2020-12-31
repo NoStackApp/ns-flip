@@ -37,10 +37,8 @@ export const newUnit = (
   const {hierarchy} = unitInfo
   // const { userClass, hierarchy } = unitInfo;
   if (typeof stack.sources[unitName] !== 'undefined') {
-    throw new TypeError(
-      `redeclaration of existing unit called '${unitName}'.
-        stack.sources[unitName]=${JSON.stringify(stack.sources[unitName])}`
-    )
+    throw new TypeError(`redeclaration of existing unit called '${unitName}'.
+        stack.sources[unitName]=${JSON.stringify(stack.sources[unitName])}`)
   }
 
   let unitId = ''
@@ -101,7 +99,9 @@ export const newUnit = (
     // }
 
     try {
-      newType(stack, typeInfo, unitName, parentType, config)
+      newType(
+        stack, typeInfo, unitName, parentType, config
+      )
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)

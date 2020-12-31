@@ -11,6 +11,7 @@
     "@typescript-eslint/ban-ts-ignore": "off",
     "max-params": "off",
     "no-warning-comments": "off",
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "function-paren-newline": ["error", { "minItems": 3 }]
   }
 }

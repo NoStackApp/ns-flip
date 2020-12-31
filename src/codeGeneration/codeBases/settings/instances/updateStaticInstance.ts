@@ -3,7 +3,7 @@ import {NsInfo} from '../../../../shared/constants/types/nsInfo'
 import {setNsInfo} from '../../../../shared/nsFiles/setNsInfo'
 
 import {updateInstanceSpecs} from '../specs/updateInstanceSpecs'
-import {attention, exitOption, menuOption, statusUpdate} from '../../../../shared/constants/chalkColors'
+import {attention, exitOption, generalOption, statusUpdate} from '../../../../shared/constants/chalkColors'
 
 const inquirer = require('inquirer')
 
@@ -53,8 +53,8 @@ export async function updateStaticInstance(
       message: `What would you like to do with ${instanceName}?`,
       name: ACTION,
       choices: [
-        menuOption(actionTypes.RENAME),
-        menuOption(actionTypes.UPDATE_SPECS),
+        generalOption(actionTypes.RENAME),
+        generalOption(actionTypes.UPDATE_SPECS),
         attention(actionTypes.DELETE),
         exitOption(actionTypes.BACK),
       ],
@@ -65,7 +65,7 @@ export async function updateStaticInstance(
       message: 'What should the name be?',
       default: instanceName,
       when: function (answers: AnswersForUpdateInstance) {
-        return (answers.action === menuOption(actionTypes.RENAME))
+        return (answers.action === generalOption(actionTypes.RENAME))
       },
     },
     {
@@ -74,7 +74,7 @@ export async function updateStaticInstance(
       message: 'What should the slug be?',
       default: instanceInfo.slug,
       when: function (answers: AnswersForUpdateInstance) {
-        return answers.action === menuOption(actionTypes.RENAME)
+        return answers.action === generalOption(actionTypes.RENAME)
       },
     },
   ]
@@ -97,7 +97,7 @@ export async function updateStaticInstance(
       return
     }
 
-    if (actionType === menuOption(actionTypes.RENAME)) {
+    if (actionType === generalOption(actionTypes.RENAME)) {
       if (instanceName !== answers[NAME]) {
         nsInfo.static[staticType][answers[NAME]] = {...instanceInfo}
         delete nsInfo.static[staticType][instanceName]
@@ -110,7 +110,9 @@ export async function updateStaticInstance(
       return
     }
 
-    await updateInstanceSpecs(staticType, instanceName, config, nsInfo, codeDir)
+    await updateInstanceSpecs(
+      staticType, instanceName, config, nsInfo, codeDir
+    )
     return
   }
 }

@@ -62,46 +62,54 @@ const domains = {
   NS_FLIP_DOMAIN: 'https://ns-flip.nostack.net/',
 }
 
+export const docSubjects = {
+  ADD_FILES: 'Add-Files-For-Customization',
+  TEST_RESULTS_DOCUMENTATION: 'Understanding-Test-Results',
+  SAFE_CODE: 'Safe-Custom-Code',
+  MAKING_FILES_CUSTOMIZABLE: 'Making-Files-Customizable',
+}
 export const links = {
   DOCUMENTATION: domains.NS_FLIP_DOMAIN,
-  TEST_RESULTS: `${domains.NS_FLIP_DOMAIN}/Understanding-Test-Results`,
-  NS_RULES: `${domains.NS_FLIP_DOMAIN}/Safe-Custom-Code`,
+  TEST_RESULTS: `${domains.NS_FLIP_DOMAIN}/${docSubjects.TEST_RESULTS_DOCUMENTATION}`,
+  SAFE_CODE_RULES: `${domains.NS_FLIP_DOMAIN}/${docSubjects.SAFE_CODE}`,
+  ADDING_CUSTOM_FILES: `${domains.NS_FLIP_DOMAIN}/${docSubjects.ADD_FILES}`,
+  MAKING_FILES_CUSTOMIZABLE: `${domains.NS_FLIP_DOMAIN}/${docSubjects.MAKING_FILES_CUSTOMIZABLE}`,
 }
 
 export const magicStrings = {
-  NS_FILE: 'ns.yml',
-  META_DIR: 'meta',
-  DIFFS: 'diffs',
-  TEMPLATE: 'template',
-  TESTS_LOG: 'tests.log',
-  COMP_DIR: 'components',
-  CUSTOM_CODE_FILE: 'customCode.json',
-  SLUG_PLACEHOLDER: '__slug__',
-  OPEN_COMMENT_PLACEHOLDER: '__NS_OPEN__',
-  CLOSE_COMMENT_PLACEHOLDER: '__NS_CLOSE__',
   STANDARD_UNIT: 'standard',
-  CONFIG_FILE: 'config.yml',
-  SAMPLE_NS_FILE: 'sample.ns.yml',
+  DEFAULT_EXCLUDED_FOLDERS: 'node_modules,lib,.idea',
+}
+
+export const placeholders = {
+  CLOSE_COMMENT: '__NS_CLOSE__',
+  OPEN_COMMENT: '__NS_OPEN__',
+  SLUG: '__slug__',
 }
 
 export const dirNames = {
   FILE_TEMPLATES: 'fileTemplates',
-  TEMPLATES: 'templates',
-  SAMPLES: 'samples',
   GENERAL: 'general',
-  STANDARD: 'standard',
-  PARTIALS: 'partials',
   HELPERS: 'helpers',
+  META: 'meta',
+  PARTIALS: 'partials',
+  SAMPLES: 'samples',
+  STANDARD: 'standard',
   STATIC: 'static',
+  TEMPLATE: 'template',
 }
 
 export const fileNames = {
+  CONFIG_FILE: 'config.yml',
+  CUSTOM_CODE_FILE: 'customCode.json',
+  DIFFS: 'diffs',
+  GENERIC_FILE: 'generic.hbs',
+  NS_FILE: 'ns.yml',
   PACKAGE_INFO: 'packageInfo.json.hbs',
   README_FILE: 'README.md',
-  GENERIC_FILE: 'generic.hbs',
-  CONFIG_FILE: 'config.yml',
   SAMPLE_NS_FILE: 'sample.ns.yml',
   START_OF_FILE_FILE: 'START_OF_FILE.hbs',
+  TESTS_LOG: 'tests.log',
 }
 
 export const META_DELIMITER = '__'
@@ -133,6 +141,7 @@ export const suffixes = {
   TEST_DIR: '.test',
   STARTUP_DIR: '.starter',
   SAMPLE_DIR: '.sample',
+  MODEL_DIR: '.model',
 }
 
 export const docPages = {

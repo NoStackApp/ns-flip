@@ -25,7 +25,9 @@ describe('settings exits properly', async () => {
     const config: Configuration = await getConfig(mockTemplateDir)
     const nsInfo: NsInfo = await getNsInfo(mockTemplateDir)
     inquirer.prompt = async () => Promise.resolve({[questionNames.SETTINGS_TYPE]: DONE})
-    const output = await settingsMenu(config, nsInfo, '')
+    const output = await settingsMenu(
+      config, nsInfo, ''
+    )
     expect(output).to.deep.equal(nsInfo)
   })
 })

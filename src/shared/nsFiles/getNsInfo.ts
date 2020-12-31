@@ -1,12 +1,12 @@
 import {NsInfo} from '../constants/types/nsInfo'
-import {magicStrings} from '../constants'
+import {dirNames, fileNames} from '../constants'
 
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
 
 export async function getNsInfo(codeDir: string) {
   let nsInfo: NsInfo
-  const nsFile = codeDir + `/${magicStrings.META_DIR}/` + magicStrings.NS_FILE
+  const nsFile = codeDir + `/${dirNames.META}/` + fileNames.NS_FILE
   try {
     const nsYml = fs.readFileSync(nsFile, 'utf8')
     nsInfo = await yaml.safeLoad(nsYml)

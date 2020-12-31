@@ -1,5 +1,5 @@
 export interface TemplateRequirements {
-  'nsDir': string;
+  'templateDir': string;
   'original': string;
   'templateName': string;
   'category': string;

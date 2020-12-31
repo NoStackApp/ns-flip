@@ -1,5 +1,5 @@
 import {installDevPackagesTaskList} from './setup/installDevPackagesTaskList'
-import {docPages, links, magicStrings, suffixes} from '../../shared/constants'
+import {docPages, dirNames, fileNames, links, suffixes} from '../../shared/constants'
 import {Configuration} from '../../shared/constants/types/configuration'
 import {getConfig} from '../../shared/configs/getConfig'
 import {CustomCodeRepository} from '../../shared/constants/types/custom'
@@ -47,7 +47,9 @@ export async function createStarterAndNewCode(
       title: 'Execute Pre-Commands',
       task: async () => {
         if (!preCommands) return
-        const preCommandsTasks = preCommandsTaskList(preCommands, starterDir, session).filter(x => x !== null)
+        const preCommandsTasks = preCommandsTaskList(
+          preCommands, starterDir, session
+        ).filter(x => x !== null)
         return new Listr(preCommandsTasks)
       },
     },
@@ -55,12 +57,12 @@ export async function createStarterAndNewCode(
       title: 'Add Meta-Data',
       task:
         async () => {
-          const metaDir = `${starterDir}/${magicStrings.META_DIR}`
-          const customCode = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+          const metaDir = `${starterDir}/${dirNames.META}`
+          const customCode = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
 
           let nsInfo: NsInfo
           try {
-            const nsYml = fs.readFileSync(`${templateDir}/${magicStrings.SAMPLE_NS_FILE}`, 'utf8')
+            const nsYml = fs.readFileSync(`${templateDir}/${fileNames.SAMPLE_NS_FILE}`, 'utf8')
             nsInfo = await yaml.safeLoad(nsYml)
           } catch (error) {
             // eslint-disable-next-line no-console
@@ -112,7 +114,7 @@ export async function createStarterAndNewCode(
   try {
     await setup.run()
     await installDependencies.run()
-    const nsFilePath = `${codeDir}/${magicStrings.META_DIR}/${magicStrings.NS_FILE}`
+    const nsFilePath = `${codeDir}/${dirNames.META}/${fileNames.NS_FILE}`
     if (!await fs.pathExists(nsFilePath)) {
       // if the settings file doesn't exist yet then it's brand new...
       const newAppTasks = await createNewCode(codeDir, starterDir)// , finalTemplateDir)

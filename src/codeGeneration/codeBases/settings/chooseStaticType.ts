@@ -1,6 +1,6 @@
 import {Configuration} from '../../../shared/constants/types/configuration'
 import {Choice} from './settingsTypes'
-import {exitOption, explanation, menuOption} from '../../../shared/constants/chalkColors'
+import {exitOption, explanation, generalOption} from '../../../shared/constants/chalkColors'
 import {menuChoices} from '../../../shared/constants'
 
 const chalk = require('chalk')
@@ -20,7 +20,7 @@ export function staticTypesFromConfig(config: Configuration) {
     staticTypeChoices = types.map((typeName: string) => {
       const {description} = staticTypes[typeName]
       return {
-        name: description ? menuOption(typeName) + ' ' + explanation(description) : menuOption(typeName),
+        name: description ? generalOption(typeName) + ' ' + explanation(description) : generalOption(typeName),
         value: typeName,
         short: typeName,
       }

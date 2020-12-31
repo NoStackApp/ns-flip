@@ -1,6 +1,6 @@
 import {Specs, SpecSet} from '../../../../shared/constants/types/configuration'
 import {ADD_NEW, AnswerValue, DELETE, DONE, EDIT, EDIT_OPTIONS, TO_EDIT, types} from '../types'
-import {attention, exitOption, menuOption, progress, userValue} from '../../../../shared/constants/chalkColors'
+import {attention, exitOption, generalOption, progress, userValue} from '../../../../shared/constants/chalkColors'
 import {extendedDescription} from './extendedDescription'
 import {askForValue} from './askForValue'
 
@@ -12,16 +12,17 @@ interface SpecChoice {
     short: string;
 }
 
-function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: any) {
+function answerForSpecificSubtype(
+  name: string, specType: Specs, instanceInfo: any
+) {
   const typeOfValue = specType.type
   const typeDescription = specType.description || ''
   if (!typeOfValue)
-    throw new Error(
-      `problem in config.  The spec type ${name} does not have a proper 'type' value. e.g. 'list' or 'set'.`)
+    throw new Error(`problem in config.  The spec type ${name} does not have a proper 'type' value. e.g. 'list' or 'set'.`)
 
   if (typeOfValue === types.LIST || typeOfValue === types.SET) {
     const required = specType.required || false
-    const nameShown = `edit ${menuOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
+    const nameShown = `edit ${generalOption(pluralize(name))} [${extendedDescription(typeOfValue, typeDescription)}]`
     return {
       name: nameShown,
       value: {name, typeOfValue, required},
@@ -34,7 +35,7 @@ function answerForSpecificSubtype(name: string, specType: Specs, instanceInfo: a
     displayedValue = currentValue.length < 40 ?
       currentValue :
       currentValue.substr(0, 35) + '...'
-  let nameShown = `edit ${menuOption(name)} [${extendedDescription(typeOfValue, typeDescription)}]`
+  let nameShown = `edit ${generalOption(name)} [${extendedDescription(typeOfValue, typeDescription)}]`
   if (specType.required) nameShown += attention('*')
   nameShown += ` value: ${userValue(displayedValue)}`
   return {
@@ -57,7 +58,7 @@ function getChoicesForSpecChildren(
         const name = instance.name || 'unnamed'
         const typeOfValue = types.SET
         specChildrenChoices.push({
-          name: `edit ${menuOption(name)}`,
+          name: `edit ${generalOption(name)}`,
           value: {name, typeOfValue, required: false, index},
           short: name,
         })
@@ -124,28 +125,28 @@ export function getQuestionsForSpecSubtree(
 
   if (type === types.TOP_LEVEL) {
     // there is no "contents" for a top level set
-    questions.push(
-      {
-        type: 'list',
-        loop: false,
-        message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
-        name: TO_EDIT,
-        choices: getChoicesForSpecChildren(specsForType, specsForInstance, type),
-      },
-    )
+    questions.push({
+      type: 'list',
+      loop: false,
+      message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
+      name: TO_EDIT,
+      choices: getChoicesForSpecChildren(
+        specsForType, specsForInstance, type
+      ),
+    },)
     return questions
   }
 
   if (type === types.LIST || type === types.SET) {
-    questions.push(
-      {
-        type: 'list',
-        loop: false,
-        message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
-        name: TO_EDIT,
-        choices: getChoicesForSpecChildren(specsForType.contents, specsForInstance, type),
-      },
-    )
+    questions.push({
+      type: 'list',
+      loop: false,
+      message: `What would you like to edit for ${currentName}? ${attention('[*=required]')}`,
+      name: TO_EDIT,
+      choices: getChoicesForSpecChildren(
+        specsForType.contents, specsForInstance, type
+      ),
+    },)
     return questions
   }
 
@@ -162,19 +163,17 @@ export function getQuestionsForSpecSubtree(
     editQuestion.when = function (answers: any) {
       return (answers[EDIT_OPTIONS] === 'edit')
     }
-    questions.push(
-      {
-        type: 'list',
-        loop: false,
-        message: `What would you like to do for ${currentName}?`,
-        name: EDIT_OPTIONS,
-        choices: [
-          'edit',
-          'delete',
-        ],
-      },
-      editQuestion,
-    )
+    questions.push({
+      type: 'list',
+      loop: false,
+      message: `What would you like to do for ${currentName}?`,
+      name: EDIT_OPTIONS,
+      choices: [
+        'edit',
+        'delete',
+      ],
+    },
+    editQuestion,)
   }
 
   return questions

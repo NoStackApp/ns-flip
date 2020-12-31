@@ -4,33 +4,11 @@ import {loadFileTemplate} from '../../templates/loadFileTemplate'
 import {registerHelpers} from '../handlebars/registerHelpers'
 import {registerPartials} from '../handlebars/registerPartials'
 import {Configuration} from '../../shared/constants/types/configuration'
-import {magicStrings} from '../../shared/constants'
+import {placeholders} from '../../shared/constants'
 import {contextForStatic} from '../handlebars/context/contextForStatic'
 import {replaceCommentDelimiters} from './replaceCommentDelimiters'
 
 const fs = require('fs-extra')
-
-// const options = {
-//   mode: 0o2775,
-// }
-
-// async function createStaticFile (filename: any, path: string) {
-//   // const fileTemplate = await loadFileTemplate(filename)
-//   // const localPath = filename.replace(standardDir, '')
-//   // const newPath = `${codeDir}${localPath}`
-//   // const parsed = path.parse(newPath)
-//   // const newFileName = path +
-//   // const {ext} = parsed.ext
-//   // if (ext !== '.hbs') {
-//   //   throw new Error(`the file ${filename} in the template standard dir
-//   //   does not end with the .hbs extension.  The only files permitted must have
-//   //   the .hbs extension.`)
-//   // }
-//
-//   // const fileText = await fileTemplate(contextForStandard(appInfo, stackInfo, parsed.name))
-//   // await fs.outputFile(newFileName, fileText)
-// }
-//
 
 export async function staticFiles(
   templateDir: string,
@@ -39,10 +17,6 @@ export async function staticFiles(
   stackInfo: Schema,
   config: Configuration,
 ) {
-  // const staticDirLocalPath = config.dirs.static
-  // if (!staticDirLocalPath) return
-  // const staticDir = `${codeDir}/${staticDirLocalPath}`
-
   const staticInfo = nsInfo.static
   if (!staticInfo) return
   const staticTypesWithFiles = Object.keys(staticInfo)
@@ -77,15 +51,19 @@ ${error}`)
         const pathString = `${templateDir}/static/${fileType}.hbs`
 
         try {
-          const fileTemplate = await loadFileTemplate(pathString)
+          const fileTemplate = await loadFileTemplate(pathString, config)
 
           const {slug, specs} = instanceInfo
-          const fileName = name.replace(magicStrings.SLUG_PLACEHOLDER, slug) + suffix
+          const fileName = name.replace(placeholders.SLUG, slug) + suffix
           const fullFilePath = `${codeDir}/${directory}/${fileName}`
 
-          const context = await contextForStatic(staticType, specs, slug, instance, fileName, nsInfo, config, codeDir)
+          const context = await contextForStatic(
+            staticType, specs, slug, instance, fileName, nsInfo, config, codeDir
+          )
           const fileText = await fileTemplate(context)
-          const finalFileText = replaceCommentDelimiters(pathString, config, fileText)
+          const finalFileText = replaceCommentDelimiters(
+            pathString, config, fileText
+          )
 
           await fs.outputFile(fullFilePath, finalFileText)
         } catch (error) {

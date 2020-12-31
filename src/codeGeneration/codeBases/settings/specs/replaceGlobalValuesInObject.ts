@@ -15,7 +15,9 @@ function fixBooleans(str: string) {
   return str
 }
 
-function replaceGlobalObjectValues(value: any, session: any, answers: any) {
+function replaceGlobalObjectValues(
+  value: any, session: any, answers: any
+) {
   const newValue = value.replace(regExObjectValue, function (
     match: string,
     objectName: string,
@@ -29,7 +31,9 @@ function replaceGlobalObjectValues(value: any, session: any, answers: any) {
   return newValue
 }
 
-export function replaceGlobalValuesInObject(rawObject: any, session: any, answers: any = {}) {
+export function replaceGlobalValuesInObject(
+  rawObject: any, session: any, answers: any = {}
+) {
   const keys = Object.keys(rawObject)
   const newObject = {...rawObject}
 
@@ -37,7 +41,9 @@ export function replaceGlobalValuesInObject(rawObject: any, session: any, answer
     const value = rawObject[key]
     if ((typeof value) !== 'string') return
 
-    newObject[key] = replaceGlobalObjectValues(value, session, answers)
+    newObject[key] = replaceGlobalObjectValues(
+      value, session, answers
+    )
     if (value !== newObject[key]) newObject[key] = fixBooleans(newObject[key])
   })
 

@@ -10,21 +10,8 @@ interface NewSpecElementQuestion {
 }
 
 export async function createSpecElement(specsForTypeContents: any, session: any = {}) {
-  // const questions: NewSpecElementQuestion[] = []
+  if (!specsForTypeContents) return {}
   const subTypes = Object.keys(specsForTypeContents)
-  // subTypes.map((subType: string) => {
-  //   const subTypeInfo = specsForTypeContents[subType]
-  //   const {type} = subTypeInfo
-  //   if (type !== types.SET && type !== types.LIST) {
-  //     questions.push(askForValue(
-  //       null,
-  //       subTypeInfo,
-  //       subType,
-  //       subType,
-  //     ))
-  //   }
-  // })
-  // const answers = await inquirer.prompt(questions)
   let answers: any = {}
   let i
   for (i = 0; i < subTypes.length; i++) {
@@ -33,7 +20,9 @@ export async function createSpecElement(specsForTypeContents: any, session: any 
     const {type} = subTypeInfo
     if (type !== types.SET && type !== types.LIST) {
       // eslint-disable-next-line require-atomic-updates
-      answers = await askQuestion(subTypeInfo, subType, answers, session)
+      answers = await askQuestion(
+        subTypeInfo, subType, answers, session
+      )
     }
   }
 

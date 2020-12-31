@@ -6,10 +6,8 @@ const execa = require('execa')
 const fs = require('fs-extra')
 const Listr = require('listr')
 
-export async function createCode(
-  codeDir: string,
-  starterDir: string,
-) {
+export async function createCode(codeDir: string,
+  starterDir: string,) {
   const tasksCopyFromBaseApp = new Listr([
     {
       title: 'Check for baseApp',
@@ -26,14 +24,10 @@ export async function createCode(
       task: async () => {
         const finalCodeDir = await getCodeDir(codeDir) || ''
 
-        await execa(
-          'cp',
-          ['-r', starterDir, finalCodeDir],
-        ).catch(
-          (error: any) => {
-            throw new Error(`${chalk.red(`error copying over from ${starterDir}.`)} Here is the error reported:\n${error}`)
-          },
-        )
+        await execa('cp',
+          ['-r', starterDir, finalCodeDir],).catch((error: any) => {
+          throw new Error(`${chalk.red(`error copying over from ${starterDir}.`)} Here is the error reported:\n${error}`)
+        },)
       },
     },
   ])

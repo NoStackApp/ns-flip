@@ -11,8 +11,9 @@ export function preCommandsTaskList(
   starterDir: string,
   session: any
 ) {
-  const preCommandsInfo = preCommands.map(
-    object => replaceGlobalValuesInObject(object, session, {})).filter(x => !x.prevent)
+  const preCommandsInfo = preCommands.map(object => replaceGlobalValuesInObject(
+    object, session, {}
+  )).filter(x => !x.prevent)
 
   return preCommandsInfo.map((commandSpec: CommandSpec) => {
     return {
@@ -22,16 +23,15 @@ export function preCommandsTaskList(
           commandSpec.file,
           convertCommandArgs(commandSpec.arguments, starterDir),
           convertCommandOptions(commandSpec.options, starterDir),
-        ).catch(
-          (error: any) => {
-            throw new Error(`${chalk.red(`error with pre-command ${commandSpec.title}.`)}
-Here is the information about the command: ${JSON.stringify(commandSpec, null, 1)}
+        ).catch((error: any) => {
+          throw new Error(`${chalk.red(`error with pre-command ${commandSpec.title}.`)}
+Here is the information about the command: ${JSON.stringify(
+    commandSpec, null, 1
+  )}
 You may try contacting the author of your template to see what they suggest.
 Here is the error reported:\n${error}`)
-          },
-        )
+        },)
       },
     }
-  },
-  )
+  },)
 }

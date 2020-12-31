@@ -1,4 +1,4 @@
-import {magicStrings} from '../../shared/constants'
+import {dirNames, fileNames} from '../../shared/constants'
 // const findInFiles = require('find-in-files')
 // import {regExFileInfo} from '../constants/Regex/regExFileInfo'
 import {CustomCodeRepository} from '../../shared/constants/types/custom'
@@ -32,7 +32,9 @@ async function storeCustomCodeRegions(
   for (i = 0; i < files.length; i++) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      customCode = await storeCustomCodeForFile(files[i], customCode, rootDir, config)
+      customCode = await storeCustomCodeForFile(
+        files[i], customCode, rootDir, config
+      )
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)
@@ -40,14 +42,17 @@ async function storeCustomCodeRegions(
     }
   }
 
-  await fs.writeJson(customCodeFile, customCode, {spaces: 2})
+  await fs.writeJson(
+    customCodeFile, customCode, {spaces: 2}
+  )
   return customCode
 }
 
 export const storeAddedCode = async (rootDir: string, config: Configuration) => {
   // const compsDir = `${rootDir}/src/${names.COMP_DIR}`
-  const metaDir = `${rootDir}/${magicStrings.META_DIR}`
-  const customCodeFile = `${metaDir}/${magicStrings.CUSTOM_CODE_FILE}`
+  if (!await fs.pathExists(rootDir)) return
+  const metaDir = `${rootDir}/${dirNames.META}`
+  const customCodeFile = `${metaDir}/${fileNames.CUSTOM_CODE_FILE}`
 
   const customCode: CustomCodeRepository = {
     addedCode: {},
@@ -55,5 +60,11 @@ export const storeAddedCode = async (rootDir: string, config: Configuration) => 
     removedCode: {},
   }
 
-  return storeCustomCodeRegions(rootDir, customCode, customCodeFile, config)
+  try {
+    return storeCustomCodeRegions(
+      rootDir, customCode, customCodeFile, config
+    )
+  } catch (error) {
+    throw new Error(`can't store custom code: ${error}`)
+  }
 }

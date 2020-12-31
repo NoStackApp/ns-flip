@@ -3,7 +3,9 @@ import {getIgnoredList} from '../shared/configs/getIgnoredList'
 // import execa = require('execa');
 const fs = require('fs-extra')
 
-export async function moveOverIgnored(sourceDir: string, updatedDir: string, config: Configuration) {
+export async function moveOverIgnored(
+  sourceDir: string, updatedDir: string, config: Configuration
+) {
   // const testDir = `${sourceDir}${names.TEST_DIR_SUFFIX}`
   const allIgnored = getIgnoredList(config)
 

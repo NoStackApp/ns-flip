@@ -1,10 +1,8 @@
 import {pluralName, singularName} from '../../../shared/inflections'
 import {ComponentTypeSpec} from '../../../shared/constants/types/configuration'
 
-export const componentName = (
-  type: string,
-  componentTypeSpec: ComponentTypeSpec
-) => {
+export const componentName = (type: string,
+  componentTypeSpec: ComponentTypeSpec) => {
   const {singular} = componentTypeSpec
 
   let fullName: string

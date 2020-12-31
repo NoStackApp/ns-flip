@@ -9,11 +9,9 @@ async function spawnInteractiveChildProcess(commandSpec: CommandSpec) {
     commandSpec.file,
     commandSpec.arguments,
     commandSpec.options,
-  ).catch(
-    (error: any) => {
-      throw new Error(`error with executing ${commandSpec.file}: ${error}`)
-    },
-  )
+  ).catch((error: any) => {
+    throw new Error(`error with executing ${commandSpec.file}: ${error}`)
+  },)
 }
 
 export async function interactiveSequence(commandSpecs: CommandSpec[], codeDir: string) {

@@ -32,10 +32,8 @@ export async function updateCustomCodeForFile(
 
   const regExNewCustomLocation = new RegExp(customLocationNewRegExString(delimiters), 'g')
 
-  fileText = fileText.replace(regExNewCustomLocation, function (
-    match: string,
-    location: string,
-  ) {
+  fileText = fileText.replace(regExNewCustomLocation, function (match: string,
+    location: string,) {
     if (!addedCode[location]) return match // this shouldn't happen
 
     return delimiters.open + ' ns__custom_start ' + location + ' ' + delimiters.close +
@@ -65,18 +63,14 @@ export async function updateCustomCodeForFile(
        */
   //
 
-  fileText = fileText.replace(regExReplacedCodeSectionGenerated(delimiters), function (
-    match: string,
-    location: string,
-  ) {
+  fileText = fileText.replace(regExReplacedCodeSectionGenerated(delimiters), function (match: string,
+    location: string,) {
     if (!replacedCode[location]) return match
     return match.replace('ns__start_section', 'ns__start_replacement')
   })
 
-  fileText = fileText.replace(regExReplacedCodeSectionTagged(delimiters), function (
-    match: string,
-    location: string,
-  ) {
+  fileText = fileText.replace(regExReplacedCodeSectionTagged(delimiters), function (match: string,
+    location: string,) {
     if (!replacedCode[location]) return match
 
     const fullReplacement =

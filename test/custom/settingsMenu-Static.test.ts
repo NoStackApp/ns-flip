@@ -55,7 +55,9 @@ describe('static settings update', async () => {
     const originalSettings = JSON.parse(JSON.stringify(nsInfo))
 
     currentStep = 1
-    const output = await settingsMenu(config, nsInfo, '')
+    const output = await settingsMenu(
+      config, nsInfo, ''
+    )
     expect(output.general).to.deep.equal(originalSettings.general)
     expect(output.units).to.deep.equal(originalSettings.units)
     expect(output.static).to.not.equal(originalSettings.static)

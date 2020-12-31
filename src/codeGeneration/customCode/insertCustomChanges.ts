@@ -9,18 +9,12 @@ import execa = require('execa');
 import {fs} from './updateCustomCodeForFile'
 import {Configuration} from '../../shared/constants/types/configuration'
 
-async function updateCode(
-  fileName: string,
-  sedString: string,
-) {
-  await execa(
-    'sed',
-    ['-i', '-e ' + sedString, fileName],
-  ).catch(
-    (error: any) => {
-      throw new Error(`${chalk.red('error inserting added code.')} Here is the error reported:\n${error}`)
-    },
-  )
+async function updateCode(fileName: string,
+  sedString: string,) {
+  await execa('sed',
+    ['-i', '-e ' + sedString, fileName],).catch((error: any) => {
+    throw new Error(`${chalk.red('error inserting added code.')} Here is the error reported:\n${error}`)
+  },)
 }
 
 async function updateRemovedImports(customCode: CustomCodeRepository, testDir: string) {
@@ -63,7 +57,9 @@ export const insertCustomChanges = async (
   }
 
   customCode = await fs.readJson(addedCodeDoc)
-  await updateCustomCode(customCode, baseDir, config)
+  await updateCustomCode(
+    customCode, baseDir, config
+  )
 
   if (Object.keys(customCode).length === 0) {
     // no added code to add

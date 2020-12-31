@@ -1,6 +1,6 @@
 import {Configuration} from '../../../shared/constants/types/configuration'
 import {NsInfo} from '../../../shared/constants/types/nsInfo'
-import {exitOption, menuOption} from '../../../shared/constants/chalkColors'
+import {exitOption, generalOption} from '../../../shared/constants/chalkColors'
 import {DONE, types} from './types'
 import {staticSettings} from './staticSettings'
 import {updateSpecSubtree} from './specs/updateSpecSubtree'
@@ -15,12 +15,12 @@ const questions = [{
   message: 'What settings would you like to change?',
   choices: [
     {
-      name: menuOption('General'),
+      name: generalOption('General'),
       value: answerValues.settingsTypes.GENERAL,
       short: 'General',
     },
     {
-      name: menuOption('Static'),
+      name: generalOption('Static'),
       value: answerValues.settingsTypes.STATIC,
       short: 'Static',
     },
@@ -45,7 +45,9 @@ export async function settingsMenu(
         return nsInfo
       }
       if (answers[questionNames.SETTINGS_TYPE] === answerValues.settingsTypes.STATIC) {
-        const nsInfoStatic = await staticSettings(config, nsInfo, codeDir)
+        const nsInfoStatic = await staticSettings(
+          config, nsInfo, codeDir
+        )
         nsInfo.static = nsInfoStatic
       }
       if (answers[questionNames.SETTINGS_TYPE] === answerValues.settingsTypes.GENERAL) {

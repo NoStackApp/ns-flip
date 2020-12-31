@@ -5,11 +5,8 @@ const chalk = require('chalk')
 const fs = require('fs-extra')
 const Listr = require('listr')
 
-export async function createNewCode(
-  codeDir: string,
-  starterDir: string,
-  // templateDir: string,
-) {
+export async function createNewCode(codeDir: string,
+  starterDir: string) {
   const tasksCopyFromBaseApp = new Listr([
     {
       title: 'Check for baseApp',
@@ -26,11 +23,9 @@ export async function createNewCode(
       task: async () => {
         const finalCodeDir = await getCodeDir(codeDir) || ''
 
-        await fs.copy(starterDir, finalCodeDir).catch(
-          (error: any) => {
-            throw new Error(`${chalk.red(`error copying over from ${starterDir}.`)} Here is the error reported:\n${error}`)
-          },
-        )
+        await fs.copy(starterDir, finalCodeDir).catch((error: any) => {
+          throw new Error(`${chalk.red(`error copying over from ${starterDir}.`)} Here is the error reported:\n${error}`)
+        },)
       },
     },
   ])
